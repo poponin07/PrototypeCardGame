@@ -1,0 +1,43 @@
+{
+    "name": "InputSystem_i",
+    "maps": [
+        {
+            "name": "Camera",
+            "id": "12f8986b-2b3d-45d6-adb4-08e7a1e2f205",
+            "actions": [
+                {
+                    "name": "CursorPosition",
+                    "type": "Value",
+                    "id": "481473b7-82e7-441f-9f99-f643f881881a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "ClickForRayCast",
+                    "type": "Button",
+                    "id": "af41de2a-6a9d-41f3-97f2-2cc079e5c30d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ff8ebdaf-49e1-469b-b47b-8b98be6b32e9",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ClickForRayCast",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
