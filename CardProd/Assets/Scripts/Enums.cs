@@ -27,4 +27,19 @@ namespace Cards
 		OnTable,
 		Discard
 	}
+	
+	/*public enum PlayerMove : byte
+	{
+		Player1,
+		Player2,
+		Discard
+	}*/
+	
+	public enum Players : byte
+	{
+		Player1,
+		Player2,
+		Discard
+	}
+	
 }

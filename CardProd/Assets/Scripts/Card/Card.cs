@@ -18,8 +18,10 @@ namespace Cards
         [SerializeField] private TextMeshPro m_cardUnitType;
         [SerializeField, Space] private uint m_id;
         [SerializeField] private MeshRenderer _picture;
+        public Players players;
         public AnimationComponent animationComponent;
-        private PlayerHand m_playerHand;
+        private PlayerHand m_player1Hand;
+        private PlayerHand m_player2Hand;
         private float stepY = 10f;
         private float liftSpeed = 0.05f;
         private float liftHeight = 5f;
@@ -30,23 +32,27 @@ namespace Cards
         
         public bool isFrontSide => _frontCard.activeSelf;
 
+        public PlayerHand Player1Hand => m_player1Hand;
+
+        public PlayerHand Player2Hand => m_player2Hand;
+
 
         public  CardState m_cardState;
 
-        public void Confiruration(CardPropertiesData data, Material picture, string description, PlayerHand playerHand)
+        public void Confiruration(CardPropertiesData data, Material picture, string description, PlayerHand playerHand, Players player)
         {
-            m_playerHand = playerHand;
+            m_player1Hand = playerHand;
             m_coast.text = data.Cost.ToString();
             m_attack.text = data.Attack.ToString();
             m_health.text = data.Health.ToString();
             m_descriptions.text = description;
             m_name.text = data.Name;
-
+            players = player;
             m_cardUnitType.text = CardUnitType.None == data.Type ? "" : data.Type.ToString();
             _picture.material = picture;
 
             m_id = data.Id;
-            animationComponent.Link(m_playerHand);
+            animationComponent.Link(Player1Hand);
         }
 
         [ContextMenu("SwitchEnable")]
@@ -117,7 +123,7 @@ namespace Cards
                 yield return null;
             }
             card.m_cardState = CardState.InHand;
-            //card.SwitchEnable();
+
         }
     }
 } 

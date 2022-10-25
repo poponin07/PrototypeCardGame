@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using Cards.ScriptableObjects;
 using UnityEngine;
@@ -41,8 +42,8 @@ namespace Cards
 
         private void Start()
         {
-            m_player1Deck = CreateDeck(m_player1DeckRoot);
-            m_player2Deck = CreateDeck(m_player2DeckRoot);
+            m_player1Deck = CreateDeck(m_player1DeckRoot, Players.Player1);
+            m_player2Deck = CreateDeck(m_player2DeckRoot, Players.Player2);
         }
         
         private void CollectingAllCards()
@@ -60,21 +61,55 @@ namespace Cards
 
         public void GetCardFromDeck()
         {
-            var index = m_player1Deck.Length - 1;
-            for (int i = index; i >= 0; i--)
+            int index;
+            switch (RoundManager.instance.PlayerMove)
             {
-                if (m_player1Deck[i] != null)
-                {
-                    index = i;
+                case Players.Player1:
+                    index = m_player1Deck.Length - 1;
+                    for (int i = index; i >= 0; i--)
+                    {
+                        if (m_player1Deck[i] != null)
+                        {
+                            index = i;
+                            break;
+                        }
+                    }
                     break;
-                }
+                case Players.Player2:
+                    index = m_player2Deck.Length - 1;
+                    for (int i = index; i >= 0; i--)
+                    {
+                        if (m_player2Deck[i] != null)
+                        {
+                            index = i;
+                            break;
+                        }
+                    }
+                    break;
+                default:
+                    return;
             }
+            
+            
 
-            bool resultSetNewCard = _player1Hand.SetNewCard(m_player1Deck[index]);
-            if (resultSetNewCard) m_player1Deck[index] = null;
+            bool resultSetNewCard;
+            
+            switch (RoundManager.instance.PlayerMove)
+            {
+                case Players.Player1:
+                    resultSetNewCard = _player1Hand.SetNewCardInHand(m_player1Deck[index]);
+                    if (resultSetNewCard) m_player1Deck[index] = null;
+                    break;
+                case Players.Player2:
+                    resultSetNewCard = _player2Hand.SetNewCardInHand(m_player2Deck[index]);
+                    if (resultSetNewCard) m_player2Deck[index] = null;
+                    break;
+                case Players.Discard:
+                    break;
+            }
         }
 
-        private Card[] CreateDeck(Transform root)
+        private Card[] CreateDeck(Transform root, Players player)
         {
             Card[] deck = new Card[m_cardDeckCount];
             Vector3 vector = Vector3.zero;
@@ -91,7 +126,7 @@ namespace Cards
                 var _newMat = new Material(m_baseMat);
                 _newMat.mainTexture = random.Texture;
 
-                deck[i].Confiruration(random, _newMat, CardUtility.GetDescriptionById(random.Id), _player1Hand);
+                deck[i].Confiruration(random, _newMat, CardUtility.GetDescriptionById(random.Id), _player1Hand, player);
                 deck[i].m_cardState = CardState.InDeck;
                 deck[i].SwitchEnable();
             }

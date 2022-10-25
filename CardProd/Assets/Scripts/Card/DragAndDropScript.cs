@@ -6,7 +6,9 @@ namespace Cards
 {
     public class DragAndDropScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler 
     {
-        [SerializeField, Range(0,7)]private float m_magnetRadius = 7;
+        [SerializeField, Range(0,7)]public const float MAGNET_RADIUS = 3;
+        [SerializeField] private PlayerHand m_player1Hand;
+        [SerializeField] private PlayerHand m_player2Hand;
         private Card m_card;
         private Ray m_ray;
         public Transform[] positonsCardOnTablePlayer1;
@@ -18,6 +20,8 @@ namespace Cards
             m_card = GetComponent<Card>(); ;
             positonsCardOnTablePlayer1 = m_card.cardManager.MPositonsCardOnTablePlayer1;
             positonsCardOnTablePlayer2  = m_card.cardManager.MPositonsCardOnTablePlayer2;
+            m_player1Hand = m_card.Player1Hand;
+            m_player2Hand = m_card.Player2Hand;
         }
 
         
@@ -30,6 +34,7 @@ namespace Cards
                 case CardState.InHand:
                     m_card.m_cardState = CardState.Discard;
                     m_card.transform.position = m_card.m_curParent.transform.position;
+                    m_player1Hand.RemoveCardFromHand(m_card);
                     break;
                 case CardState.OnTable:
                     break;
@@ -49,8 +54,7 @@ namespace Cards
                 case CardState.OnTable:
                     break;
                 case CardState.Discard:
-                    
-                    RaycastDragAndDop(eventData);
+                    RaycastDragAndDrop(eventData);
                     break;
             }
         }
@@ -66,15 +70,15 @@ namespace Cards
                 case CardState.OnTable:
                 break;
                 case CardState.Discard:
-                    
-                    Transform closestSlot = GetClosestSlot(positonsCardOnTablePlayer1);
-                    Debug.DrawLine(m_card.transform.position,closestSlot.position, Color.red, 5);
-                    MagnetToSlot(closestSlot);
+                    // Transform closestSlot = GetClosestSlot(positonsCardOnTablePlayer1);
+                    // Debug.DrawLine(m_card.transform.position,closestSlot.position, Color.red, 5);
+                    m_player1Hand.AddCardOnTable(m_card);
+                    //MagnetToSlot(closestSlot);
                     break;
             }
         }
 
-        private  void RaycastDragAndDop(PointerEventData eventData)
+        private  void RaycastDragAndDrop(PointerEventData eventData)
         {
             Camera _camera = Camera.main;
             Vector3 cc = new Vector3(eventData.position.x,eventData.position.y,0);
@@ -88,7 +92,7 @@ namespace Cards
             } 
         }
 
-        private Transform GetClosestSlot(Transform[] slotPositions)
+        public Transform GetClosestSlot(Transform[] slotPositions)
         {
             float minDistance = float.MaxValue;
             Transform closestSlot = slotPositions[0];
@@ -105,21 +109,20 @@ namespace Cards
             return closestSlot;
         }
 
-        private void MagnetToSlot(Transform slot)
+        /*public void MagnetToSlot(Transform slot)
         {
             if (Vector3.Distance(m_card.transform.position, slot.position) <= m_magnetRadius)
             {
                 m_card.m_curParent = slot;
+                m_card.transform.SetParent(slot);
                 m_card.transform.position = slot.position;
+                m_card.m_cardState = CardState.OnTable;
             }
             else
             {
                 StartCoroutine(m_card.MoveInHand(m_card, m_card.m_curParent));
             }
-        }
-
-
-
-
+        }*/
+        
     }
 }

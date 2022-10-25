@@ -12,8 +12,8 @@ namespace Input
     public class PlayerRayCast : MonoBehaviour
     {
         private InputSystem_i _input;
-        private Ray ray; 
-        [SerializeField] private CardManager _cardManager;
+        private Ray ray;
+        [SerializeField] private CardManager m_cardManager;
 
         private void Awake()
         {
@@ -33,15 +33,15 @@ namespace Input
             if (Physics.Raycast(ray, out var hit))
             {
                 Card card = hit.transform.GetComponent<Card>();
-                if (card == null) return;
+                if (card == null || card.players != RoundManager.instance.PlayerMove) return;
                            
                     if (card.m_cardState == CardState.InDeck)
                 {
                     card.m_cardState = CardState.Discard;
-                    var cardComp = hit.transform != null ? card : null;
+                    Card cardComp = hit.transform != null ? card : null;
                 if (cardComp != null)
                 {
-                    _cardManager.GetCardFromDeck();
+                    m_cardManager.GetCardFromDeck();
                 }
                 }
                 
