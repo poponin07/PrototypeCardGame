@@ -44,7 +44,6 @@ namespace Input
                     m_cardManager.GetCardFromDeck();
                 }
                 }
-                
             }
         }
 

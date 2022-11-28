@@ -10,6 +10,7 @@ namespace Cards
     {
         [SerializeField] private Animator m_animator;
         private static readonly int ToHand = Animator.StringToHash("ToHand");
+        private static readonly int ShakeCard = Animator.StringToHash("ShakeCard");
         private PlayerHand m_playerHand;
         public void Link(PlayerHand playerHand)
         {
@@ -19,6 +20,10 @@ namespace Cards
         public void AnimationFlipCard()
         {
             m_animator.SetTrigger(ToHand);
+        }
+        public void AnimationShakeCard()
+        {
+            m_animator.SetTrigger(ShakeCard);
         }
 
         public void Flip()

@@ -9,10 +9,11 @@ namespace Cards
 {
     public class PlayerHand : MonoBehaviour
     {
-        [SerializeField] private Transform[] m_positonsCardInHand;
+        [SerializeField] private Transform[] m_positonsCardInHand; 
         //[SerializeField] private Transform[] m_positonsCardOnTable;
         private Card[] m_cardInHand;
         private List<Card> m_cardOnTable;
+        
 
         public Transform axis;
         private void Start()
@@ -67,6 +68,21 @@ namespace Cards
         {
             DragAndDropScript dropScript = moveCard.GetComponent<DragAndDropScript>();
             Transform positonCardOnTable = dropScript.GetClosestSlot(dropScript.positonsCardOnTablePlayer1);
+            
+           switch (RoundManager.instance.PlayerMove)
+            {
+                case Players.Player1:
+                    positonCardOnTable = dropScript.GetClosestSlot(dropScript.positonsCardOnTablePlayer1);
+                    break;
+                case Players.Player2:
+                    positonCardOnTable = dropScript.GetClosestSlot(dropScript.positonsCardOnTablePlayer2);
+                    break;
+                case Players.Discard:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
             Debug.DrawLine(moveCard.transform.position,positonCardOnTable.position, Color.red, 5);
             SlotScript slotScript = positonCardOnTable.GetComponent<SlotScript>();
             
@@ -83,8 +99,39 @@ namespace Cards
                 moveCard.transform.SetParent(positonCardOnTable);
                 moveCard.transform.position = positonCardOnTable.position;
                 moveCard.m_cardState = CardState.OnTable;
-                (axis.GetComponent<RoundManager>()).MoveChange();
+                //axis.GetComponent<RoundManager>().MoveChange();
                 return true;
         }
+
+        public bool CardAttack(Card moveCard)
+        {
+            DragAndDropScript dropScript = moveCard.GetComponent<DragAndDropScript>();
+            Transform positonCardOnTable = dropScript.GetClosestSlot(dropScript.positonsCardOnTablePlayer1);
+            
+            switch (RoundManager.instance.PlayerMove)
+            {
+                case Players.Player1:
+                    positonCardOnTable = dropScript.GetClosestSlot(dropScript.positonsCardOnTablePlayer2);
+                    break;
+                case Players.Player2:
+                    positonCardOnTable = dropScript.GetClosestSlot(dropScript.positonsCardOnTablePlayer1);
+                    break;
+                case Players.Discard:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            Debug.DrawLine(moveCard.transform.position,positonCardOnTable.position, Color.red, 5);
+            SlotScript slotScript = positonCardOnTable.GetComponent<SlotScript>();
+            
+            if ((slotScript == null ||  !slotScript.couple || Vector3.Distance(moveCard.transform.position, positonCardOnTable.position) > DragAndDropScript.MAGNET_RADIUS))
+            {
+                moveCard.StartCoroutine(moveCard.MoveInHand(moveCard, moveCard.m_curParent));
+                return false;
+            }
+
+            return true;
+        }
+        
     }
     }

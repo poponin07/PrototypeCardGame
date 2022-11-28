@@ -1,13 +1,33 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UIAvatarScript : MonoBehaviour
 {
     [SerializeField] private Transform[] Avatarcanvases;
     [SerializeField, Range(0.1f, 100f)] private float speedRotateCanvas;
+    [SerializeField] private PlayerData _player1Data;
+    [SerializeField] private PlayerData _player2Data;
+    
+    [SerializeField] private TextMeshProUGUI healthUItext_Player1;
+    [SerializeField] private TextMeshProUGUI manaUItext_Player1;
+    [SerializeField] private TextMeshProUGUI healthUItext_Player2;
+    [SerializeField] private TextMeshProUGUI manaUItext_Player2;
 
+    private void Start()
+    {
+        setDefaultData();
+    }
+
+    private void setDefaultData()
+    {
+        healthUItext_Player1.text = Convert.ToString(_player1Data.Health);
+        manaUItext_Player1.text = Convert.ToString(_player1Data.Mana);
+        healthUItext_Player2.text = Convert.ToString(_player2Data.Health);
+        manaUItext_Player2.text = Convert.ToString(_player2Data.Mana);
+    }
     public IEnumerator CoroutineTurnIcon() //корутина поворота иконок hp и mana
     {
         if (Time.timeScale != 0)

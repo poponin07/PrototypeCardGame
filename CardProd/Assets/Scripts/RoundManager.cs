@@ -11,8 +11,8 @@ namespace Cards
       
       [SerializeField, Range(0.1f, 100f)] private float speedRotateCamera;
       [SerializeField] public UIAvatarScript m_avatarScript;
-      //private Camera m_mainCamera;
-      private Players m_playerMove;
+      [SerializeField]  private Players m_playerMove;
+
       public Players PlayerMove => m_playerMove;
 
 
@@ -23,7 +23,7 @@ namespace Cards
          }else{
             instance = this;
          }
-         //m_mainCamera = Camera.main;
+
          m_playerMove = Players.Player1;
       }
       
@@ -36,7 +36,7 @@ namespace Cards
                StartCoroutine(CoroutineTurnCamera());
                break;
             case Players.Player2:
-               m_playerMove = Players.Player2;
+               m_playerMove = Players.Player1;
                StartCoroutine(CoroutineTurnCamera());
                break;
             case Players.Discard:

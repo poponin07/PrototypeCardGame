@@ -19,6 +19,7 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerRayCast.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3f0ffa0d28a34012b04d76ff1979f8cd3f000/f7/f0a37cdc/IPointerDownHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a979f18d51af41179d12b797e8c5be14116000/90/ed93a62c/Camera.cs" root0="SKIP_HIGHLIGHTING" />
@@ -106,6 +107,11 @@
       <workItem from="1665661979496" duration="1236000" />
       <workItem from="1665995955365" duration="9533000" />
       <workItem from="1666092912735" duration="7553000" />
+      <workItem from="1667206587960" duration="1189000" />
+      <workItem from="1667898263024" duration="1464000" />
+      <workItem from="1669020359971" duration="5986000" />
+      <workItem from="1669125210129" duration="3841000" />
+      <workItem from="1669298089903" duration="612000" />
     </task>
     <servers />
   </component>
