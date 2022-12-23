@@ -62,7 +62,51 @@ namespace Cards
         public void GetCardFromDeck()
         {
             int index;
+            Card[] playerDeck;
+            
             switch (RoundManager.instance.PlayerMove)
+            {
+                case Players.Player1:
+                    playerDeck = m_player1Deck;
+                    index = 0;
+                    break;
+                case Players.Player2:
+                    playerDeck = m_player2Deck;
+                    index = 0;
+                    break;
+                default:
+                    playerDeck = m_player1Deck;
+                    index = 0;
+                    break;
+            }
+            for (int i = playerDeck.Length - 1; i >= 0; i--)
+            {
+                if (playerDeck[i] != null)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            
+            
+            bool resultSetNewCard;
+            
+            switch (RoundManager.instance.PlayerMove)
+            {
+                case Players.Player1:
+                    resultSetNewCard = _player1Hand.SetNewCardInHand(m_player1Deck[index]);
+                    if (resultSetNewCard) m_player1Deck[index] = null;
+                    break;
+                case Players.Player2:
+                    resultSetNewCard = _player2Hand.SetNewCardInHand(m_player2Deck[index]);
+                    if (resultSetNewCard) m_player2Deck[index] = null;
+                    break;
+                default:
+                    index = 0;
+                    break;
+                    
+            }
+            /*switch (RoundManager.instance.PlayerMove)
             {
                 case Players.Player1:
                     index = m_player1Deck.Length - 1;
@@ -89,24 +133,11 @@ namespace Cards
                 default:
                     return;
             }
+            */
             
             
-
-            bool resultSetNewCard;
             
-            switch (RoundManager.instance.PlayerMove)
-            {
-                case Players.Player1:
-                    resultSetNewCard = _player1Hand.SetNewCardInHand(m_player1Deck[index]);
-                    if (resultSetNewCard) m_player1Deck[index] = null;
-                    break;
-                case Players.Player2:
-                    resultSetNewCard = _player2Hand.SetNewCardInHand(m_player2Deck[index]);
-                    if (resultSetNewCard) m_player2Deck[index] = null;
-                    break;
-                case Players.Discard:
-                    break;
-            }
+            
         }
 
         private Card[] CreateDeck(Transform root, Players player)
@@ -126,7 +157,7 @@ namespace Cards
                 var _newMat = new Material(m_baseMat);
                 _newMat.mainTexture = random.Texture;
 
-                deck[i].Confiruration(random, _newMat, CardUtility.GetDescriptionById(random.Id), _player1Hand, player);
+                deck[i].Confiruration(random, _newMat, CardUtility.GetDescriptionById(random.Id), _player1Hand , _player2Hand, player);
                 deck[i].m_cardState = CardState.InDeck;
                 deck[i].SwitchEnable();
             }

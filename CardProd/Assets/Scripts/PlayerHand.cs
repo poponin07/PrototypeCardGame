@@ -1,30 +1,46 @@
-﻿using System;
-using System.Collections;
+﻿
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 namespace Cards
 {
     public class PlayerHand : MonoBehaviour
     {
-        [SerializeField] private Transform[] m_positonsCardInHand; 
+        [SerializeField] private Players m_move;
+        [SerializeField] private Transform[] m_positonsCardInHand;
         //[SerializeField] private Transform[] m_positonsCardOnTable;
-        private Card[] m_cardInHand;
+        //[SerializeField] private Card[] m_cardInHand; 
+         private Card[] m_cardInHand1;
+        private Card[] m_cardInHand2;
         private List<Card> m_cardOnTable;
+        
         
 
         public Transform axis;
         private void Start()
         {
-            m_cardInHand = new Card[m_positonsCardInHand.Length];
+            if (m_move == Players.Player1)
+                m_cardInHand1 = new Card[m_positonsCardInHand.Length];
+            else
+                m_cardInHand2 = new Card[m_positonsCardInHand.Length];
+            
             m_cardOnTable = new List<Card>();
         }
 
         public bool SetNewCardInHand(Card newCard)
         {
-            int result = GetIndexLastCard(m_positonsCardInHand);
+            Card[] cardInHand;
+            if (RoundManager.instance.PlayerMove != Players.Player1)
+            {
+                cardInHand = m_cardInHand2;
+            }
+            else
+            {
+                cardInHand = m_cardInHand1;
+            }
+            
+            int result = GetIndexLastCard(cardInHand);
 
             if (result == -1)
             {
@@ -32,33 +48,43 @@ namespace Cards
                 return false;
             }
 
-            m_cardInHand[result] = newCard;
-
+            cardInHand[result] = newCard;
             newCard.StartCoroutine(newCard.LiftCard(newCard, m_positonsCardInHand[result]));
 
             return true;
         }
 
-        private int GetIndexLastCard(Transform[] arr)
+        private int GetIndexLastCard(Card[] arr)
         {
-            for (int i = 0; i < m_cardInHand.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
-                if (m_cardInHand[i] == null)
+                if (arr[i] == null)
                 {
                     return i;
                 }
             }
+
             return -1;
         }
 
         public void RemoveCardFromHand(Card removeCard)
         {
-            for (int i = 0; i < m_cardInHand.Length - 1; i++)
+            Card[] m_cardInHand;
+            if (RoundManager.instance.PlayerMove == Players.Player1)
+            {
+                m_cardInHand = m_cardInHand1;
+            }
+            else
+            {
+                m_cardInHand = m_cardInHand2;
+            }
+            
+            for (int i = 0; i < m_cardInHand.Length; i++)
             {
                 if (m_cardInHand[i] == removeCard)
                 {
                     m_cardInHand[i] = null;
-                    Debug.Log("Еhe card is removed from the hand");
+                    Debug.Log("All card is removed from the hand");
                     return;
                 }
             } 
@@ -79,8 +105,6 @@ namespace Cards
                     break;
                 case Players.Discard:
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
             
             Debug.DrawLine(moveCard.transform.position,positonCardOnTable.position, Color.red, 5);
@@ -93,7 +117,7 @@ namespace Cards
             }
 
             slotScript.SwitchCouple();
-            m_cardOnTable.Add(moveCard);
+            //m_cardOnTable.Add(moveCard);
             
                 moveCard.m_curParent = positonCardOnTable;
                 moveCard.transform.SetParent(positonCardOnTable);
@@ -107,6 +131,7 @@ namespace Cards
         {
             DragAndDropScript dropScript = moveCard.GetComponent<DragAndDropScript>();
             Transform positonCardOnTable = dropScript.GetClosestSlot(dropScript.positonsCardOnTablePlayer1);
+            Debug.Log(positonCardOnTable);
             
             switch (RoundManager.instance.PlayerMove)
             {
@@ -118,8 +143,6 @@ namespace Cards
                     break;
                 case Players.Discard:
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
             Debug.DrawLine(moveCard.transform.position,positonCardOnTable.position, Color.red, 5);
             SlotScript slotScript = positonCardOnTable.GetComponent<SlotScript>();

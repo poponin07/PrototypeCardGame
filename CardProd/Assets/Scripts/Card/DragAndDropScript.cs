@@ -7,7 +7,7 @@ namespace Cards
     public class DragAndDropScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
     {
         [SerializeField, Range(0, 7)] public const float MAGNET_RADIUS = 3;
-        [SerializeField] private PlayerHand m_player1Hand;
+       private PlayerHand m_player1Hand;
         [SerializeField] private PlayerHand m_player2Hand;
         private float m_magnetRadius = 7;
         private Card m_card;
@@ -19,7 +19,6 @@ namespace Cards
         private void Start()
         {
             m_card = GetComponent<Card>();
-            ;
             positonsCardOnTablePlayer1 = m_card.cardManager.MPositonsCardOnTablePlayer1;
             positonsCardOnTablePlayer2 = m_card.cardManager.MPositonsCardOnTablePlayer2;
             m_player1Hand = m_card.Player1Hand;
@@ -40,6 +39,7 @@ namespace Cards
                     break;
                 case CardState.OnTable:
                     break;
+
             }
         }
 
@@ -70,8 +70,21 @@ namespace Cards
                 case CardState.InHand:
                     break;
                 case CardState.OnTable:
-                    m_card.animationComponent.AnimationShakeCard();
-                    Debug.Log("Shake");
+                    //m_card.animationComponent.AnimationShakeCard();
+                    
+                    switch (RoundManager.instance.PlayerMove)
+                    {
+                        case Players.Player1:
+                            m_player2Hand.CardAttack(m_card);
+                            break;
+                        case Players.Player2:
+                            m_player1Hand.CardAttack(m_card);
+                            break;
+                        case Players.Discard:
+                            Debug.LogError("Discard in Drop");
+                            break;
+                    }
+                    
                     break;
                 case CardState.Discard:
                     //Transform closestSlot = GetClosestSlot(positonsCardOnTablePlayer1);
@@ -114,21 +127,5 @@ namespace Cards
             return closestSlot;
         }
 
-        /*public void MagnetToSlot(Transform slot)
-         {
-             if (Vector3.Distance(m_card.transform.position, slot.position) <= m_magnetRadius)
-             {
-                 m_card.m_curParent = slot;
-                 m_card.transform.SetParent(slot);
-                 m_card.transform.position = slot.position;
-                 m_card.m_cardState = CardState.OnTable;
-             }
-             else
-             {
-                 StartCoroutine(m_card.MoveInHand(m_card, m_card.m_curParent));
-             }
-         }
-         
-     }*/
     }
 }

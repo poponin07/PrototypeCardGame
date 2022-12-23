@@ -39,9 +39,12 @@ namespace Cards
 
         public  CardState m_cardState;
 
-        public void Confiruration(CardPropertiesData data, Material picture, string description, PlayerHand playerHand, Players player)
+        public void Confiruration(CardPropertiesData data, Material picture, string description, PlayerHand playerHand1, PlayerHand playerHand2, Players player)
         {
-            m_player1Hand = playerHand;
+            m_player1Hand = playerHand1;
+            m_player2Hand = playerHand2;
+            Debug.Log(m_player1Hand);
+            Debug.Log(m_player2Hand);
             m_coast.text = data.Cost.ToString();
             m_attack.text = data.Attack.ToString();
             m_health.text = data.Health.ToString();
