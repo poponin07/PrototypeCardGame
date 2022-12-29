@@ -28,13 +28,6 @@ namespace Cards
 		Discard
 	}
 	
-	/*public enum PlayerMove : byte
-	{
-		Player1,
-		Player2,
-		Discard
-	}*/
-	
 	public enum Players : byte
 	{
 		Player1,

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Cards.ScriptableObjects;
+using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -22,8 +23,8 @@ namespace Cards
         [SerializeField, Space] private PlayerHand _player1Hand;
         [SerializeField] private PlayerHand _player2Hand;
         
-        [SerializeField] private Transform[] m_positonsCardOnTablePlayer1;
-        [SerializeField] private Transform[] m_positonsCardOnTablePlayer2;
+        // [SerializeField] private Transform[] m_positonsCardOnTablePlayer1;
+        // [SerializeField] private Transform[] m_positonsCardOnTablePlayer2;
 
         private Card[] m_player1Deck;
         private Card[] m_player2Deck;
@@ -31,9 +32,11 @@ namespace Cards
         private const float c_stepCardInDeck = 0.07f;
         private Material m_baseMat;
 
-        public Transform[] MPositonsCardOnTablePlayer1 => m_positonsCardOnTablePlayer1;
-        public Transform[] MPositonsCardOnTablePlayer2 => m_positonsCardOnTablePlayer2;
+        // public Transform[] PositonsCardOnTablePlayer1 => m_positonsCardOnTablePlayer1;
+        // public Transform[] PositonsCardOnTablePlayer2 => m_positonsCardOnTablePlayer2;
 
+        private Dictionary<int, SlotScript> m_playerCardSlots = new Dictionary<int, SlotScript>();
+        [SerializeField] private PlayerCardSlotsManager m_slotsManager;
 
         private void Awake()
         {
@@ -44,6 +47,37 @@ namespace Cards
         {
             m_player1Deck = CreateDeck(m_player1DeckRoot, Players.Player1);
             m_player2Deck = CreateDeck(m_player2DeckRoot, Players.Player2);
+            FillCardSlots();
+        }
+
+        private void FillCardSlots()
+        {
+            foreach (var playerCardSlot in m_slotsManager.playerCardSlots)
+            {
+                m_playerCardSlots.Add(playerCardSlot.slotId, playerCardSlot);
+            }
+        }
+
+        public SlotScript GetClosestSlot(Card card, bool isSamePlayerSlots)
+        {
+            float minDistance = float.MaxValue;
+            var slotPositions = m_playerCardSlots;
+
+            SlotScript closestSlot = slotPositions[0];
+            foreach (var slot in slotPositions)
+            {
+                var slotPosition = slot.Value.transform.position;
+                float distSlot = Vector3.Distance(card.transform.position, slotPosition);
+                var player = RoundManager.instance.PlayerMove;
+                bool isSamePlayer = player == Players.Player1 && slot.Value.playerId == 1 || player == Players.Player2 && slot.Value.playerId == 2;
+                if (distSlot < minDistance && (isSamePlayerSlots == isSamePlayer))
+                {
+                    minDistance = distSlot;
+                    closestSlot = slot.Value;
+                }
+            }
+
+            return closestSlot;
         }
         
         private void CollectingAllCards()
@@ -79,6 +113,7 @@ namespace Cards
                     index = 0;
                     break;
             }
+            
             for (int i = playerDeck.Length - 1; i >= 0; i--)
             {
                 if (playerDeck[i] != null)
@@ -104,40 +139,8 @@ namespace Cards
                 default:
                     index = 0;
                     break;
-                    
+                
             }
-            /*switch (RoundManager.instance.PlayerMove)
-            {
-                case Players.Player1:
-                    index = m_player1Deck.Length - 1;
-                    for (int i = index; i >= 0; i--)
-                    {
-                        if (m_player1Deck[i] != null)
-                        {
-                            index = i;
-                            break;
-                        }
-                    }
-                    break;
-                case Players.Player2:
-                    index = m_player2Deck.Length - 1;
-                    for (int i = index; i >= 0; i--)
-                    {
-                        if (m_player2Deck[i] != null)
-                        {
-                            index = i;
-                            break;
-                        }
-                    }
-                    break;
-                default:
-                    return;
-            }
-            */
-            
-            
-            
-            
         }
 
         private Card[] CreateDeck(Transform root, Players player)
@@ -152,14 +155,13 @@ namespace Cards
                 deck[i].transform.localPosition = vector;
                 vector += new Vector3(0, c_stepCardInDeck, 0);
 
-                var random = m_allCards[Random.Range(0, m_allCards.Count)];
+                var randomCard = m_allCards[Random.Range(0, m_allCards.Count)];
 
                 var _newMat = new Material(m_baseMat);
-                _newMat.mainTexture = random.Texture;
+                _newMat.mainTexture = randomCard.Texture;
 
-                deck[i].Confiruration(random, _newMat, CardUtility.GetDescriptionById(random.Id), _player1Hand , _player2Hand, player);
-                deck[i].m_cardState = CardState.InDeck;
-                deck[i].SwitchEnable();
+                deck[i].Confiruration(randomCard, _newMat, CardUtility.GetDescriptionById(randomCard.Id), _player1Hand , _player2Hand, player);
+           
             }
 
             return deck;

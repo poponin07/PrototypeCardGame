@@ -9,15 +9,21 @@ namespace Cards
 {
     public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        [SerializeField, Space] private GameObject _frontCard;
-        [SerializeField] private TextMeshPro m_coast;
-        [SerializeField] private TextMeshPro m_attack;
-        [SerializeField] private TextMeshPro m_health;
+        [SerializeField, Space] private GameObject m_frontCard;
+        [SerializeField] private TextMeshPro m_tx_coast;
+        [SerializeField] private TextMeshPro m_tx_attack;
+        [SerializeField] private TextMeshPro m_tx_health;
         [SerializeField] private TextMeshPro m_name;
-        [SerializeField] private TextMeshPro m_descriptions;
-        [SerializeField] private TextMeshPro m_cardUnitType;
+        [SerializeField] private TextMeshPro m_tx_descriptions;
+        [SerializeField] private TextMeshPro m_tx_cardUnitType;
+        
         [SerializeField, Space] private uint m_id;
         [SerializeField] private MeshRenderer _picture;
+
+        public int m_health;
+        public int m_coast;
+        public int m_attack;
+        
         public Players players;
         public AnimationComponent animationComponent;
         private PlayerHand m_player1Hand;
@@ -25,12 +31,13 @@ namespace Cards
         private float stepY = 10f;
         private float liftSpeed = 0.05f;
         private float liftHeight = 5f;
+        private bool isMove;
         
         public Transform m_curParent;
 
         public CardManager cardManager;
         
-        public bool isFrontSide => _frontCard.activeSelf;
+        public bool isFrontSide => m_frontCard.activeSelf;
 
         public PlayerHand Player1Hand => m_player1Hand;
 
@@ -43,26 +50,36 @@ namespace Cards
         {
             m_player1Hand = playerHand1;
             m_player2Hand = playerHand2;
-            Debug.Log(m_player1Hand);
-            Debug.Log(m_player2Hand);
-            m_coast.text = data.Cost.ToString();
-            m_attack.text = data.Attack.ToString();
-            m_health.text = data.Health.ToString();
-            m_descriptions.text = description;
+            m_tx_coast.text = data.Cost.ToString();
+            m_tx_attack.text = data.Attack.ToString();
+            m_tx_health.text = data.Health.ToString();
+            m_tx_descriptions.text = description;
             m_name.text = data.Name;
             players = player;
-            m_cardUnitType.text = CardUnitType.None == data.Type ? "" : data.Type.ToString();
+            m_health = data.Health;
+            m_attack = data.Attack;
+            m_coast = data.Cost;
+            m_tx_cardUnitType.text = CardUnitType.None == data.Type ? "" : data.Type.ToString();
             _picture.material = picture;
-
+           m_cardState = CardState.InDeck;
+            SwitchEnable();
             m_id = data.Id;
             animationComponent.Link(Player1Hand);
+            isMove = false;
+        }
+
+        private void RefreshUICard()
+        {
+            m_tx_coast.text = m_coast.ToString();
+            m_tx_attack.text = m_attack.ToString();
+            m_tx_health.text = m_health.ToString();
         }
 
         [ContextMenu("SwitchEnable")]
         public void SwitchEnable()
         {
             bool turneBool = !isFrontSide;
-            _frontCard.SetActive(turneBool);
+            m_frontCard.SetActive(turneBool);
             _picture.enabled = turneBool;
         }
 
@@ -74,11 +91,13 @@ namespace Cards
 
                     break;
                 case CardState.InHand:
-                    transform.localPosition = new Vector3(0, stepY, 0);
+                    if (players == RoundManager.instance.PlayerMove)
+                    {
+                        transform.localPosition = new Vector3(0, stepY, 0);
+                    }
                     break;
                 case CardState.OnTable:
                     break;
-
             }
         }
 
@@ -94,7 +113,6 @@ namespace Cards
                     break;
                 case CardState.OnTable:
                     break;
-
             }
         }
 
@@ -113,7 +131,7 @@ namespace Cards
             card.animationComponent.AnimationFlipCard();
         }
 
-        public IEnumerator MoveInHand(Card card, Transform parent)
+        public IEnumerator MoveInHandOrTable(Card card, Transform parent, CardState cardState)
         {
             Vector3 startPos = card.transform.position;
             Vector3 endPos = parent.transform.position;
@@ -125,8 +143,32 @@ namespace Cards
                 time += Time.deltaTime;
                 yield return null;
             }
-            card.m_cardState = CardState.InHand;
+            card.m_cardState = cardState;
+        }
 
+
+        public bool GetDamage(int damage)
+        {
+            m_health -= damage;
+
+            if (m_health <= 0)
+            {
+                DestroyCard();
+                return true;
+            }
+
+            RefreshUICard();
+            return false;
+        }
+        
+        private void DealDamage()
+        {
+            
+        }
+
+        private void DestroyCard()
+        {
+            Destroy(gameObject);
         }
     }
 } 

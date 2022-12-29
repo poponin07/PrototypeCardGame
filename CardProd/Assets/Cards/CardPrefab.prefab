@@ -1536,16 +1536,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ceeec82e6aa78749a18daa98579e2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _frontCard: {fileID: 1307249474052391439}
-  m_coast: {fileID: 1307249473836208755}
-  m_attack: {fileID: 1307249473160749871}
-  m_health: {fileID: 1307249473871312366}
+  m_frontCard: {fileID: 1307249474052391439}
+  m_tx_coast: {fileID: 1307249473836208755}
+  m_tx_attack: {fileID: 1307249473160749871}
+  m_tx_health: {fileID: 1307249473871312366}
   m_name: {fileID: 1307249472768872969}
-  m_descriptions: {fileID: 1307249472827250133}
-  m_cardUnitType: {fileID: 1307249472091281202}
+  m_tx_descriptions: {fileID: 1307249472827250133}
+  m_tx_cardUnitType: {fileID: 1307249472091281202}
   m_id: 0
   _picture: {fileID: 1307249472203900899}
+  m_health: 50
+  m_coast: 0
+  m_attack: 0
+  players: 0
   animationComponent: {fileID: 4540524329939357214}
+  m_curParent: {fileID: 0}
+  cardManager: {fileID: 0}
   m_cardState: 0
 --- !u!95 &70325882
 Animator:
@@ -1591,4 +1597,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4a228b696e34cf3b94abe6359544a09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_positonsCardInHand: []
+  m_player2Hand: {fileID: 0}
+  positonsCardOnTablePlayer1: []
+  positonsCardOnTablePlayer2: []

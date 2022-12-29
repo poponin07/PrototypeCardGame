@@ -553,6 +553,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   couple: 0
+  slotId: 0
+  playerId: 1
 --- !u!1 &160546217
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,6 +701,7 @@ MonoBehaviour:
   - {fileID: 1285143895}
   - {fileID: 168294782}
   - {fileID: 1090923271}
+  m_cardManger: {fileID: 504294451}
   axis: {fileID: 1881552397}
 --- !u!1 &168294781
 GameObject:
@@ -1085,6 +1088,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   couple: 0
+  slotId: 7
+  playerId: 2
 --- !u!1 &313835982
 GameObject:
   m_ObjectHideFlags: 0
@@ -1978,22 +1983,7 @@ MonoBehaviour:
   m_player2DeckRoot: {fileID: 1611253035}
   _player1Hand: {fileID: 166772794}
   _player2Hand: {fileID: 2018095707}
-  m_positonsCardOnTablePlayer1:
-  - {fileID: 141563411}
-  - {fileID: 1063493860}
-  - {fileID: 1153335595}
-  - {fileID: 1071422143}
-  - {fileID: 1201539900}
-  - {fileID: 963908150}
-  - {fileID: 1878520923}
-  m_positonsCardOnTablePlayer2:
-  - {fileID: 309052986}
-  - {fileID: 532164350}
-  - {fileID: 773894974}
-  - {fileID: 1909708592}
-  - {fileID: 1152574807}
-  - {fileID: 895800425}
-  - {fileID: 713851907}
+  m_slotsManager: {fileID: 1083235565}
 --- !u!114 &504294452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2011,7 +2001,7 @@ MonoBehaviour:
   - {fileID: 538059723}
   - {fileID: 1165284533}
   - {fileID: 1470651755}
-  speedRotateCanvas: 50
+  speedRotateCanvas: 100
   _player1Data: {fileID: 521428997}
   _player2Data: {fileID: 26577038}
   healthUItext_Player1: {fileID: 1156278090}
@@ -2158,6 +2148,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   couple: 0
+  slotId: 8
+  playerId: 2
 --- !u!1 &538059722
 GameObject:
   m_ObjectHideFlags: 0
@@ -2644,6 +2636,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   couple: 0
+  slotId: 13
+  playerId: 2
 --- !u!1 &771568523
 GameObject:
   m_ObjectHideFlags: 0
@@ -2782,6 +2776,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   couple: 0
+  slotId: 9
+  playerId: 2
 --- !u!1 &779094251
 GameObject:
   m_ObjectHideFlags: 0
@@ -2963,6 +2959,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   couple: 0
+  slotId: 12
+  playerId: 2
 --- !u!1 &950708672
 GameObject:
   m_ObjectHideFlags: 0
@@ -3195,6 +3193,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   couple: 0
+  slotId: 5
+  playerId: 1
 --- !u!1 &1063493859
 GameObject:
   m_ObjectHideFlags: 0
@@ -3252,6 +3252,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   couple: 0
+  slotId: 1
+  playerId: 1
 --- !u!1 &1071422142
 GameObject:
   m_ObjectHideFlags: 0
@@ -3309,6 +3311,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   couple: 0
+  slotId: 3
+  playerId: 1
 --- !u!1 &1083235563
 GameObject:
   m_ObjectHideFlags: 0
@@ -3318,6 +3322,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1083235564}
+  - component: {fileID: 1083235565}
   m_Layer: 0
   m_Name: Played_Cards
   m_TagString: Untagged
@@ -3341,6 +3346,33 @@ Transform:
   m_Father: {fileID: 504294450}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1083235565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083235563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b8a9152604a4fafa09208259f8b685e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCardSlots:
+  - {fileID: 141563413}
+  - {fileID: 1063493862}
+  - {fileID: 1153335597}
+  - {fileID: 1071422145}
+  - {fileID: 1201539902}
+  - {fileID: 963908152}
+  - {fileID: 1878520925}
+  - {fileID: 309052988}
+  - {fileID: 532164352}
+  - {fileID: 773894976}
+  - {fileID: 1909708594}
+  - {fileID: 1152574809}
+  - {fileID: 895800427}
+  - {fileID: 713851909}
 --- !u!1 &1090923270
 GameObject:
   m_ObjectHideFlags: 0
@@ -3640,6 +3672,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   couple: 0
+  slotId: 11
+  playerId: 2
 --- !u!1 &1153335594
 GameObject:
   m_ObjectHideFlags: 0
@@ -3697,6 +3731,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   couple: 0
+  slotId: 2
+  playerId: 1
 --- !u!1 &1156278088
 GameObject:
   m_ObjectHideFlags: 0
@@ -4046,6 +4082,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   couple: 0
+  slotId: 4
+  playerId: 1
 --- !u!1 &1281921021
 GameObject:
   m_ObjectHideFlags: 0
@@ -4928,6 +4966,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   couple: 0
+  slotId: 6
+  playerId: 1
 --- !u!1 &1881552395
 GameObject:
   m_ObjectHideFlags: 0
@@ -4957,7 +4997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82c0bfe72247c741a5c9ed6b1efbd74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedRotateCamera: 50
+  speedRotateCamera: 100
   m_avatarScript: {fileID: 504294452}
   m_playerMove: 0
 --- !u!4 &1881552397
@@ -5069,6 +5109,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   couple: 0
+  slotId: 10
+  playerId: 2
 --- !u!1 &1917234399
 GameObject:
   m_ObjectHideFlags: 0
@@ -5500,6 +5542,7 @@ MonoBehaviour:
   - {fileID: 1865908102}
   - {fileID: 1971017674}
   - {fileID: 779094252}
+  m_cardManger: {fileID: 504294451}
   axis: {fileID: 1881552397}
 --- !u!1 &2026790137
 GameObject:

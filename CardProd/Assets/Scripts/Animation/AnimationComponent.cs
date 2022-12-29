@@ -29,7 +29,7 @@ namespace Cards
         public void Flip()
         {
             Card card = GetComponent<Card>();
-            card.StartCoroutine(card.MoveInHand(card, card.m_curParent));
+            card.StartCoroutine(card.MoveInHandOrTable(card, card.m_curParent, CardState.InHand));
         }
     }
 }

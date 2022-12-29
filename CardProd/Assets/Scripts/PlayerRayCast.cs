@@ -38,8 +38,7 @@ namespace Input
                     if (card.m_cardState == CardState.InDeck)
                 {
                     Card cardComp = hit.transform != null ? card : null;
-                    //card.m_cardState = CardState.Discard;
-                if (cardComp != null)
+                    if (cardComp != null)
                 {
                     m_cardManager.GetCardFromDeck();
                 }

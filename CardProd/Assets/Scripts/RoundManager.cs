@@ -18,12 +18,11 @@ namespace Cards
 
       private void Awake()
       {
-         if (instance != null) {
+         if (instance != null)
             Destroy(gameObject);
-         }else{
+         else
             instance = this;
-         }
-
+         
          m_playerMove = Players.Player1;
       }
       
