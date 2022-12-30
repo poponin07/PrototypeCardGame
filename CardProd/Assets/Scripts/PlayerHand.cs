@@ -14,14 +14,14 @@ namespace Cards
         private CardManager m_cardManger;
         private Card[] m_cardInHand1;
         private Card[] m_cardInHand2;
-        private List<Card> m_cardOnTable;
+        //private List<Card> m_cardOnTable;
         
         public Transform axis;
         private void Start()
         {
             m_cardInHand1 = new Card[m_positonsCardInHand.Length];
             m_cardInHand2 = new Card[m_positonsCardInHand.Length];
-            m_cardOnTable = new List<Card>();
+            //m_cardOnTable = new List<Card>();
         }
 
         public bool SetNewCardInHand(Card newCard)
@@ -88,7 +88,7 @@ namespace Cards
             SlotScript slotScript = m_cardManger.GetClosestSlot(moveCard, true);
             var slotTransform = slotScript.transform;
 
-            if (slotScript != null && !slotScript.couple &&  Vector3.Distance(moveCard.transform.position, slotTransform.position) < DragAndDropScript.MAGNET_RADIUS)
+            if (slotScript != null && !slotScript.couple &&  Vector3.Distance(moveCard.transform.position, slotTransform.position) < DragAndDropScript.MAGNET_RADIUS && m_cardManger.CheckingCardRequirements(moveCard))
             {
                 slotScript.SwitchCouple(moveCard);
                 moveCard.m_curParent = slotTransform;
@@ -111,15 +111,16 @@ namespace Cards
             {
                 animationComponent.AnimationShakeCard();
                 
-               bool attackResult = slotScript.GetCardCouple().GetDamage(moveCard.m_attack);
+               bool attackResult = slotScript.GetCardCouple().GetDamage(moveCard, true);
 
                if (attackResult)
                {
                    slotScript.SwitchCouple(slotScript.GetCardCouple());
                }
-                
-                moveCard.transform.position = slotTransform.position;
 
+               moveCard.transform.position = new Vector3(slotTransform.position.x, slotTransform.position.y + 2f,
+                    slotTransform.position.z);
+                    
                 moveCard.StartCoroutine(moveCard.MoveInHandOrTable(moveCard, moveCard.m_curParent, CardState.OnTable));
                 
                 return false;

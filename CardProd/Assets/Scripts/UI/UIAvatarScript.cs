@@ -8,8 +8,8 @@ public class UIAvatarScript : MonoBehaviour
 {
     [SerializeField] private Transform[] Avatarcanvases;
     [SerializeField, Range(0.1f, 100f)] private float speedRotateCanvas;
-    [SerializeField] private PlayerData _player1Data;
-    [SerializeField] private PlayerData _player2Data;
+    [SerializeField] public PlayerData _player1Data;
+    [SerializeField] public PlayerData _player2Data;
     
     [SerializeField] private TextMeshProUGUI healthUItext_Player1;
     [SerializeField] private TextMeshProUGUI manaUItext_Player1;
@@ -28,6 +28,17 @@ public class UIAvatarScript : MonoBehaviour
         healthUItext_Player2.text = Convert.ToString(_player2Data.Health);
         manaUItext_Player2.text = Convert.ToString(_player2Data.Mana);
     }
+
+    public void RefreshPlayerManaRound(int manaPlayer1, int manaPlayer2)
+    {
+        manaUItext_Player1.text = manaPlayer1.ToString();
+        manaUItext_Player2.text = manaPlayer2.ToString();
+    }
+
+    public void RefreshManaPlayer()
+    {
+    }
+    
     public IEnumerator CoroutineTurnIcon() //корутина поворота иконок hp и mana
     {
         if (Time.timeScale != 0)

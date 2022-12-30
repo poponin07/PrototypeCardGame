@@ -96,7 +96,7 @@ namespace Cards
         private void RaycastDragAndDrop(PointerEventData eventData)
         {
             Camera _camera = Camera.main;
-            Vector3 dirVector = new Vector3(eventData.position.x, eventData.position.y, 0);
+            Vector3 dirVector = new Vector3(eventData.position.x, eventData.position.y + 2f, 0);
             m_ray = _camera.ScreenPointToRay(dirVector);
 
 

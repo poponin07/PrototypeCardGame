@@ -20,9 +20,9 @@ namespace Cards
         [SerializeField, Space] private uint m_id;
         [SerializeField] private MeshRenderer _picture;
 
-        public int m_health;
-        public int m_coast;
-        public int m_attack;
+        public int health;
+        public int coast;
+        public int attack;
         
         public Players players;
         public AnimationComponent animationComponent;
@@ -56,12 +56,12 @@ namespace Cards
             m_tx_descriptions.text = description;
             m_name.text = data.Name;
             players = player;
-            m_health = data.Health;
-            m_attack = data.Attack;
-            m_coast = data.Cost;
+            health = data.Health;
+            attack = data.Attack;
+            coast = data.Cost;
             m_tx_cardUnitType.text = CardUnitType.None == data.Type ? "" : data.Type.ToString();
             _picture.material = picture;
-           m_cardState = CardState.InDeck;
+            m_cardState = CardState.InDeck;
             SwitchEnable();
             m_id = data.Id;
             animationComponent.Link(Player1Hand);
@@ -70,9 +70,9 @@ namespace Cards
 
         private void RefreshUICard()
         {
-            m_tx_coast.text = m_coast.ToString();
-            m_tx_attack.text = m_attack.ToString();
-            m_tx_health.text = m_health.ToString();
+            m_tx_coast.text = coast.ToString();
+            m_tx_attack.text = attack.ToString();
+            m_tx_health.text = health.ToString();
         }
 
         [ContextMenu("SwitchEnable")]
@@ -147,23 +147,24 @@ namespace Cards
         }
 
 
-        public bool GetDamage(int damage)
+        public bool GetDamage(Card attackingCard, bool  firstAttack)
         {
-            m_health -= damage;
+            health -= attackingCard.attack;
+            
+            if (firstAttack)
+            {
+                attackingCard.GetDamage(this, false);
+            }
 
-            if (m_health <= 0)
+            if (health <= 0)
             {
                 DestroyCard();
                 return true;
             }
 
             RefreshUICard();
-            return false;
-        }
-        
-        private void DealDamage()
-        {
             
+            return false;
         }
 
         private void DestroyCard()

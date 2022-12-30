@@ -22,31 +22,36 @@ namespace Cards
 
         [SerializeField, Space] private PlayerHand _player1Hand;
         [SerializeField] private PlayerHand _player2Hand;
-        
-        // [SerializeField] private Transform[] m_positonsCardOnTablePlayer1;
-        // [SerializeField] private Transform[] m_positonsCardOnTablePlayer2;
 
         private Card[] m_player1Deck;
         private Card[] m_player2Deck;
 
         private const float c_stepCardInDeck = 0.07f;
-        private Material m_baseMat;
-
-        // public Transform[] PositonsCardOnTablePlayer1 => m_positonsCardOnTablePlayer1;
-        // public Transform[] PositonsCardOnTablePlayer2 => m_positonsCardOnTablePlayer2;
+        private Material m_baseMat; 
 
         private Dictionary<int, SlotScript> m_playerCardSlots = new Dictionary<int, SlotScript>();
         [SerializeField] private PlayerCardSlotsManager m_slotsManager;
-
-        private void Awake()
+        private UIAvatarScript m_avatarScript;
+        private PlayerData m_player1Data;
+        private PlayerData m_player2Data;
+            private void Awake()
         {
             CollectingAllCards();
         }
 
         private void Start()
         {
+            Initialization();
+        }
+
+        private void Initialization()
+        {
             m_player1Deck = CreateDeck(m_player1DeckRoot, Players.Player1);
             m_player2Deck = CreateDeck(m_player2DeckRoot, Players.Player2);
+            m_avatarScript = GetComponent<UIAvatarScript>();
+            m_player1Data = m_avatarScript._player1Data;
+            m_player2Data = m_avatarScript._player2Data;
+           
             FillCardSlots();
         }
 
@@ -123,7 +128,6 @@ namespace Cards
                 }
             }
             
-            
             bool resultSetNewCard;
             
             switch (RoundManager.instance.PlayerMove)
@@ -139,8 +143,23 @@ namespace Cards
                 default:
                     index = 0;
                     break;
-                
             }
+        }
+
+        public bool CheckingCardRequirements(Card card)
+        {
+            PlayerData data = RoundManager.instance.PlayerMove == Players.Player1 ? m_player1Data : m_player2Data;
+            if (card.coast <= data.Mana)
+            {
+                data.Mana -= card.coast;
+                m_avatarScript.RefreshManaPlayer();
+            }
+            else
+            {
+                Debug.Log("Not enough mana");
+                return false;
+            }
+            return true;
         }
 
         private Card[] CreateDeck(Transform root, Players player)
@@ -161,7 +180,6 @@ namespace Cards
                 _newMat.mainTexture = randomCard.Texture;
 
                 deck[i].Confiruration(randomCard, _newMat, CardUtility.GetDescriptionById(randomCard.Id), _player1Hand , _player2Hand, player);
-           
             }
 
             return deck;
