@@ -11,6 +11,7 @@ namespace Cards
         public int slotId;
         public int playerId;
         private Card m_cardCouple;
+        public bool m_isPlyerAvatar;
         
         public Card GetCardCouple()
         {

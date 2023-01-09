@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
+using Cards;
 using TMPro;
 using UnityEngine;
 
@@ -35,9 +35,29 @@ public class UIAvatarScript : MonoBehaviour
         manaUItext_Player2.text = manaPlayer2.ToString();
     }
 
-    public void RefreshManaPlayer()
+    public void RefreshManaPlayer(int mana)
     {
+        if (RoundManager.instance.PlayerMove == Players.Player1)
+        {
+            manaUItext_Player1.text = mana.ToString();
+        }
+        else
+        {
+            manaUItext_Player2.text = mana.ToString();
+        }
     }
+    public void RefreshHealthPlayer(int helth)
+    {
+        if (RoundManager.instance.PlayerMove == Players.Player1)
+        {
+            healthUItext_Player2.text = helth.ToString();
+        }
+        else
+        {
+            healthUItext_Player1.text = helth.ToString();
+        }
+    }
+    
     
     public IEnumerator CoroutineTurnIcon() //корутина поворота иконок hp и mana
     {

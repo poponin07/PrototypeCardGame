@@ -9,7 +9,7 @@ using static Cards.Card;
 
 namespace Input
 {
-    public class PlayerRayCast : MonoBehaviour
+    public class PlayerRayCast : MonoBehaviour // дебажный скрипт для удобства
     {
         private InputSystem_i _input;
         private Ray ray;
@@ -40,7 +40,7 @@ namespace Input
                     Card cardComp = hit.transform != null ? card : null;
                     if (cardComp != null)
                 {
-                    m_cardManager.GetCardFromDeck();
+                   // m_cardManager.GetCardFromDeck(1);
                 }
                 }
             }

@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
 
 namespace Cards
@@ -12,6 +13,7 @@ namespace Cards
 
         [SerializeField]
         private CardManager m_cardManger;
+        
         private Card[] m_cardInHand1;
         private Card[] m_cardInHand2;
         //private List<Card> m_cardOnTable;
@@ -24,7 +26,7 @@ namespace Cards
             //m_cardOnTable = new List<Card>();
         }
 
-        public bool SetNewCardInHand(Card newCard)
+        public bool SetNewCardInHand(Card newCard, bool fromDeck)
         {
             Card[] cardInHand;
             if (RoundManager.instance.PlayerMove != Players.Player1)
@@ -41,14 +43,22 @@ namespace Cards
                 Debug.LogWarning("Maximum number of cards in a hand");
                 return false;
             }
-
             cardInHand[result] = newCard;
-            newCard.StartCoroutine(newCard.LiftCard(newCard, m_positonsCardInHand[result]));
+            if (fromDeck)
+            {
+                newCard.StartCoroutine(newCard.LiftCard(newCard, m_positonsCardInHand[result], fromDeck));  
+            }
+            else
+            {
+                newCard.StartCoroutine(newCard.MoveInHandOrTable(newCard, newCard.m_curParent, CardState.InHand));
+            }
+            
+            
 
             return true;
         }
 
-        private int GetIndexLastCard(Card[] arr)
+        public int GetIndexLastCard(Card[] arr)
         {
             for (int i = 0; i < arr.Length; i++)
             {
@@ -87,16 +97,23 @@ namespace Cards
         {
             SlotScript slotScript = m_cardManger.GetClosestSlot(moveCard, true);
             var slotTransform = slotScript.transform;
-
-            if (slotScript != null && !slotScript.couple &&  Vector3.Distance(moveCard.transform.position, slotTransform.position) < DragAndDropScript.MAGNET_RADIUS && m_cardManger.CheckingCardRequirements(moveCard))
+           
+            if (slotScript != null && !slotScript.couple &&  Vector3.Distance(moveCard.transform.position, slotTransform.position) < DragAndDropScript.MAGNET_RADIUS && !slotScript.m_isPlyerAvatar && m_cardManger.CheckingCardRequirements(moveCard))
             {
                 slotScript.SwitchCouple(moveCard);
                 moveCard.m_curParent = slotTransform;
                 moveCard.transform.SetParent(slotTransform);
                 moveCard.transform.position = slotTransform.position;
-                moveCard.m_cardState = CardState.OnTable;
+                
+                //int result = GetIndexLastCard(cardInHand);
+                
+                moveCard.SwitchCardState(moveCard,CardState.OnTable);
+                
                 return false;
             }
+            Card [] playerHand = RoundManager.instance.PlayerMove == Players.Player1 ? m_cardInHand1 : m_cardInHand2;
+            int result = GetIndexLastCard(playerHand);
+            playerHand[result] = moveCard;
             moveCard.StartCoroutine(moveCard.MoveInHandOrTable(moveCard, moveCard.m_curParent, CardState.InHand));
             return true;
         }
@@ -104,18 +121,33 @@ namespace Cards
         public bool CardAttack(Card moveCard)
         {
             SlotScript slotScript = m_cardManger.GetClosestSlot(moveCard, false);
+            Debug.Log(slotScript);
             AnimationComponent animationComponent = moveCard.GetComponent<AnimationComponent>();
             var slotTransform = slotScript.transform;
-            
-            if (slotScript != null && slotScript.couple && Vector3.Distance(moveCard.transform.position, slotTransform.position) < DragAndDropScript.MAGNET_RADIUS)
-            {
-                animationComponent.AnimationShakeCard();
-                
-               bool attackResult = slotScript.GetCardCouple().GetDamage(moveCard, true);
 
-               if (attackResult)
+            if (slotScript != null && slotScript.couple && Vector3.Distance(moveCard.transform.position, slotTransform.position) < DragAndDropScript.MAGNET_RADIUS + 10f && slotScript.isActiveAndEnabled)
+            {
+                bool attackResult;
+                if (slotScript.m_isPlyerAvatar)
+                {
+                    attackResult = slotScript.gameObject.GetComponent<PlayerScript>().GetDamage(moveCard.attack);
+                    animationComponent.AnimationShakeCard();
+                    moveCard.RefresMoveIndex(1);
+                    if (attackResult)
+                    {
+                        Debug.LogError(RoundManager.instance.PlayerMove + " wins!");
+                    }
+                }
+                else
+                {
+                     attackResult = slotScript.GetCardCouple().GetDamage(moveCard, true);
+                }
+
+                if (attackResult)
                {
                    slotScript.SwitchCouple(slotScript.GetCardCouple());
+                   moveCard.RefresMoveIndex(1);
+                   animationComponent.AnimationShakeCard();
                }
 
                moveCard.transform.position = new Vector3(slotTransform.position.x, slotTransform.position.y + 2f,

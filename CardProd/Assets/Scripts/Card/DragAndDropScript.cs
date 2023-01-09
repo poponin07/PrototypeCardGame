@@ -31,7 +31,12 @@ namespace Cards
                     {
                         return;
                     }
-                    m_card.m_cardState = CardState.Discard;
+
+                    if (m_card.m_cardState == CardState.InHand)
+                    {
+                        m_card.SwitchCardState(m_card, CardState.Discard);
+                    }
+
                     m_card.transform.position = m_card.m_curParent.transform.position;
                     m_player1Hand.RemoveCardFromHand(m_card);
                     break;
@@ -47,10 +52,11 @@ namespace Cards
                 case CardState.InDeck:
                     break;
                 case CardState.InHand:
+                    //RaycastDragAndDrop(eventData);
                     break;
                 case CardState.OnTable:
                     var player = RoundManager.instance.PlayerMove;
-                    if (player == m_card.players)
+                    if (player == m_card.players && m_card.isReadyMome <= 0)
                     {
                         RaycastDragAndDrop(eventData);
                     }
@@ -68,6 +74,8 @@ namespace Cards
                 case CardState.InDeck:
                     break;
                 case CardState.InHand:
+                    //m_player1Hand.SetNewCardInHand(m_card, false);
+                   
                     break;
                 case CardState.OnTable:
                     var player = RoundManager.instance.PlayerMove;
@@ -88,7 +96,12 @@ namespace Cards
                     }
                     break;
                 case CardState.Discard:
+                    
+                    PlayerHand playerHand = RoundManager.instance.PlayerMove == Players.Player1 ? m_player1Hand : m_player2Hand;
                     m_player1Hand.AddCardOnTable(m_card);
+                    //m_card.StartCoroutine(m_card.MoveInHandOrTable(m_card,m_card.m_curParent, CardState.InHand));
+                    //m_card.StartCoroutine(m_card.MoveInHandOrTable(m_card));
+                    
                     break;
             }
         }
@@ -105,6 +118,11 @@ namespace Cards
                 Debug.DrawLine(m_ray.origin, hit.point, Color.green);
                 m_card.transform.position = new Vector3(hit.point.x, 1, hit.point.z);
             }
+
+            /*if (m_card.m_cardState != CardState.Discard)
+            {
+                m_card.SwitchCardState(m_card, CardState.Discard);
+            }*/
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Cards
         private float stepY = 10f;
         private float liftSpeed = 0.05f;
         private float liftHeight = 5f;
-        private bool isMove;
+        public int isReadyMome;
         
         public Transform m_curParent;
 
@@ -61,11 +61,11 @@ namespace Cards
             coast = data.Cost;
             m_tx_cardUnitType.text = CardUnitType.None == data.Type ? "" : data.Type.ToString();
             _picture.material = picture;
-            m_cardState = CardState.InDeck;
+            SwitchCardState(this, CardState.InDeck);
             SwitchEnable();
             m_id = data.Id;
             animationComponent.Link(Player1Hand);
-            isMove = false;
+            isReadyMome = 1;
         }
 
         private void RefreshUICard()
@@ -116,18 +116,19 @@ namespace Cards
             }
         }
 
-        public IEnumerator LiftCard(Card card, Transform parent)
+        public IEnumerator LiftCard(Card card, Transform parent, bool fromDeck)
         {
             Vector3 startPos = card.transform.position;
             Vector3 endPos = card.transform.position + (Vector3.up * liftHeight);
             m_curParent = parent;
-
+            
             while (Vector3.Distance(endPos, startPos) > 0.01f)
             {
                 startPos = card.transform.position;
                 yield return null;
                 card.transform.Translate((endPos - startPos) * (Time.deltaTime + liftSpeed));
             }
+            
             card.animationComponent.AnimationFlipCard();
         }
 
@@ -136,20 +137,34 @@ namespace Cards
             Vector3 startPos = card.transform.position;
             Vector3 endPos = parent.transform.position;
             float time = 0f;
+            card.transform.SetParent(parent);
+
             while (time < 1f)
             {
-                card.transform.SetParent(parent);
+                
                 card.transform.position = Vector3.Lerp(startPos, endPos, time);
                 time += Time.deltaTime;
                 yield return null;
             }
+
+            SwitchCardState(card, cardState);
+
+        }
+
+        public void SwitchCardState(Card card, CardState cardState)
+        {
             card.m_cardState = cardState;
         }
 
-
+        public void RefresMoveIndex(int arg)
+        {
+            isReadyMome += arg;
+        }
+        
         public bool GetDamage(Card attackingCard, bool  firstAttack)
         {
             health -= attackingCard.attack;
+            animationComponent.AnimationScaleCard();
             
             if (firstAttack)
             {
@@ -158,6 +173,7 @@ namespace Cards
 
             if (health <= 0)
             {
+                m_curParent.GetComponent<SlotScript>().SwitchCouple(null);
                 DestroyCard();
                 return true;
             }
@@ -171,5 +187,6 @@ namespace Cards
         {
             Destroy(gameObject);
         }
+
     }
 } 

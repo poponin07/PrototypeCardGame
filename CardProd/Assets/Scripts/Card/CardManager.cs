@@ -30,10 +30,13 @@ namespace Cards
         private Material m_baseMat; 
 
         private Dictionary<int, SlotScript> m_playerCardSlots = new Dictionary<int, SlotScript>();
+        
         [SerializeField] private PlayerCardSlotsManager m_slotsManager;
+        public List<SlotScript> cardsOntablePlayer1;
+        public List<SlotScript> cardsOntablePlayer2;
         private UIAvatarScript m_avatarScript;
-        private PlayerData m_player1Data;
-        private PlayerData m_player2Data;
+        public PlayerData m_player1Data;
+        public PlayerData m_player2Data;
             private void Awake()
         {
             CollectingAllCards();
@@ -61,6 +64,21 @@ namespace Cards
             {
                 m_playerCardSlots.Add(playerCardSlot.slotId, playerCardSlot);
             }
+
+            foreach (var cardSlot in m_playerCardSlots)
+            {
+                if (!cardSlot.Value.m_isPlyerAvatar)
+                {
+                    if (cardSlot.Value.playerId == 1)
+                    {
+                        cardsOntablePlayer1.Add(cardSlot.Value);
+                    }
+                    else
+                    {
+                        cardsOntablePlayer2.Add(cardSlot.Value);
+                    }
+                }
+            }
         }
 
         public SlotScript GetClosestSlot(Card card, bool isSamePlayerSlots)
@@ -81,7 +99,6 @@ namespace Cards
                     closestSlot = slot.Value;
                 }
             }
-
             return closestSlot;
         }
         
@@ -98,51 +115,54 @@ namespace Cards
             m_baseMat.renderQueue = 2994;
         }
 
-        public void GetCardFromDeck()
+        public void GetCardFromDeck(int cards)
         {
-            int index;
-            Card[] playerDeck;
-            
-            switch (RoundManager.instance.PlayerMove)
+            for (int j = cards; j != 0; j--)
             {
-                case Players.Player1:
-                    playerDeck = m_player1Deck;
-                    index = 0;
-                    break;
-                case Players.Player2:
-                    playerDeck = m_player2Deck;
-                    index = 0;
-                    break;
-                default:
-                    playerDeck = m_player1Deck;
-                    index = 0;
-                    break;
-            }
-            
-            for (int i = playerDeck.Length - 1; i >= 0; i--)
-            {
-                if (playerDeck[i] != null)
+                int index;
+                Card[] playerDeck;
+
+                switch (RoundManager.instance.PlayerMove)
                 {
-                    index = i;
-                    break;
+                    case Players.Player1:
+                        playerDeck = m_player1Deck;
+                        index = 0;
+                        break;
+                    case Players.Player2:
+                        playerDeck = m_player2Deck;
+                        index = 0;
+                        break;
+                    default:
+                        playerDeck = m_player1Deck;
+                        index = 0;
+                        break;
                 }
-            }
-            
-            bool resultSetNewCard;
-            
-            switch (RoundManager.instance.PlayerMove)
-            {
-                case Players.Player1:
-                    resultSetNewCard = _player1Hand.SetNewCardInHand(m_player1Deck[index]);
-                    if (resultSetNewCard) m_player1Deck[index] = null;
-                    break;
-                case Players.Player2:
-                    resultSetNewCard = _player2Hand.SetNewCardInHand(m_player2Deck[index]);
-                    if (resultSetNewCard) m_player2Deck[index] = null;
-                    break;
-                default:
-                    index = 0;
-                    break;
+
+                for (int i = playerDeck.Length - 1; i >= 0; i--)
+                {
+                    if (playerDeck[i] != null)
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+
+                bool resultSetNewCard;
+
+                switch (RoundManager.instance.PlayerMove)
+                {
+                    case Players.Player1:
+                        resultSetNewCard = _player1Hand.SetNewCardInHand(m_player1Deck[index], true);
+                        if (resultSetNewCard) m_player1Deck[index] = null;
+                        break;
+                    case Players.Player2:
+                        resultSetNewCard = _player2Hand.SetNewCardInHand(m_player2Deck[index], true);
+                        if (resultSetNewCard) m_player2Deck[index] = null;
+                        break;
+                    default:
+                        index = 0;
+                        break;
+                }
             }
         }
 
@@ -152,7 +172,7 @@ namespace Cards
             if (card.coast <= data.Mana)
             {
                 data.Mana -= card.coast;
-                m_avatarScript.RefreshManaPlayer();
+                m_avatarScript.RefreshManaPlayer(data.Mana);
             }
             else
             {

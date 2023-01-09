@@ -131,6 +131,8 @@ GameObject:
   m_Component:
   - component: {fileID: 26577037}
   - component: {fileID: 26577038}
+  - component: {fileID: 26577039}
+  - component: {fileID: 26577040}
   m_Layer: 0
   m_Name: Player_2_Avatar
   m_TagString: Untagged
@@ -146,7 +148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 26577036}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 38.1, y: 0, z: 20.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 313835983}
@@ -167,7 +169,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_health: 30
-  m_mana: 1
+  m_mana: 5
+  m_players: 1
+--- !u!114 &26577039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 26577036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf854ad42e7d61448cfda33f80a4478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  couple: 1
+  slotId: 98
+  playerId: 2
+  m_isPlyerAvatar: 1
+--- !u!114 &26577040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 26577036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d412bbe2912646579e0e394bc596886a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UIavatarscript: {fileID: 504294452}
 --- !u!1 &27656629
 GameObject:
   m_ObjectHideFlags: 0
@@ -555,6 +587,7 @@ MonoBehaviour:
   couple: 0
   slotId: 0
   playerId: 1
+  m_isPlyerAvatar: 0
 --- !u!1 &160546217
 GameObject:
   m_ObjectHideFlags: 0
@@ -1090,6 +1123,7 @@ MonoBehaviour:
   couple: 0
   slotId: 7
   playerId: 2
+  m_isPlyerAvatar: 0
 --- !u!1 &313835982
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,7 +1151,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 313835982}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -38.77, y: 0.1, z: -23.86}
+  m_LocalPosition: {x: -0.670002, y: 0.1, z: -3.0600014}
   m_LocalScale: {x: 20, y: 0.1, z: 20}
   m_Children: []
   m_Father: {fileID: 26577037}
@@ -1571,7 +1605,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 376764004}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -38.77, y: 0.1, z: -23.86}
+  m_LocalPosition: {x: 1.2000008, y: 0.1, z: 0.3899994}
   m_LocalScale: {x: 20, y: 0.1, z: 20}
   m_Children: []
   m_Father: {fileID: 521428996}
@@ -1984,6 +2018,10 @@ MonoBehaviour:
   _player1Hand: {fileID: 166772794}
   _player2Hand: {fileID: 2018095707}
   m_slotsManager: {fileID: 1083235565}
+  cardsOntablePlayer1: []
+  cardsOntablePlayer2: []
+  m_player1Data: {fileID: 0}
+  m_player2Data: {fileID: 0}
 --- !u!114 &504294452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2054,6 +2092,8 @@ GameObject:
   m_Component:
   - component: {fileID: 521428996}
   - component: {fileID: 521428997}
+  - component: {fileID: 521428998}
+  - component: {fileID: 521428999}
   m_Layer: 0
   m_Name: Player_1_Avatar
   m_TagString: Untagged
@@ -2069,7 +2109,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 521428995}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -39.97, y: 0, z: -24.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 376764005}
@@ -2090,7 +2130,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_health: 30
-  m_mana: 1
+  m_mana: 5
+  m_players: 0
+--- !u!114 &521428998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521428995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf854ad42e7d61448cfda33f80a4478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  couple: 1
+  slotId: 99
+  playerId: 1
+  m_isPlyerAvatar: 1
+--- !u!114 &521428999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521428995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d412bbe2912646579e0e394bc596886a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UIavatarscript: {fileID: 504294452}
 --- !u!1 &532164349
 GameObject:
   m_ObjectHideFlags: 0
@@ -2150,6 +2220,7 @@ MonoBehaviour:
   couple: 0
   slotId: 8
   playerId: 2
+  m_isPlyerAvatar: 0
 --- !u!1 &538059722
 GameObject:
   m_ObjectHideFlags: 0
@@ -2338,7 +2409,7 @@ RectTransform:
   m_GameObject: {fileID: 672579119}
   m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: 0, y: 0, z: -0.0039}
-  m_LocalScale: {x: 0.00014126439, y: 0.000017427205, z: 0.014285715}
+  m_LocalScale: {x: 0.0001212644, y: 0.0000124272, z: 0.01228572}
   m_Children:
   - {fileID: 42438535}
   m_Father: {fileID: 126271917}
@@ -2346,7 +2417,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: -90, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.55067, y: 0}
+  m_AnchoredPosition: {x: -0.334, y: 1.1}
   m_SizeDelta: {x: 2057.0647, y: 9164.969}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &672579121
@@ -2638,6 +2709,7 @@ MonoBehaviour:
   couple: 0
   slotId: 13
   playerId: 2
+  m_isPlyerAvatar: 0
 --- !u!1 &771568523
 GameObject:
   m_ObjectHideFlags: 0
@@ -2778,6 +2850,7 @@ MonoBehaviour:
   couple: 0
   slotId: 9
   playerId: 2
+  m_isPlyerAvatar: 0
 --- !u!1 &779094251
 GameObject:
   m_ObjectHideFlags: 0
@@ -2961,6 +3034,7 @@ MonoBehaviour:
   couple: 0
   slotId: 12
   playerId: 2
+  m_isPlyerAvatar: 0
 --- !u!1 &950708672
 GameObject:
   m_ObjectHideFlags: 0
@@ -3195,6 +3269,7 @@ MonoBehaviour:
   couple: 0
   slotId: 5
   playerId: 1
+  m_isPlyerAvatar: 0
 --- !u!1 &1063493859
 GameObject:
   m_ObjectHideFlags: 0
@@ -3254,6 +3329,7 @@ MonoBehaviour:
   couple: 0
   slotId: 1
   playerId: 1
+  m_isPlyerAvatar: 0
 --- !u!1 &1071422142
 GameObject:
   m_ObjectHideFlags: 0
@@ -3313,6 +3389,7 @@ MonoBehaviour:
   couple: 0
   slotId: 3
   playerId: 1
+  m_isPlyerAvatar: 0
 --- !u!1 &1083235563
 GameObject:
   m_ObjectHideFlags: 0
@@ -3373,6 +3450,8 @@ MonoBehaviour:
   - {fileID: 1152574809}
   - {fileID: 895800427}
   - {fileID: 713851909}
+  - {fileID: 521428998}
+  - {fileID: 26577039}
 --- !u!1 &1090923270
 GameObject:
   m_ObjectHideFlags: 0
@@ -3674,6 +3753,7 @@ MonoBehaviour:
   couple: 0
   slotId: 11
   playerId: 2
+  m_isPlyerAvatar: 0
 --- !u!1 &1153335594
 GameObject:
   m_ObjectHideFlags: 0
@@ -3733,6 +3813,7 @@ MonoBehaviour:
   couple: 0
   slotId: 2
   playerId: 1
+  m_isPlyerAvatar: 0
 --- !u!1 &1156278088
 GameObject:
   m_ObjectHideFlags: 0
@@ -3915,8 +3996,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1157014567}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -16.31}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 7.9400005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 516641690}
@@ -3926,7 +4007,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -46.39, y: 0.7}
+  m_AnchoredPosition: {x: -6.419998, y: 0.7}
   m_SizeDelta: {x: 2, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1157014570
@@ -4084,6 +4165,7 @@ MonoBehaviour:
   couple: 0
   slotId: 4
   playerId: 1
+  m_isPlyerAvatar: 0
 --- !u!1 &1281921021
 GameObject:
   m_ObjectHideFlags: 0
@@ -4272,7 +4354,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1424861413}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -16.46}
+  m_LocalPosition: {x: 0, y: 0, z: 4.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1165284533}
@@ -4282,7 +4364,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -31.1, y: 0.8}
+  m_AnchoredPosition: {x: 6.999998, y: 0.8}
   m_SizeDelta: {x: 2, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1424861415
@@ -4469,7 +4551,7 @@ Transform:
   m_GameObject: {fileID: 1513982518}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 100, y: 1, z: 70}
+  m_LocalScale: {x: 159.56, y: 1, z: 91.4}
   m_Children:
   - {fileID: 126271917}
   m_Father: {fileID: 0}
@@ -4968,6 +5050,7 @@ MonoBehaviour:
   couple: 0
   slotId: 6
   playerId: 1
+  m_isPlyerAvatar: 0
 --- !u!1 &1881552395
 GameObject:
   m_ObjectHideFlags: 0
@@ -5000,6 +5083,7 @@ MonoBehaviour:
   speedRotateCamera: 100
   m_avatarScript: {fileID: 504294452}
   m_playerMove: 0
+  m_cardManager: {fileID: 504294451}
 --- !u!4 &1881552397
 Transform:
   m_ObjectHideFlags: 0
@@ -5111,6 +5195,7 @@ MonoBehaviour:
   couple: 0
   slotId: 10
   playerId: 2
+  m_isPlyerAvatar: 0
 --- !u!1 &1917234399
 GameObject:
   m_ObjectHideFlags: 0

@@ -1545,11 +1545,12 @@ MonoBehaviour:
   m_tx_cardUnitType: {fileID: 1307249472091281202}
   m_id: 0
   _picture: {fileID: 1307249472203900899}
-  m_health: 50
-  m_coast: 0
-  m_attack: 0
+  health: 0
+  coast: 0
+  attack: 0
   players: 0
   animationComponent: {fileID: 4540524329939357214}
+  isReadyMome: 0
   m_curParent: {fileID: 0}
   cardManager: {fileID: 0}
   m_cardState: 0
@@ -1598,5 +1599,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_player2Hand: {fileID: 0}
-  positonsCardOnTablePlayer1: []
-  positonsCardOnTablePlayer2: []
