@@ -30,8 +30,10 @@ namespace Cards
         {
             Card[] cardInHand;
             if (RoundManager.instance.PlayerMove != Players.Player1)
+            {
                 cardInHand = m_cardInHand2;
-                else
+            }
+            else
             {
                 cardInHand = m_cardInHand1;
             }
@@ -47,6 +49,7 @@ namespace Cards
             if (fromDeck)
             {
                 newCard.StartCoroutine(newCard.LiftCard(newCard, m_positonsCardInHand[result], fromDeck));  
+                newCard.SetSlotInCurHand(m_positonsCardInHand[result].GetComponent<SlotInhandScript>());
             }
             else
             {

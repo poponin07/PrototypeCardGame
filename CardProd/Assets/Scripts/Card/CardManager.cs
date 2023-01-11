@@ -166,6 +166,11 @@ namespace Cards
             }
         }
 
+        public void CardReplacementOnFerstMove()
+        {
+            
+        }
+        
         public bool CheckingCardRequirements(Card card)
         {
             PlayerData data = RoundManager.instance.PlayerMove == Players.Player1 ? m_player1Data : m_player2Data;

@@ -24,18 +24,19 @@ namespace Cards
         public int coast;
         public int attack;
         
+        public CardManager cardManager;
+        public Transform m_curParent;
         public Players players;
         public AnimationComponent animationComponent;
+        public int isReadyMome;
         private PlayerHand m_player1Hand;
         private PlayerHand m_player2Hand;
         private float stepY = 10f;
         private float liftSpeed = 0.05f;
         private float liftHeight = 5f;
-        public int isReadyMome;
-        
-        public Transform m_curParent;
+        private SlotInhandScript m_slotInhandScript;
 
-        public CardManager cardManager;
+        
         
         public bool isFrontSide => m_frontCard.activeSelf;
 
@@ -146,9 +147,7 @@ namespace Cards
                 time += Time.deltaTime;
                 yield return null;
             }
-
             SwitchCardState(card, cardState);
-
         }
 
         public void SwitchCardState(Card card, CardState cardState)
@@ -183,6 +182,16 @@ namespace Cards
             return false;
         }
 
+        public SlotInhandScript GetSlotInCurHand()
+        {
+            return m_slotInhandScript;
+        }
+        
+        public void SetSlotInCurHand(SlotInhandScript slotInhandScript)
+        {
+            m_slotInhandScript = slotInhandScript;
+        }
+        
         private void DestroyCard()
         {
             Destroy(gameObject);

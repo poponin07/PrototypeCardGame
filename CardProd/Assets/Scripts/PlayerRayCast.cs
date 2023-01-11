@@ -38,14 +38,16 @@ namespace Input
                     if (card.m_cardState == CardState.InDeck)
                 {
                     Card cardComp = hit.transform != null ? card : null;
-                    if (cardComp != null)
+                    if (cardComp != null && cardComp.m_cardState == CardState.InHand)
                 {
-                   // m_cardManager.GetCardFromDeck(1);
+                    
                 }
                 }
             }
         }
 
+        
+        
         private void OnEnable()
         {
             _input.Enable();

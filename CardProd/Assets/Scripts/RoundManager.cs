@@ -25,7 +25,7 @@ namespace Cards
       
       private void Awake()
       {
-         ferstMoveIsDonePlayer = 2;
+         ferstMoveIsDonePlayer = 4;
          if (instance != null)
             Destroy(gameObject);
          else
@@ -60,7 +60,7 @@ namespace Cards
       {
          if (ferstMoveIsDonePlayer != 0)
          {
-            m_cardManager.GetCardFromDeck(5);
+            m_cardManager.GetCardFromDeck(3);
             --ferstMoveIsDonePlayer;
          }
          else
@@ -85,6 +85,14 @@ namespace Cards
                StartCoroutine(CoroutineTurnCamera());
                GetMana();
                break;
+         }
+      }
+
+      public void EndFerstMove()
+      {
+         if (ferstMoveIsDonePlayer > 0)
+         {
+            ferstMoveIsDonePlayer--;
          }
       }
 
