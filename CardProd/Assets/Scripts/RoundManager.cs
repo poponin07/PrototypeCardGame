@@ -17,15 +17,16 @@ namespace Cards
       private PlayerData m_PlayerData1;
       private PlayerData m_PlayerData2;
       private int m_manaIndex;
-      private int ferstMoveIsDonePlayer;
-
+      private int ferstMoveIsDonePlayerIndex;
+      private int swapCardOnFerstRoundIndex;
       //public event Action EndRound;
       
       public Players PlayerMove => m_playerMove;
       
       private void Awake()
       {
-         ferstMoveIsDonePlayer = 4;
+         ferstMoveIsDonePlayerIndex = 2;
+         swapCardOnFerstRoundIndex = 2;
          if (instance != null)
             Destroy(gameObject);
          else
@@ -58,10 +59,10 @@ namespace Cards
       
       public void DistributionCards()
       {
-         if (ferstMoveIsDonePlayer != 0)
+         if (ferstMoveIsDonePlayerIndex != 0)
          {
             m_cardManager.GetCardFromDeck(3);
-            --ferstMoveIsDonePlayer;
+            --ferstMoveIsDonePlayerIndex;
          }
          else
          {
@@ -90,12 +91,22 @@ namespace Cards
 
       public void EndFerstMove()
       {
-         if (ferstMoveIsDonePlayer > 0)
+         if (ferstMoveIsDonePlayerIndex > 0)
          {
-            ferstMoveIsDonePlayer--;
+            ferstMoveIsDonePlayerIndex--;
+         }
+
+         if (swapCardOnFerstRoundIndex > 0 )
+         {
+            swapCardOnFerstRoundIndex--;
          }
       }
 
+      public int GetSwapCardOnFerstRoundIndex()
+      {
+         return swapCardOnFerstRoundIndex;
+      }
+      
       private void GetMana()
       {
          m_manaIndex++;

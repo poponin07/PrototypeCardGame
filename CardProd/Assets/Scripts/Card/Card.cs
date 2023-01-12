@@ -36,6 +36,8 @@ namespace Cards
         private float liftHeight = 5f;
         private SlotInhandScript m_slotInhandScript;
 
+        private Transform m_deckPosition;
+
         
         
         public bool isFrontSide => m_frontCard.activeSelf;
@@ -67,6 +69,10 @@ namespace Cards
             m_id = data.Id;
             animationComponent.Link(Player1Hand);
             isReadyMome = 1;
+            m_deckPosition = RoundManager.instance.PlayerMove == players
+                ? cardManager.m_player1DeckRoot
+                : cardManager.m_player2DeckRoot;
+
         }
 
         private void RefreshUICard()
@@ -122,14 +128,17 @@ namespace Cards
             Vector3 startPos = card.transform.position;
             Vector3 endPos = card.transform.position + (Vector3.up * liftHeight);
             m_curParent = parent;
-            
-            while (Vector3.Distance(endPos, startPos) > 0.01f)
+
+            if (fromDeck)
             {
-                startPos = card.transform.position;
-                yield return null;
-                card.transform.Translate((endPos - startPos) * (Time.deltaTime + liftSpeed));
+                while (Vector3.Distance(endPos, startPos) > 0.01f)
+                {
+                    startPos = card.transform.position;
+                    yield return null;
+                    card.transform.Translate((endPos - startPos) * (Time.deltaTime + liftSpeed));
+                }
             }
-            
+
             card.animationComponent.AnimationFlipCard();
         }
 
@@ -185,6 +194,16 @@ namespace Cards
         public SlotInhandScript GetSlotInCurHand()
         {
             return m_slotInhandScript;
+        }
+
+        public void CardInDeck()
+        {
+            if (m_slotInhandScript.GetIsSwapedCardOnFerstRound())
+            {
+                StartCoroutine(LiftCard( this, m_deckPosition, false));
+                m_slotInhandScript.SetIsSwapedCardOnFerstRound();
+            }
+            
         }
         
         public void SetSlotInCurHand(SlotInhandScript slotInhandScript)

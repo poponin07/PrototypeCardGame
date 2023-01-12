@@ -34,15 +34,13 @@ namespace Input
             {
                 Card card = hit.transform.GetComponent<Card>();
                 if (card == null || card.players != RoundManager.instance.PlayerMove) return;
-                           
-                    if (card.m_cardState == CardState.InDeck)
-                {
+                 
                     Card cardComp = hit.transform != null ? card : null;
-                    if (cardComp != null && cardComp.m_cardState == CardState.InHand)
-                {
-                    
-                }
-                }
+                    if (cardComp != null && cardComp.m_cardState == CardState.InHand && RoundManager.instance.GetSwapCardOnFerstRoundIndex() > 0 )
+                    {
+                        Debug.Log("click");
+                        cardComp.CardInDeck();
+                    }
             }
         }
 

@@ -1,18 +1,26 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SlotInhandScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private bool isSwapedCardOnFerstRound;
+
+    private void Start()
     {
-        
+        isSwapedCardOnFerstRound = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetIsSwapedCardOnFerstRound()
     {
-        
+        isSwapedCardOnFerstRound = false;
     }
+
+
+    public bool GetIsSwapedCardOnFerstRound()
+    {
+        return isSwapedCardOnFerstRound;
+    }
+        
 }

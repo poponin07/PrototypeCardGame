@@ -17,8 +17,8 @@ namespace Cards
         [SerializeField] private CardPackConfiguration[] m_allPacks;
         [SerializeField, Range(0, 100)] private int m_cardDeckCount;
 
-        [SerializeField, Space] private Transform m_player1DeckRoot;
-        [SerializeField] private Transform m_player2DeckRoot;
+        public Transform m_player1DeckRoot;
+        public Transform m_player2DeckRoot;
 
         [SerializeField, Space] private PlayerHand _player1Hand;
         [SerializeField] private PlayerHand _player2Hand;
@@ -166,8 +166,23 @@ namespace Cards
             }
         }
 
-        public void CardReplacementOnFerstMove()
+        public void AddCardToDeck( Card card)
         {
+            Card[] arr = card.players == RoundManager.instance.PlayerMove ? m_player1Deck : m_player2Deck;
+            int indx = -1;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] == null)
+                {
+                    indx = i;
+                }
+            }
+
+            if (indx != -1)
+            {
+                arr[indx] = card;
+                card.m_cardState = CardState.InDeck;
+            }
             
         }
         
