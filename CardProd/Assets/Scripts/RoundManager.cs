@@ -18,7 +18,6 @@ namespace Cards
       private PlayerData m_PlayerData2;
       private int m_manaIndex;
       private int ferstMoveIsDonePlayerIndex;
-      private int swapCardOnFerstRoundIndex;
       //public event Action EndRound;
       
       public Players PlayerMove => m_playerMove;
@@ -26,7 +25,6 @@ namespace Cards
       private void Awake()
       {
          ferstMoveIsDonePlayerIndex = 2;
-         swapCardOnFerstRoundIndex = 2;
          if (instance != null)
             Destroy(gameObject);
          else
@@ -61,12 +59,13 @@ namespace Cards
       {
          if (ferstMoveIsDonePlayerIndex != 0)
          {
-            m_cardManager.GetCardFromDeck(3);
+           // Card[] startCards = m_cardManager.GenStartPoolCardPack(PlayerMove);
+            m_cardManager.GetCardFromDeck(3, false);
             --ferstMoveIsDonePlayerIndex;
          }
          else
          {
-            m_cardManager.GetCardFromDeck(1);
+            m_cardManager.GetCardFromDeck(1, false);
          }
       }
       
@@ -95,18 +94,8 @@ namespace Cards
          {
             ferstMoveIsDonePlayerIndex--;
          }
-
-         if (swapCardOnFerstRoundIndex > 0 )
-         {
-            swapCardOnFerstRoundIndex--;
-         }
       }
 
-      public int GetSwapCardOnFerstRoundIndex()
-      {
-         return swapCardOnFerstRoundIndex;
-      }
-      
       private void GetMana()
       {
          m_manaIndex++;

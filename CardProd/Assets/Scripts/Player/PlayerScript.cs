@@ -8,16 +8,26 @@ namespace Player
     {
         private PlayerData m_plaerData;
         [SerializeField] private UIAvatarScript m_UIavatarscript;
+        private int  m_damageCounterForCards;
 
         private void Awake()
         {
             m_plaerData = GetComponent<PlayerData>();
-
+            m_damageCounterForCards = 1;
         }
 
-        public bool GetDamage(int damage)
+        public bool GetDamage(int damage,bool  forGetCard)
         {
-            m_plaerData.Health -= damage;
+            if (forGetCard)
+            {
+                m_plaerData.Health -= m_damageCounterForCards;
+                m_damageCounterForCards++;
+            }
+            else
+            {
+                m_plaerData.Health -= damage; 
+            }
+            
             
             m_UIavatarscript.RefreshHealthPlayer(m_plaerData.Health);
             

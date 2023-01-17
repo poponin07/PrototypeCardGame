@@ -45,6 +45,7 @@ namespace Cards
                 Debug.LogWarning("Maximum number of cards in a hand");
                 return false;
             }
+            
             cardInHand[result] = newCard;
             if (fromDeck)
             {
@@ -133,7 +134,7 @@ namespace Cards
                 bool attackResult;
                 if (slotScript.m_isPlyerAvatar)
                 {
-                    attackResult = slotScript.gameObject.GetComponent<PlayerScript>().GetDamage(moveCard.attack);
+                    attackResult = slotScript.gameObject.GetComponent<PlayerScript>().GetDamage(moveCard.attack, false);
                     animationComponent.AnimationShakeCard();
                     moveCard.RefresMoveIndex(1);
                     if (attackResult)

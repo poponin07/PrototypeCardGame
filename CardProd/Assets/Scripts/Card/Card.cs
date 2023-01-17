@@ -196,14 +196,16 @@ namespace Cards
             return m_slotInhandScript;
         }
 
-        public void CardInDeck()
+        public bool CardInDeck()
         {
             if (m_slotInhandScript.GetIsSwapedCardOnFerstRound())
             {
                 StartCoroutine(LiftCard( this, m_deckPosition, false));
                 m_slotInhandScript.SetIsSwapedCardOnFerstRound();
+                return true;
             }
-            
+
+            return false;
         }
         
         public void SetSlotInCurHand(SlotInhandScript slotInhandScript)

@@ -36,10 +36,14 @@ namespace Input
                 if (card == null || card.players != RoundManager.instance.PlayerMove) return;
                  
                     Card cardComp = hit.transform != null ? card : null;
-                    if (cardComp != null && cardComp.m_cardState == CardState.InHand && RoundManager.instance.GetSwapCardOnFerstRoundIndex() > 0 )
+                    if (cardComp != null && cardComp.m_cardState == CardState.InHand /*&& RoundManager.instance.GetSwapCardOnFerstRoundIndex() > 0 */)
                     {
                         Debug.Log("click");
-                        cardComp.CardInDeck();
+                        if (cardComp.CardInDeck())
+                        {
+                            m_cardManager.AddCardToDeck(cardComp);
+                            m_cardManager.GetCardFromDeck(1, true); 
+                        }
                     }
             }
         }

@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class SlotInhandScript : MonoBehaviour
 {
-    private bool isSwapedCardOnFerstRound;
+    [SerializeField]private bool isSwapedCardOnFerstRound;
 
     private void Start()
     {
-        isSwapedCardOnFerstRound = true;
+       // isSwapedCardOnFerstRound = true;
     }
 
     public void SetIsSwapedCardOnFerstRound()

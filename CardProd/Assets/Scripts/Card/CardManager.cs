@@ -115,7 +115,7 @@ namespace Cards
             m_baseMat.renderQueue = 2994;
         }
 
-        public void GetCardFromDeck(int cards)
+        public void GetCardFromDeck(int cards, bool isRandomCard)
         {
             for (int j = cards; j != 0; j--)
             {
@@ -126,47 +126,63 @@ namespace Cards
                 {
                     case Players.Player1:
                         playerDeck = m_player1Deck;
-                        index = 0;
+                        index = -1;
                         break;
                     case Players.Player2:
                         playerDeck = m_player2Deck;
-                        index = 0;
+                        index = -1;
                         break;
                     default:
                         playerDeck = m_player1Deck;
-                        index = 0;
+                        index = -1;
                         break;
                 }
 
-                for (int i = playerDeck.Length - 1; i >= 0; i--)
+                if (isRandomCard)
                 {
-                    if (playerDeck[i] != null)
+                    index = GetRandomIndexFromDeck();
+                }
+                
+                if (!isRandomCard || index == -1)
+                {
+                    for (int i = playerDeck.Length - 1; i >= 0; i--)
                     {
-                        index = i;
-                        break;
-                    }
+                        if (playerDeck[i] != null)
+                        {
+                            index = i;
+                            break;
+                        }
+                    } 
                 }
 
                 bool resultSetNewCard;
-
-                switch (RoundManager.instance.PlayerMove)
+                
+                if (m_player1Deck[index] != null)
                 {
-                    case Players.Player1:
-                        resultSetNewCard = _player1Hand.SetNewCardInHand(m_player1Deck[index], true);
-                        if (resultSetNewCard) m_player1Deck[index] = null;
-                        break;
-                    case Players.Player2:
-                        resultSetNewCard = _player2Hand.SetNewCardInHand(m_player2Deck[index], true);
-                        if (resultSetNewCard) m_player2Deck[index] = null;
-                        break;
-                    default:
-                        index = 0;
-                        break;
+                    switch (RoundManager.instance.PlayerMove)
+                    {
+                        case Players.Player1:
+                            resultSetNewCard = _player1Hand.SetNewCardInHand(m_player1Deck[index], true);
+                            if (resultSetNewCard)
+                            {
+                                m_player1Deck[index] = null;
+                            }
+                            break;
+
+                        case Players.Player2:
+                            resultSetNewCard = _player2Hand.SetNewCardInHand(m_player2Deck[index], true);
+                            if (resultSetNewCard) m_player2Deck[index] = null;
+                            break;
+                    }
+                }
+                else
+                {
+                    
                 }
             }
         }
 
-        public void AddCardToDeck( Card card)
+        public void AddCardToDeck(Card card)
         {
             Card[] arr = card.players == RoundManager.instance.PlayerMove ? m_player1Deck : m_player2Deck;
             int indx = -1;
@@ -201,6 +217,40 @@ namespace Cards
             }
             return true;
         }
+
+       /* public Card[] GenStartPoolCardPack(Players _player)
+        {
+            Card[] startPoolCardPack = new Card[] { };
+            List<int> expInt = null;
+            for (int i = 0; i < 3; i++)
+            {
+                int inx = Random.Range(0, m_player1Deck.Length);
+                if (expInt.Contains(inx))
+                {
+                    i--;
+                }
+                else
+                {
+                    if (_player == Players.Player1)
+                    {
+                        startPoolCardPack[i] = m_player1Deck[inx];
+                    }
+                    else
+                    {
+                        startPoolCardPack[i] = m_player2Deck[inx];
+                    }
+                }
+            
+
+            return startPoolCardPack;
+        }*/
+
+       private int GetRandomIndexFromDeck()
+       {
+           Card[] cardsInDeck = RoundManager.instance.PlayerMove == Players.Player1 ? m_player1Deck : m_player2Deck;
+           int indx = Random.Range(0, cardsInDeck.Length);
+           return indx;
+       }
 
         private Card[] CreateDeck(Transform root, Players player)
         {
