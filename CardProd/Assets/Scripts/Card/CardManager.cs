@@ -23,21 +23,25 @@ namespace Cards
         [SerializeField, Space] private PlayerHand _player1Hand;
         [SerializeField] private PlayerHand _player2Hand;
 
+        [SerializeField] private PlayerScript m_playerScript1;
+        [SerializeField] private PlayerScript m_playerScript2;
+
         private Card[] m_player1Deck;
         private Card[] m_player2Deck;
 
         private const float c_stepCardInDeck = 0.07f;
-        private Material m_baseMat; 
+        private Material m_baseMat;
 
         private Dictionary<int, SlotScript> m_playerCardSlots = new Dictionary<int, SlotScript>();
-        
+
         [SerializeField] private PlayerCardSlotsManager m_slotsManager;
         public List<SlotScript> cardsOntablePlayer1;
         public List<SlotScript> cardsOntablePlayer2;
         private UIAvatarScript m_avatarScript;
         public PlayerData m_player1Data;
         public PlayerData m_player2Data;
-            private void Awake()
+
+        private void Awake()
         {
             CollectingAllCards();
         }
@@ -54,7 +58,7 @@ namespace Cards
             m_avatarScript = GetComponent<UIAvatarScript>();
             m_player1Data = m_avatarScript._player1Data;
             m_player2Data = m_avatarScript._player2Data;
-           
+
             FillCardSlots();
         }
 
@@ -92,16 +96,18 @@ namespace Cards
                 var slotPosition = slot.Value.transform.position;
                 float distSlot = Vector3.Distance(card.transform.position, slotPosition);
                 var player = RoundManager.instance.PlayerMove;
-                bool isSamePlayer = player == Players.Player1 && slot.Value.playerId == 1 || player == Players.Player2 && slot.Value.playerId == 2;
+                bool isSamePlayer = player == Players.Player1 && slot.Value.playerId == 1 ||
+                                    player == Players.Player2 && slot.Value.playerId == 2;
                 if (distSlot < minDistance && (isSamePlayerSlots == isSamePlayer))
                 {
                     minDistance = distSlot;
                     closestSlot = slot.Value;
                 }
             }
+
             return closestSlot;
         }
-        
+
         private void CollectingAllCards()
         {
             IEnumerable<CardPropertiesData> _allCard = new List<CardPropertiesData>();
@@ -117,69 +123,75 @@ namespace Cards
 
         public void GetCardFromDeck(int cards, bool isRandomCard)
         {
+
+            PlayerHand playerHand = RoundManager.instance.PlayerMove == Players.Player1 ? _player1Hand : _player2Hand;
+
             for (int j = cards; j != 0; j--)
             {
-                int index;
+                Card card = null;
                 Card[] playerDeck;
 
                 switch (RoundManager.instance.PlayerMove)
                 {
                     case Players.Player1:
                         playerDeck = m_player1Deck;
-                        index = -1;
                         break;
                     case Players.Player2:
                         playerDeck = m_player2Deck;
-                        index = -1;
                         break;
                     default:
                         playerDeck = m_player1Deck;
-                        index = -1;
                         break;
                 }
 
+                int randomCardIndex = 0;
                 if (isRandomCard)
                 {
-                    index = GetRandomIndexFromDeck();
+                    var result = GetRandomIndexFromDeck(playerDeck);
+                    card = result.card;
+                    randomCardIndex = result.index;
                 }
-                
-                if (!isRandomCard || index == -1)
+
+                if (!isRandomCard)
                 {
                     for (int i = playerDeck.Length - 1; i >= 0; i--)
                     {
                         if (playerDeck[i] != null)
                         {
-                            index = i;
+                            card = playerDeck[i];
+                            randomCardIndex = i;
                             break;
                         }
-                    } 
-                }
-
-                bool resultSetNewCard;
-                
-                if (m_player1Deck[index] != null)
-                {
-                    switch (RoundManager.instance.PlayerMove)
-                    {
-                        case Players.Player1:
-                            resultSetNewCard = _player1Hand.SetNewCardInHand(m_player1Deck[index], true);
-                            if (resultSetNewCard)
-                            {
-                                m_player1Deck[index] = null;
-                            }
-                            break;
-
-                        case Players.Player2:
-                            resultSetNewCard = _player2Hand.SetNewCardInHand(m_player2Deck[index], true);
-                            if (resultSetNewCard) m_player2Deck[index] = null;
-                            break;
                     }
                 }
-                else
+
+
+                if (!CheckDeckNull(playerDeck))
                 {
-                    
+                    PlayerScript playerScript = RoundManager.instance.PlayerMove == Players.Player1
+                        ? m_playerScript1
+                        : m_playerScript2;
+                    playerScript.GetDamage(playerScript.GetDamageForEmptyDeck(), true);
+                }
+
+                if (card != null && CheckDeckNull(playerDeck) && playerHand.SetNewCardInHand(card, true)) 
+                {
+                        playerDeck[randomCardIndex] = null;
                 }
             }
+        }
+
+        private bool CheckDeckNull(Card[] cards)
+        {
+            foreach (var card in cards)
+            {
+                if (card != null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void AddCardToDeck(Card card)
@@ -199,9 +211,9 @@ namespace Cards
                 arr[indx] = card;
                 card.m_cardState = CardState.InDeck;
             }
-            
+
         }
-        
+
         public bool CheckingCardRequirements(Card card)
         {
             PlayerData data = RoundManager.instance.PlayerMove == Players.Player1 ? m_player1Data : m_player2Data;
@@ -215,44 +227,30 @@ namespace Cards
                 Debug.Log("Not enough mana");
                 return false;
             }
+
             return true;
         }
 
-       /* public Card[] GenStartPoolCardPack(Players _player)
+        private (Card card, int index) GetRandomIndexFromDeck(Card[] cardsInDeck)
         {
-            Card[] startPoolCardPack = new Card[] { };
-            List<int> expInt = null;
-            for (int i = 0; i < 3; i++)
-            {
-                int inx = Random.Range(0, m_player1Deck.Length);
-                if (expInt.Contains(inx))
-                {
-                    i--;
-                }
-                else
-                {
-                    if (_player == Players.Player1)
-                    {
-                        startPoolCardPack[i] = m_player1Deck[inx];
-                    }
-                    else
-                    {
-                        startPoolCardPack[i] = m_player2Deck[inx];
-                    }
-                }
-            
+             Card card = null;
+             int index = 0;
+             if (!CheckDeckNull(cardsInDeck))
+             {
+                 return (null, index);
+             }
+             while (card == null)
+             {
+                 var randomIndex = Random.Range(0, cardsInDeck.Length);
+                 card = cardsInDeck[randomIndex];
+                 index = randomIndex;
+             }
+             
+             return (card, index);
+        }
+    
 
-            return startPoolCardPack;
-        }*/
-
-       private int GetRandomIndexFromDeck()
-       {
-           Card[] cardsInDeck = RoundManager.instance.PlayerMove == Players.Player1 ? m_player1Deck : m_player2Deck;
-           int indx = Random.Range(0, cardsInDeck.Length);
-           return indx;
-       }
-
-        private Card[] CreateDeck(Transform root, Players player)
+    private Card[] CreateDeck(Transform root, Players player)
         {
             Card[] deck = new Card[m_cardDeckCount];
             Vector3 vector = Vector3.zero;

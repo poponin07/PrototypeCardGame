@@ -56,9 +56,6 @@ namespace Cards
             {
                 newCard.StartCoroutine(newCard.MoveInHandOrTable(newCard, newCard.m_curParent, CardState.InHand));
             }
-            
-            
-
             return true;
         }
 

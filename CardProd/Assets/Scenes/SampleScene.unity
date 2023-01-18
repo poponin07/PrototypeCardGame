@@ -2110,11 +2110,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3229ff84acff46246a9bd0591a1ab7f6, type: 2}
   - {fileID: 11400000, guid: cb7286cd1080bf04cbbf4a2265e52f38, type: 2}
   - {fileID: 11400000, guid: 93d377064370f4443970eeb9769fd723, type: 2}
-  m_cardDeckCount: 30
+  m_cardDeckCount: 3
   m_player1DeckRoot: {fileID: 1566324997}
   m_player2DeckRoot: {fileID: 1611253035}
   _player1Hand: {fileID: 166772794}
   _player2Hand: {fileID: 2018095707}
+  m_playerScript1: {fileID: 521428999}
+  m_playerScript2: {fileID: 26577040}
   m_slotsManager: {fileID: 1083235565}
   cardsOntablePlayer1: []
   cardsOntablePlayer2: []

@@ -49,18 +49,11 @@ namespace Cards
            card?.RefresMoveIndex(-1);
          }
       }
-      
-      /*public void RoundEnd()
-      {
-         EndRound();
-      }*/
-      
       public void DistributionCards()
       {
          if (ferstMoveIsDonePlayerIndex != 0)
          {
-           // Card[] startCards = m_cardManager.GenStartPoolCardPack(PlayerMove);
-            m_cardManager.GetCardFromDeck(3, false);
+            m_cardManager.GetCardFromDeck(3, true);
             --ferstMoveIsDonePlayerIndex;
          }
          else

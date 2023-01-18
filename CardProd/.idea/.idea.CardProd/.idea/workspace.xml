@@ -70,10 +70,10 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="9148">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="9148" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -154,6 +154,8 @@
       <workItem from="1673513151059" duration="5839000" />
       <workItem from="1673857463692" duration="6686000" />
       <workItem from="1673959565969" duration="2557000" />
+      <workItem from="1674022189220" duration="8973000" />
+      <workItem from="1674045068580" duration="6813000" />
     </task>
     <servers />
   </component>

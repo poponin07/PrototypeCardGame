@@ -39,5 +39,10 @@ namespace Player
             
             return false;
         }
+        
+        public int GetDamageForEmptyDeck()
+        {
+            return m_damageCounterForCards;
+        }
     }
 }
