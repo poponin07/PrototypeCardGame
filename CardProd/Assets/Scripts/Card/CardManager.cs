@@ -131,18 +131,7 @@ namespace Cards
                 Card card = null;
                 Card[] playerDeck;
 
-                switch (RoundManager.instance.PlayerMove)
-                {
-                    case Players.Player1:
-                        playerDeck = m_player1Deck;
-                        break;
-                    case Players.Player2:
-                        playerDeck = m_player2Deck;
-                        break;
-                    default:
-                        playerDeck = m_player1Deck;
-                        break;
-                }
+                playerDeck = RoundManager.instance.PlayerMove == Players.Player1 ? m_player1Deck : m_player2Deck;
 
                 int randomCardIndex = 0;
                 if (isRandomCard)
@@ -164,7 +153,6 @@ namespace Cards
                         }
                     }
                 }
-
 
                 if (!CheckDeckNull(playerDeck))
                 {

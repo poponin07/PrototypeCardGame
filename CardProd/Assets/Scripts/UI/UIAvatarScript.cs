@@ -50,11 +50,11 @@ public class UIAvatarScript : MonoBehaviour
     {
         if (RoundManager.instance.PlayerMove == Players.Player1)
         {
-            healthUItext_Player2.text = helth.ToString();
+            healthUItext_Player1.text = helth.ToString();
         }
         else
         {
-            healthUItext_Player1.text = helth.ToString();
+            healthUItext_Player2.text = helth.ToString();
         }
     }
     
