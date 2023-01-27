@@ -1,0 +1,567 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a987287b39c24b21a31d2d45267e7fef, type: 3}
+  m_Name: CardPack
+  m_EditorClassIdentifier: 
+  ids:
+  - Id: 101
+    Name: Grimscale Oracle
+    Texture: {fileID: 2800000, guid: 2640b12c48b40084d87c1205f15f28ad, type: 3}
+    Attack: 1
+    Health: 1
+    Type: 1
+  - Id: 102
+    Name: Elven Archer
+    Texture: {fileID: 2800000, guid: 70dde54215b51254abe6a32218138450, type: 3}
+    Attack: 1
+    Health: 1
+    Type: 0
+  - Id: 103
+    Name: Goldshire Footman
+    Texture: {fileID: 2800000, guid: 313701467bd41734d86736a100fc8197, type: 3}
+    Attack: 1
+    Health: 2
+    Type: 0
+  - Id: 104
+    Name: Stonetusk Boar
+    Texture: {fileID: 2800000, guid: e48680f7ea2550642820ae76d16e8d42, type: 3}
+    Attack: 1
+    Health: 1
+    Type: 2
+  - Id: 105
+    Name: Voodoo Doctor
+    Texture: {fileID: 2800000, guid: 7e0b1f4c8463171409f543c0222c78bf, type: 3}
+    Attack: 2
+    Health: 1
+    Type: 0
+  - Id: 106
+    Name: Murloc Raider
+    Texture: {fileID: 2800000, guid: 2075075e332ee2d42afd9944f0865ca3, type: 3}
+    Attack: 1
+    Health: 1
+    Type: 1
+  - Id: 107
+    Name: Boar
+    Texture: {fileID: 2800000, guid: 034ec5c518f3924469504a3855a273c4, type: 3}
+    Attack: 1
+    Health: 1
+    Type: 2
+  - Id: 108
+    Name: Mechanical Dragonling
+    Texture: {fileID: 2800000, guid: aa2e71adae60f064091f659f6240f2ac, type: 3}
+    Attack: 2
+    Health: 1
+    Type: 4
+  - Id: 109
+    Name: Murloc scout
+    Texture: {fileID: 2800000, guid: 2075075e332ee2d42afd9944f0865ca3, type: 3}
+    Attack: 1
+    Health: 1
+    Type: 1
+  - Id: 201
+    Name: Acidic Swamp Ooze
+    Texture: {fileID: 2800000, guid: cc844a6a7bbe6844c91b826347452c16, type: 3}
+    Attack: 3
+    Health: 2
+    Type: 0
+  - Id: 202
+    Name: Bloodfen Raptor
+    Texture: {fileID: 2800000, guid: 4eeb469e669a00c42acc83c88214e7a4, type: 3}
+    Attack: 3
+    Health: 2
+    Type: 2
+  - Id: 203
+    Name: Bluegill Warrior
+    Texture: {fileID: 2800000, guid: fb888e8bb4afbea468d1220bf07d6955, type: 3}
+    Attack: 2
+    Health: 1
+    Type: 1
+  - Id: 204
+    Name: Frostwolf Grunt
+    Texture: {fileID: 2800000, guid: 9cff2d8f6be92f145abca4a6fc0982cd, type: 3}
+    Attack: 2
+    Health: 2
+    Type: 0
+  - Id: 205
+    Name: Kobold Geomancer
+    Texture: {fileID: 2800000, guid: d7204d09017145c489fe388e29dc767d, type: 3}
+    Attack: 2
+    Health: 2
+    Type: 0
+  - Id: 206
+    Name: Murloc Tidehunter
+    Texture: {fileID: 2800000, guid: 05a446138e6dbe649809881e5b292286, type: 3}
+    Attack: 2
+    Health: 1
+    Type: 1
+  - Id: 207
+    Name: Novice Engineer
+    Texture: {fileID: 2800000, guid: a9901cbc592b91d4fb15b1ad2463eda3, type: 3}
+    Attack: 1
+    Health: 1
+    Type: 0
+  - Id: 208
+    Name: River Crocolisk
+    Texture: {fileID: 2800000, guid: 9e85f3b5f30c9b24baac58126ab8fce2, type: 3}
+    Attack: 2
+    Health: 3
+    Type: 2
+  - Id: 301
+    Name: Dalaran Mage
+    Texture: {fileID: 2800000, guid: 27938be2e04adb342910c36b53904bd5, type: 3}
+    Attack: 1
+    Health: 4
+    Type: 0
+  - Id: 302
+    Name: Ironforge Rifleman
+    Texture: {fileID: 2800000, guid: 06a85f618d7801a48b9daec5d62650d0, type: 3}
+    Attack: 2
+    Health: 2
+    Type: 0
+  - Id: 303
+    Name: Ironfur Grizzly
+    Texture: {fileID: 2800000, guid: 80492959f6bb2f346ab58f734ad6efa1, type: 3}
+    Attack: 3
+    Health: 3
+    Type: 2
+  - Id: 304
+    Name: Magma Rager
+    Texture: {fileID: 2800000, guid: f9ba27f3e2aba4d4f9c173a192be365d, type: 3}
+    Attack: 5
+    Health: 1
+    Type: 3
+  - Id: 305
+    Name: Raid Leader
+    Texture: {fileID: 2800000, guid: 4a998d486677af84e91c4c820be9a706, type: 3}
+    Attack: 2
+    Health: 2
+    Type: 0
+  - Id: 306
+    Name: Razorfen Hunter
+    Texture: {fileID: 2800000, guid: 034ec5c518f3924469504a3855a273c4, type: 3}
+    Attack: 2
+    Health: 3
+    Type: 0
+  - Id: 307
+    Name: Shattered Sun Cleric
+    Texture: {fileID: 2800000, guid: 7b44340ea8d20914f8e88ae2e571508d, type: 3}
+    Attack: 3
+    Health: 2
+    Type: 0
+  - Id: 308
+    Name: Silverback Patriarch
+    Texture: {fileID: 2800000, guid: 2b37cf722fd267c4ebdb2a41d73561e3, type: 3}
+    Attack: 1
+    Health: 4
+    Type: 2
+  - Id: 309
+    Name: Wolfrider
+    Texture: {fileID: 2800000, guid: 29d8c991eaec3c54dbc78976c88510eb, type: 3}
+    Attack: 3
+    Health: 1
+    Type: 0
+  - Id: 401
+    Name: Chillwind Yeti
+    Texture: {fileID: 2800000, guid: f033185b83bd9a040a9d30a94f03ec2c, type: 3}
+    Attack: 4
+    Health: 5
+    Type: 0
+  - Id: 402
+    Name: Dragonling Mechanic
+    Texture: {fileID: 2800000, guid: 815334f1e8468564c9ccf7e0d54dba81, type: 3}
+    Attack: 2
+    Health: 4
+    Type: 0
+  - Id: 403
+    Name: Gnomish Inventor
+    Texture: {fileID: 2800000, guid: 9ee6a53b5e7075743bd6cdb7d8b9729a, type: 3}
+    Attack: 2
+    Health: 4
+    Type: 0
+  - Id: 404
+    Name: Oasis Snapjaw
+    Texture: {fileID: 2800000, guid: 3425e9de4230b9a4098559590f0ea885, type: 3}
+    Attack: 2
+    Health: 7
+    Type: 2
+  - Id: 405
+    Name: Ogre Magi
+    Texture: {fileID: 2800000, guid: 291bbce33b6221f4c9e1fdaaaba5d7d5, type: 3}
+    Attack: 4
+    Health: 4
+    Type: 0
+  - Id: 406
+    Name: Sen'jin Shieldmasta
+    Texture: {fileID: 2800000, guid: 99874dc23e0d56d45866ae3850e8cb71, type: 3}
+    Attack: 3
+    Health: 5
+    Type: 0
+  - Id: 407
+    Name: Stormwind Knight
+    Texture: {fileID: 2800000, guid: 91db97110b0891e49ad2d48d011772d7, type: 3}
+    Attack: 2
+    Health: 5
+    Type: 0
+  - Id: 501
+    Name: Booty Bay Bodyguard
+    Texture: {fileID: 2800000, guid: ed587b30c2c0b4d4dae19b14b562ebe4, type: 3}
+    Attack: 5
+    Health: 4
+    Type: 0
+  - Id: 502
+    Name: Darkscale Healer
+    Texture: {fileID: 2800000, guid: ba0c888e544dbc54bb92ed1ae096bdfc, type: 3}
+    Attack: 4
+    Health: 5
+    Type: 0
+  - Id: 503
+    Name: Frostwolf Warlord
+    Texture: {fileID: 2800000, guid: 9f4593a48e103e348a365104c4fe0266, type: 3}
+    Attack: 4
+    Health: 4
+    Type: 0
+  - Id: 504
+    Name: Gurubashi Berserer
+    Texture: {fileID: 2800000, guid: 9e38a10689e5b004abbfe139dde974a3, type: 3}
+    Attack: 2
+    Health: 7
+    Type: 0
+  - Id: 505
+    Name: Nightblade
+    Texture: {fileID: 2800000, guid: c39f529da285b1d4ea6c011bdb66301b, type: 3}
+    Attack: 4
+    Health: 4
+    Type: 0
+  - Id: 506
+    Name: Stormpike Commando
+    Texture: {fileID: 2800000, guid: 91c8badf91051554ca58dc893b722e9c, type: 3}
+    Attack: 4
+    Health: 2
+    Type: 0
+  - Id: 601
+    Name: Archmage
+    Texture: {fileID: 2800000, guid: 1eca6edaf048b4b4f94ef6f995b49926, type: 3}
+    Attack: 4
+    Health: 7
+    Type: 0
+  - Id: 602
+    Name: Boulderfist Ogre
+    Texture: {fileID: 2800000, guid: 69bf3e3df1be3834f8196c02722d7e72, type: 3}
+    Attack: 6
+    Health: 7
+    Type: 0
+  - Id: 603
+    Name: Lord of the Arena
+    Texture: {fileID: 2800000, guid: 22d0b460a9e1a2b48a973c821e256d31, type: 3}
+    Attack: 6
+    Health: 5
+    Type: 0
+  - Id: 604
+    Name: Reckless Rocketeer
+    Texture: {fileID: 2800000, guid: 583235ce1b48b8c4ab0214f1689e6c2f, type: 3}
+    Attack: 5
+    Health: 2
+    Type: 0
+  - Id: 701
+    Name: Core Hound
+    Texture: {fileID: 2800000, guid: c14665de531b40646b061d4b83595145, type: 3}
+    Attack: 9
+    Health: 5
+    Type: 2
+  - Id: 702
+    Name: Stormwind Champion
+    Texture: {fileID: 2800000, guid: 69fe9d69d1e8d194bbea49330e90af90, type: 3}
+    Attack: 6
+    Health: 6
+    Type: 0
+  - Id: 703
+    Name: War Golem
+    Texture: {fileID: 2800000, guid: df4e97a7b1f292b40b18dad56f8d434b, type: 3}
+    Attack: 7
+    Health: 7
+    Type: 0
+  - Id: 101
+    Name: Grimscale Oracle
+    Texture: {fileID: 2800000, guid: 2640b12c48b40084d87c1205f15f28ad, type: 3}
+    Attack: 1
+    Health: 1
+    Type: 1
+  - Id: 102
+    Name: Elven Archer
+    Texture: {fileID: 2800000, guid: 70dde54215b51254abe6a32218138450, type: 3}
+    Attack: 1
+    Health: 1
+    Type: 0
+  - Id: 103
+    Name: Goldshire Footman
+    Texture: {fileID: 2800000, guid: 313701467bd41734d86736a100fc8197, type: 3}
+    Attack: 1
+    Health: 2
+    Type: 0
+  - Id: 104
+    Name: Stonetusk Boar
+    Texture: {fileID: 2800000, guid: e48680f7ea2550642820ae76d16e8d42, type: 3}
+    Attack: 1
+    Health: 1
+    Type: 2
+  - Id: 105
+    Name: Voodoo Doctor
+    Texture: {fileID: 2800000, guid: 7e0b1f4c8463171409f543c0222c78bf, type: 3}
+    Attack: 2
+    Health: 1
+    Type: 0
+  - Id: 106
+    Name: Murloc Raider
+    Texture: {fileID: 2800000, guid: 2075075e332ee2d42afd9944f0865ca3, type: 3}
+    Attack: 1
+    Health: 1
+    Type: 1
+  - Id: 107
+    Name: Boar
+    Texture: {fileID: 2800000, guid: 034ec5c518f3924469504a3855a273c4, type: 3}
+    Attack: 1
+    Health: 1
+    Type: 2
+  - Id: 108
+    Name: Mechanical Dragonling
+    Texture: {fileID: 2800000, guid: aa2e71adae60f064091f659f6240f2ac, type: 3}
+    Attack: 2
+    Health: 1
+    Type: 4
+  - Id: 109
+    Name: Murloc scout
+    Texture: {fileID: 2800000, guid: 2075075e332ee2d42afd9944f0865ca3, type: 3}
+    Attack: 1
+    Health: 1
+    Type: 1
+  - Id: 201
+    Name: Acidic Swamp Ooze
+    Texture: {fileID: 2800000, guid: cc844a6a7bbe6844c91b826347452c16, type: 3}
+    Attack: 3
+    Health: 2
+    Type: 0
+  - Id: 202
+    Name: Bloodfen Raptor
+    Texture: {fileID: 2800000, guid: 4eeb469e669a00c42acc83c88214e7a4, type: 3}
+    Attack: 3
+    Health: 2
+    Type: 2
+  - Id: 203
+    Name: Bluegill Warrior
+    Texture: {fileID: 2800000, guid: fb888e8bb4afbea468d1220bf07d6955, type: 3}
+    Attack: 2
+    Health: 1
+    Type: 1
+  - Id: 204
+    Name: Frostwolf Grunt
+    Texture: {fileID: 2800000, guid: 9cff2d8f6be92f145abca4a6fc0982cd, type: 3}
+    Attack: 2
+    Health: 2
+    Type: 0
+  - Id: 205
+    Name: Kobold Geomancer
+    Texture: {fileID: 2800000, guid: d7204d09017145c489fe388e29dc767d, type: 3}
+    Attack: 2
+    Health: 2
+    Type: 0
+  - Id: 206
+    Name: Murloc Tidehunter
+    Texture: {fileID: 2800000, guid: 05a446138e6dbe649809881e5b292286, type: 3}
+    Attack: 2
+    Health: 1
+    Type: 1
+  - Id: 207
+    Name: Novice Engineer
+    Texture: {fileID: 2800000, guid: a9901cbc592b91d4fb15b1ad2463eda3, type: 3}
+    Attack: 1
+    Health: 1
+    Type: 0
+  - Id: 208
+    Name: River Crocolisk
+    Texture: {fileID: 2800000, guid: 9e85f3b5f30c9b24baac58126ab8fce2, type: 3}
+    Attack: 2
+    Health: 3
+    Type: 2
+  - Id: 301
+    Name: Dalaran Mage
+    Texture: {fileID: 2800000, guid: 27938be2e04adb342910c36b53904bd5, type: 3}
+    Attack: 1
+    Health: 4
+    Type: 0
+  - Id: 302
+    Name: Ironforge Rifleman
+    Texture: {fileID: 2800000, guid: 06a85f618d7801a48b9daec5d62650d0, type: 3}
+    Attack: 2
+    Health: 2
+    Type: 0
+  - Id: 303
+    Name: Ironfur Grizzly
+    Texture: {fileID: 2800000, guid: 80492959f6bb2f346ab58f734ad6efa1, type: 3}
+    Attack: 3
+    Health: 3
+    Type: 2
+  - Id: 304
+    Name: Magma Rager
+    Texture: {fileID: 2800000, guid: f9ba27f3e2aba4d4f9c173a192be365d, type: 3}
+    Attack: 5
+    Health: 1
+    Type: 3
+  - Id: 305
+    Name: Raid Leader
+    Texture: {fileID: 2800000, guid: 4a998d486677af84e91c4c820be9a706, type: 3}
+    Attack: 2
+    Health: 2
+    Type: 0
+  - Id: 306
+    Name: Razorfen Hunter
+    Texture: {fileID: 2800000, guid: 034ec5c518f3924469504a3855a273c4, type: 3}
+    Attack: 2
+    Health: 3
+    Type: 0
+  - Id: 307
+    Name: Shattered Sun Cleric
+    Texture: {fileID: 2800000, guid: 7b44340ea8d20914f8e88ae2e571508d, type: 3}
+    Attack: 3
+    Health: 2
+    Type: 0
+  - Id: 308
+    Name: Silverback Patriarch
+    Texture: {fileID: 2800000, guid: 2b37cf722fd267c4ebdb2a41d73561e3, type: 3}
+    Attack: 1
+    Health: 4
+    Type: 2
+  - Id: 309
+    Name: Wolfrider
+    Texture: {fileID: 2800000, guid: 29d8c991eaec3c54dbc78976c88510eb, type: 3}
+    Attack: 3
+    Health: 1
+    Type: 0
+  - Id: 401
+    Name: Chillwind Yeti
+    Texture: {fileID: 2800000, guid: f033185b83bd9a040a9d30a94f03ec2c, type: 3}
+    Attack: 4
+    Health: 5
+    Type: 0
+  - Id: 402
+    Name: Dragonling Mechanic
+    Texture: {fileID: 2800000, guid: 815334f1e8468564c9ccf7e0d54dba81, type: 3}
+    Attack: 2
+    Health: 4
+    Type: 0
+  - Id: 403
+    Name: Gnomish Inventor
+    Texture: {fileID: 2800000, guid: 9ee6a53b5e7075743bd6cdb7d8b9729a, type: 3}
+    Attack: 2
+    Health: 4
+    Type: 0
+  - Id: 404
+    Name: Oasis Snapjaw
+    Texture: {fileID: 2800000, guid: 3425e9de4230b9a4098559590f0ea885, type: 3}
+    Attack: 2
+    Health: 7
+    Type: 2
+  - Id: 405
+    Name: Ogre Magi
+    Texture: {fileID: 2800000, guid: 291bbce33b6221f4c9e1fdaaaba5d7d5, type: 3}
+    Attack: 4
+    Health: 4
+    Type: 0
+  - Id: 406
+    Name: Sen'jin Shieldmasta
+    Texture: {fileID: 2800000, guid: 99874dc23e0d56d45866ae3850e8cb71, type: 3}
+    Attack: 3
+    Health: 5
+    Type: 0
+  - Id: 407
+    Name: Stormwind Knight
+    Texture: {fileID: 2800000, guid: 91db97110b0891e49ad2d48d011772d7, type: 3}
+    Attack: 2
+    Health: 5
+    Type: 0
+  - Id: 501
+    Name: Booty Bay Bodyguard
+    Texture: {fileID: 2800000, guid: ed587b30c2c0b4d4dae19b14b562ebe4, type: 3}
+    Attack: 5
+    Health: 4
+    Type: 0
+  - Id: 502
+    Name: Darkscale Healer
+    Texture: {fileID: 2800000, guid: ba0c888e544dbc54bb92ed1ae096bdfc, type: 3}
+    Attack: 4
+    Health: 5
+    Type: 0
+  - Id: 503
+    Name: Frostwolf Warlord
+    Texture: {fileID: 2800000, guid: 9f4593a48e103e348a365104c4fe0266, type: 3}
+    Attack: 4
+    Health: 4
+    Type: 0
+  - Id: 504
+    Name: Gurubashi Berserer
+    Texture: {fileID: 2800000, guid: 9e38a10689e5b004abbfe139dde974a3, type: 3}
+    Attack: 2
+    Health: 7
+    Type: 0
+  - Id: 505
+    Name: Nightblade
+    Texture: {fileID: 2800000, guid: c39f529da285b1d4ea6c011bdb66301b, type: 3}
+    Attack: 4
+    Health: 4
+    Type: 0
+  - Id: 506
+    Name: Stormpike Commando
+    Texture: {fileID: 2800000, guid: 91c8badf91051554ca58dc893b722e9c, type: 3}
+    Attack: 4
+    Health: 2
+    Type: 0
+  - Id: 601
+    Name: Archmage
+    Texture: {fileID: 2800000, guid: 1eca6edaf048b4b4f94ef6f995b49926, type: 3}
+    Attack: 4
+    Health: 7
+    Type: 0
+  - Id: 602
+    Name: Boulderfist Ogre
+    Texture: {fileID: 2800000, guid: 69bf3e3df1be3834f8196c02722d7e72, type: 3}
+    Attack: 6
+    Health: 7
+    Type: 0
+  - Id: 603
+    Name: Lord of the Arena
+    Texture: {fileID: 2800000, guid: 22d0b460a9e1a2b48a973c821e256d31, type: 3}
+    Attack: 6
+    Health: 5
+    Type: 0
+  - Id: 604
+    Name: Reckless Rocketeer
+    Texture: {fileID: 2800000, guid: 583235ce1b48b8c4ab0214f1689e6c2f, type: 3}
+    Attack: 5
+    Health: 2
+    Type: 0
+  - Id: 701
+    Name: Core Hound
+    Texture: {fileID: 2800000, guid: c14665de531b40646b061d4b83595145, type: 3}
+    Attack: 9
+    Health: 5
+    Type: 2
+  - Id: 702
+    Name: Stormwind Champion
+    Texture: {fileID: 2800000, guid: 69fe9d69d1e8d194bbea49330e90af90, type: 3}
+    Attack: 6
+    Health: 6
+    Type: 0
+  - Id: 703
+    Name: War Golem
+    Texture: {fileID: 2800000, guid: df4e97a7b1f292b40b18dad56f8d434b, type: 3}
+    Attack: 7
+    Health: 7
+    Type: 0
