@@ -28,6 +28,11 @@ namespace Cards
 
         private Card[] m_player1Deck;
         private Card[] m_player2Deck;
+        private Card[] m_customPlayer1Deck;
+        private Card[] m_customPlayer2Deck;
+        [SerializeField] private int[] m_idForCustomDeckPlayer1;
+        [SerializeField] private int[] m_idForCustomDeckPlayer2;
+
 
         private const float c_stepCardInDeck = 0.07f;
         private Material m_baseMat;
@@ -40,6 +45,7 @@ namespace Cards
         private UIAvatarScript m_avatarScript;
         public PlayerData m_player1Data;
         public PlayerData m_player2Data;
+        public bool UseCustomDeck;
 
         private void Awake()
         {
@@ -53,6 +59,8 @@ namespace Cards
 
         private void Initialization()
         {
+            //m_player1Deck = CreateDeckWithRandomCards(m_player1DeckRoot, Players.Player1);
+            //m_player2Deck = CreateDeckWithRandomCards(m_player2DeckRoot, Players.Player2);
             m_player1Deck = CreateDeck(m_player1DeckRoot, Players.Player1);
             m_player2Deck = CreateDeck(m_player2DeckRoot, Players.Player2);
             m_avatarScript = GetComponent<UIAvatarScript>();
@@ -162,9 +170,9 @@ namespace Cards
                     playerScript.GetDamage(playerScript.GetDamageForEmptyDeck(), true);
                 }
 
-                if (card != null && CheckDeckNull(playerDeck) && playerHand.SetNewCardInHand(card, true)) 
+                if (card != null && CheckDeckNull(playerDeck) && playerHand.SetNewCardInHand(card, true))
                 {
-                        playerDeck[randomCardIndex] = null;
+                    playerDeck[randomCardIndex] = null;
                 }
             }
         }
@@ -221,44 +229,66 @@ namespace Cards
 
         private (Card card, int index) GetRandomIndexFromDeck(Card[] cardsInDeck)
         {
-             Card card = null;
-             int index = 0;
-             if (!CheckDeckNull(cardsInDeck))
-             {
-                 return (null, index);
-             }
-             while (card == null)
-             {
-                 var randomIndex = Random.Range(0, cardsInDeck.Length);
-                 card = cardsInDeck[randomIndex];
-                 index = randomIndex;
-             }
-             
-             return (card, index);
-        }
-    
+            Card card = null;
+            int index = 0;
+            if (!CheckDeckNull(cardsInDeck))
+            {
+                return (null, index);
+            }
 
-    private Card[] CreateDeck(Transform root, Players player)
+            while (card == null)
+            {
+                var randomIndex = Random.Range(0, cardsInDeck.Length);
+                card = cardsInDeck[randomIndex];
+                index = randomIndex;
+            }
+
+            return (card, index);
+        }
+
+
+        private Card[] CreateDeck(Transform root, Players player)
         {
             Card[] deck = new Card[m_cardDeckCount];
             Vector3 vector = Vector3.zero;
 
-            for (int i = 0; i < m_cardDeckCount; i++)
+
+            for (int i = 0; i < m_idForCustomDeckPlayer1.Length; i++)
             {
                 deck[i] = Instantiate(m_cardPrefab, root);
                 deck[i].cardManager = this;
                 deck[i].transform.localPosition = vector;
                 vector += new Vector3(0, c_stepCardInDeck, 0);
 
-                var randomCard = m_allCards[Random.Range(0, m_allCards.Count)];
+                CardPropertiesData card = m_allCards[0];
+
+                if (UseCustomDeck)
+                {
+                    foreach (var cardData in m_allCards)
+                    {
+                        if (cardData.Id == m_idForCustomDeckPlayer1[i])
+                        {
+                            card = cardData;
+                            break;
+                        }
+                    }
+
+                }
+                else
+                {
+                    var randomCard = m_allCards[Random.Range(0, m_allCards.Count)];
+                    
+                }
 
                 var _newMat = new Material(m_baseMat);
-                _newMat.mainTexture = randomCard.Texture;
+                _newMat.mainTexture = card.Texture;
 
-                deck[i].Confiruration(randomCard, _newMat, CardUtility.GetDescriptionById(randomCard.Id), _player1Hand , _player2Hand, player);
+                deck[i].Confiruration(card, _newMat, CardUtility.GetDescriptionById(card.Id), _player1Hand,
+                    _player2Hand, player);
             }
 
             return deck;
         }
+
     }
 }
