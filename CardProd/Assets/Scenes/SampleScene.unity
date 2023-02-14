@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_health: 30
-  m_mana: 5
+  m_mana: 1
   m_players: 1
 --- !u!114 &26577039
 MonoBehaviour:
@@ -2110,18 +2110,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3229ff84acff46246a9bd0591a1ab7f6, type: 2}
   - {fileID: 11400000, guid: cb7286cd1080bf04cbbf4a2265e52f38, type: 2}
   - {fileID: 11400000, guid: 93d377064370f4443970eeb9769fd723, type: 2}
-  m_cardDeckCount: 3
+  m_cardDeckCount: 30
   m_player1DeckRoot: {fileID: 1566324997}
   m_player2DeckRoot: {fileID: 1611253035}
   _player1Hand: {fileID: 166772794}
   _player2Hand: {fileID: 2018095707}
   m_playerScript1: {fileID: 521428999}
   m_playerScript2: {fileID: 26577040}
+  m_idForCustomDeckPlayer1: 66000000c90000002d0100009201000093010000f5010000f6010000590200005a020000bd020000be0200006500000066000000cb00000067000000ca0000002d0100002e0100002f0100009101000093010000f6010000f50100005a020000be02000068000000690000006a000000cd0000002f010000
+  m_idForCustomDeckPlayer2: 650000006600000067000000c9000000ca0000002d0100002e010000910100009201000093010000f5010000f6010000f7010000590200005a020000bd020000be02000068000000690000006a000000cc000000cd0000002f0100003001000094010000f50100005b020000be0200006a0000006b000000
   m_slotsManager: {fileID: 1083235565}
   cardsOntablePlayer1: []
   cardsOntablePlayer2: []
   m_player1Data: {fileID: 0}
   m_player2Data: {fileID: 0}
+  UseCustomDeck: 1
 --- !u!114 &504294452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2230,7 +2233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_health: 30
-  m_mana: 5
+  m_mana: 1
   m_players: 0
 --- !u!114 &521428998
 MonoBehaviour:
