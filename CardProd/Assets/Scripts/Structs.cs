@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cards.ScriptableObjects;
 using UnityEngine;
 using OneLine;
 
@@ -42,13 +43,15 @@ namespace Cards
 		public ushort Health;
 		[Width(65)]
 		public CardUnitType Type;
+		[SerializeField] public List<EffectParameters> effects;
 
 		public CardParamsData GetParams()
 		{
 			return new CardParamsData(Cost, Attack, Health);
 		}
 	}
-
+	
+	
 	public struct CardParamsData
 	{
 		public ushort Cost;

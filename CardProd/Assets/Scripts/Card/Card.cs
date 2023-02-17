@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using examples;
 using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine;
@@ -51,6 +52,11 @@ namespace Cards
 
         public void Confiruration(CardPropertiesData data, Material picture, string description, PlayerHand playerHand1, PlayerHand playerHand2, Players player)
         {
+            List<BaseEffect> effects = new List<BaseEffect>();
+            foreach (var dataEffect in data.effects)
+            {
+                // effects
+            }
             m_player1Hand = playerHand1;
             m_player2Hand = playerHand2;
             m_tx_coast.text = data.Cost.ToString();

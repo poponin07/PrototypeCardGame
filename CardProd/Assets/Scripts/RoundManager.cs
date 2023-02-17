@@ -91,7 +91,11 @@ namespace Cards
 
       private void GetMana()
       {
-         m_manaIndex++;
+         if (m_manaIndex < 10)
+         {
+            m_manaIndex++;
+         }
+         
          m_PlayerData1.Mana += m_manaIndex;
         m_PlayerData2.Mana += m_manaIndex;
         

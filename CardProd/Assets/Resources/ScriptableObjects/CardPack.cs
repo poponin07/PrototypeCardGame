@@ -10,7 +10,6 @@ namespace Cards.ScriptableObjects
     {
         [SerializeField, OneLine(Header = LineHeader.Short)]
         public List<CardPropertiesData> ids = new List<CardPropertiesData>();
-
         public CardPropertiesData GetCardById(uint id)
         {
             CardPropertiesData card = ids.Find(c => c.Id == id);

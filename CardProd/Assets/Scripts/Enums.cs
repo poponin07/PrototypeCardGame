@@ -34,5 +34,11 @@ namespace Cards
 		Player2,
 		Discard
 	}
+
+	public enum EffectsType
+	{
+		Battlecry,
+		Taunt
+	}
 	
 }
