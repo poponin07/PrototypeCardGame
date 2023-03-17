@@ -17,6 +17,6 @@ namespace Cards.ScriptableObjects
     {
         public string effectName;
         public EffectsType type;
-        public EffectAbilities effectAbilities;
+        public BaseEffect effectAbilities;
     }
 }

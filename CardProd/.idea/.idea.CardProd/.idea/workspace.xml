@@ -24,13 +24,16 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.4.2/InputSystem/Plugins/PlayerInput/PlayerInput.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/UIAvatarScript.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Unity/Hub/Editor/2019.4.4f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Tests/Runtime/TextEditor/TextEditorTests.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Card/EffectsScript.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.4.2/InputSystem/Plugins/UI/VirtualMouseInput.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.4.2/InputSystem/Plugins/Android/AndroidGameController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a979f18d51af41179d12b797e8c5be14116000/5c/f8da3523/Object.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a979f18d51af41179d12b797e8c5be14116000/c2/9c9c8df3/SetupCoroutine.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/RoundManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.4.2/InputSystem/Controls/StickControl.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.4.2/InputSystem/Plugins/OSX/OSXGameController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/908f8bca7f3649909af9c6824762362b364758/4c/1885fdaf/LinkedList`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.4.2/InputSystem/State/InputState.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerRayCast.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Card/EffectExample.cs" root0="FORCE_HIGHLIGHTING" />
@@ -39,6 +42,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.4.2/InputSystem/Utilities/FourCC.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SlotScript.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Unity/Hub/Editor/2019.4.4f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Tests/Runtime/Dropdown/DropdownTests.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Unity/Hub/Editor/2019.4.4f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/GraphicRebuildTracker.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.4.2/InputSystem/Plugins/PlayerInput/PlayerInputManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.4.2/InputSystem/Devices/Precompiled/FastMouse.partial.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.4.2/InputSystem/InputManagerStateMonitors.cs" root0="SKIP_HIGHLIGHTING" />
@@ -170,6 +174,10 @@
       <workItem from="1677070838233" duration="612000" />
       <workItem from="1677505287210" duration="597000" />
       <workItem from="1677852252562" duration="709000" />
+      <workItem from="1678091960091" duration="7492000" />
+      <workItem from="1678695061795" duration="2983000" />
+      <workItem from="1678793297526" duration="5724000" />
+      <workItem from="1678979407026" duration="2758000" />
     </task>
     <servers />
   </component>

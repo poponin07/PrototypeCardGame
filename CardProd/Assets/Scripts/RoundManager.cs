@@ -24,7 +24,7 @@ namespace Cards
       
       private void Awake()
       {
-         ferstMoveIsDonePlayerIndex = 2;
+         ferstMoveIsDonePlayerIndex = 4;
          if (instance != null)
             Destroy(gameObject);
          else
@@ -51,6 +51,11 @@ namespace Cards
       }
       public void DistributionCards()
       {
+         if (ferstMoveIsDonePlayerIndex > 2)
+         {
+            --ferstMoveIsDonePlayerIndex;
+            return;
+         }
          if (ferstMoveIsDonePlayerIndex != 0)
          {
             m_cardManager.GetCardFromDeck(3, true);
@@ -91,6 +96,10 @@ namespace Cards
 
       private void GetMana()
       {
+         if (ferstMoveIsDonePlayerIndex > 2)
+         {
+            return;
+         }
          if (m_manaIndex < 10)
          {
             m_manaIndex++;

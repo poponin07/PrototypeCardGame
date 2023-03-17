@@ -43,7 +43,7 @@ namespace Cards
 		public ushort Health;
 		[Width(65)]
 		public CardUnitType Type;
-		[SerializeField] public List<EffectParameters> effects;
+		[SerializeField] public List<BaseEffect> effects;
 
 		public CardParamsData GetParams()
 		{

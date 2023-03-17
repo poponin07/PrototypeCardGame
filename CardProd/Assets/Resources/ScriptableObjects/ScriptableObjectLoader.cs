@@ -9,7 +9,7 @@ namespace Cards.ScriptableObjects
     {
         private CardPack m_cardPack;
         public const string SCRIPTABLE_OBJECTS_PATH = "ScriptableObjects/";
-        private void Awake()
+      private void Awake()
         {
             m_cardPack = Resources.Load<CardPack>(SCRIPTABLE_OBJECTS_PATH + "CardPack");
             string constName = "-CommonCardPack";

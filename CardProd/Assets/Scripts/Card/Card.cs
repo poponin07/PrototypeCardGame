@@ -79,6 +79,10 @@ namespace Cards
                 ? cardManager.m_player1DeckRoot
                 : cardManager.m_player2DeckRoot;
 
+            
+            
+            //data.effects[0]
+            
         }
 
         private void RefreshUICard()
@@ -222,6 +226,33 @@ namespace Cards
         private void DestroyCard()
         {
             Destroy(gameObject);
+        }
+        
+        
+        //effect
+        private int m_defaultHealth = 1;
+        [SerializeField] private int m_defaultDamage = 0;
+        
+        private LinkedList<BaseEffect> m_effects = new LinkedList<BaseEffect>();
+        
+        public void AddEffect(BaseEffect effect)
+        {
+            m_effects.AddLast(effect);
+            effect.ApplyEffect(this);
+        }
+
+        public bool TryToRemoveEffect(BaseEffect effect)
+        {
+            if (!m_effects.Contains(effect)) return false;
+            m_effects.Remove(effect);
+
+            return effect.TryToRemoveEffect(this);
+        }
+
+        private void Awake()
+        {
+            health = m_defaultHealth;
+            attack = m_defaultDamage;
         }
 
     }

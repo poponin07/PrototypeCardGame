@@ -33,7 +33,19 @@ namespace Input
             if (Physics.Raycast(ray, out var hit))
             {
                 Card card = hit.transform.GetComponent<Card>();
-                if (card == null || card.players != RoundManager.instance.PlayerMove) return;
+                Debug.Log(hit.collider.gameObject.name);
+                if (card == null || card.players == RoundManager.instance.PlayerMove)
+                {
+                    СhoicePlayerAvatar сhoicePlayerAvatar = hit.transform.GetComponent<СhoicePlayerAvatar>();
+                    
+                    if (сhoicePlayerAvatar != null && сhoicePlayerAvatar.m_players ==  RoundManager.instance.PlayerMove)
+                    {
+                        сhoicePlayerAvatar.SetAvatar();
+                        return;
+                    }
+                    return;
+                }
+                
                  
                     Card cardComp = hit.transform != null ? card : null;
                     if (cardComp != null && cardComp.m_cardState == CardState.InHand /*&& RoundManager.instance.GetSwapCardOnFerstRoundIndex() > 0 */)
