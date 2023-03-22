@@ -25,7 +25,8 @@ namespace Cards
             m_cardInHand2 = new Card[m_positonsCardInHand.Length];
             //m_cardOnTable = new List<Card>();
         }
-
+        
+        
         public bool SetNewCardInHand(Card newCard, bool fromDeck)
         {
             Card[] cardInHand;
@@ -67,6 +68,11 @@ namespace Cards
                 {
                     return i;
                 }
+                /*Debug.Log(arr[i].gameObject.transform.childCount);
+                if (arr[i].gameObject.transform.childCount == 0)
+                {
+                    return i; 
+                }*/
             }
             return -1;
         }
@@ -106,7 +112,8 @@ namespace Cards
                 moveCard.transform.SetParent(slotTransform);
                 moveCard.transform.position = slotTransform.position;
                 
-                //int result = GetIndexLastCard(cardInHand);
+                List<Card> arr = moveCard.players  == Players.Player1 ? m_cardManger.cardsPlayedPlayer1 : m_cardManger.cardsPlayedPlayer2;
+                arr.Add(moveCard);
                 
                 moveCard.SwitchCardState(moveCard,CardState.OnTable);
                 
@@ -122,7 +129,6 @@ namespace Cards
         public bool CardAttack(Card moveCard)
         {
             SlotScript slotScript = m_cardManger.GetClosestSlot(moveCard, false);
-            Debug.Log(slotScript);
             AnimationComponent animationComponent = moveCard.GetComponent<AnimationComponent>();
             var slotTransform = slotScript.transform;
 
@@ -161,6 +167,13 @@ namespace Cards
             moveCard.StartCoroutine(moveCard.MoveInHandOrTable(moveCard, moveCard.m_curParent, CardState.OnTable));
             
             return true;
+        }
+
+        private Card[] CheckTaunt()
+        {
+            Card[] tauntcards  = new Card[] {};
+
+            return tauntcards;
         }
     }
     }

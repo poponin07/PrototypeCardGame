@@ -13,6 +13,7 @@ namespace Cards
     {
         public Card Parent;
         public bool Permanent;
+        public CardUnitType type;
 
         public abstract void ApplyEffect(Card target);
 

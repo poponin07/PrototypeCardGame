@@ -74,17 +74,24 @@ namespace Cards
             SwitchEnable();
             m_id = data.Id;
             animationComponent.Link(Player1Hand);
-            isReadyMome = 1;
+            SetChargeParam(data);
             m_deckPosition = RoundManager.instance.PlayerMove == players
                 ? cardManager.m_player1DeckRoot
                 : cardManager.m_player2DeckRoot;
-
-            
-            
-            //data.effects[0]
-            
         }
 
+        private void SetChargeParam(CardPropertiesData data)
+        {
+            if (data.isCharge == true)
+            {
+                isReadyMome = 0;
+            }
+            else
+            {
+                isReadyMome = 1;
+            }
+        }
+        
         private void RefreshUICard()
         {
             m_tx_coast.text = coast.ToString();
@@ -225,6 +232,8 @@ namespace Cards
         
         private void DestroyCard()
         {
+            List<Card> arr = RoundManager.instance.PlayerMove == players ? cardManager.cardsPlayedPlayer1 : cardManager.cardsPlayedPlayer2;
+            arr.Remove(this);
             Destroy(gameObject);
         }
         

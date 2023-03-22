@@ -26,6 +26,9 @@ namespace Cards
         [SerializeField] private PlayerScript m_playerScript1;
         [SerializeField] private PlayerScript m_playerScript2;
 
+        public List<Card> cardsPlayedPlayer1;
+        public List<Card> cardsPlayedPlayer2;
+
         private Card[] m_player1Deck;
         private Card[] m_player2Deck;
         private Card[] m_customPlayer1Deck;
@@ -40,8 +43,8 @@ namespace Cards
         private Dictionary<int, SlotScript> m_playerCardSlots = new Dictionary<int, SlotScript>();
 
         [SerializeField] private PlayerCardSlotsManager m_slotsManager;
-        public List<SlotScript> cardsOntablePlayer1;
-        public List<SlotScript> cardsOntablePlayer2;
+        public List<SlotScript> slotsOntablePlayer1;
+        public List<SlotScript> slotsOntablePlayer2;
         private UIAvatarScript m_avatarScript;
         public PlayerData m_player1Data;
         public PlayerData m_player2Data;
@@ -59,8 +62,6 @@ namespace Cards
 
         private void Initialization()
         {
-            //m_player1Deck = CreateDeckWithRandomCards(m_player1DeckRoot, Players.Player1);
-            //m_player2Deck = CreateDeckWithRandomCards(m_player2DeckRoot, Players.Player2);
             m_player1Deck = CreateDeck(m_player1DeckRoot, Players.Player1);
             m_player2Deck = CreateDeck(m_player2DeckRoot, Players.Player2);
             m_avatarScript = GetComponent<UIAvatarScript>();
@@ -83,11 +84,11 @@ namespace Cards
                 {
                     if (cardSlot.Value.playerId == 1)
                     {
-                        cardsOntablePlayer1.Add(cardSlot.Value);
+                        slotsOntablePlayer1.Add(cardSlot.Value);
                     }
                     else
                     {
-                        cardsOntablePlayer2.Add(cardSlot.Value);
+                        slotsOntablePlayer2.Add(cardSlot.Value);
                     }
                 }
             }
@@ -118,13 +119,13 @@ namespace Cards
 
         private void CollectingAllCards()
         {
-            IEnumerable<CardPropertiesData> _allCard = new List<CardPropertiesData>();
+            IEnumerable<CardPropertiesData> allCard = new List<CardPropertiesData>();
             foreach (var pack in m_allPacks)
             {
-                _allCard = pack.UnionProperties(_allCard);
+                allCard = pack.UnionProperties(allCard);
             }
 
-            m_allCards = new List<CardPropertiesData>(_allCard);
+            m_allCards = new List<CardPropertiesData>(allCard);
             m_baseMat = new Material(Shader.Find("TextMeshPro/Sprite"));
             m_baseMat.renderQueue = 2994;
         }
@@ -264,20 +265,22 @@ namespace Cards
 
                 if (UseCustomDeck)
                 {
+                    int[] customePuckCard  = RoundManager.instance.PlayerMove == Players.Player1 ? m_idForCustomDeckPlayer1 : m_idForCustomDeckPlayer2;
+                    
                     foreach (var cardData in m_allCards)
                     {
-                        if (cardData.Id == m_idForCustomDeckPlayer1[i])
+                        if (cardData.Id == customePuckCard[i])
                         {
                             card = cardData;
                             break;
                         }
                     }
-
                 }
+
                 else
                 {
                     var randomCard = m_allCards[Random.Range(0, m_allCards.Count)];
-                    
+                    card = randomCard;
                 }
 
                 var _newMat = new Material(m_baseMat);

@@ -73,13 +73,13 @@ namespace Cards
          {
             case Players.Player1:
                m_playerMove = Players.Player2;
-               SetIndexIsReadyMome(m_cardManager.cardsOntablePlayer1);
+               SetIndexIsReadyMome(m_cardManager.slotsOntablePlayer1);
                StartCoroutine(CoroutineTurnCamera());
                
                break;
             case Players.Player2:
                m_playerMove = Players.Player1;
-               SetIndexIsReadyMome(m_cardManager.cardsOntablePlayer2);
+               SetIndexIsReadyMome(m_cardManager.slotsOntablePlayer2);
                StartCoroutine(CoroutineTurnCamera());
                GetMana();
                break;
