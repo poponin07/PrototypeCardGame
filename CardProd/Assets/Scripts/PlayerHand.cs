@@ -131,10 +131,13 @@ namespace Cards
             SlotScript slotScript = m_cardManger.GetClosestSlot(moveCard, false);
             AnimationComponent animationComponent = moveCard.GetComponent<AnimationComponent>();
             var slotTransform = slotScript.transform;
+            List<Card> TauntCards = CheckTaunt();
 
-            if (slotScript != null && slotScript.couple && Vector3.Distance(moveCard.transform.position, slotTransform.position) < DragAndDropScript.MAGNET_RADIUS + 10f && slotScript.isActiveAndEnabled)
+            if ((TauntCards.Count > 0 && (!TauntCards.Contains(slotTransform.GetComponentInChildren<Card>())) && (slotScript != null && slotScript.couple && 
+                Vector3.Distance(moveCard.transform.position, slotTransform.position) < DragAndDropScript.MAGNET_RADIUS + 10f && slotScript.isActiveAndEnabled)))
             {
                 bool attackResult;
+           
                 if (slotScript.m_isPlyerAvatar)
                 {
                     attackResult = slotScript.gameObject.GetComponent<PlayerScript>().GetDamage(moveCard.attack, false);
@@ -157,8 +160,9 @@ namespace Cards
                    animationComponent.AnimationShakeCard();
                }
 
-               moveCard.transform.position = new Vector3(slotTransform.position.x, slotTransform.position.y + 2f,
-                    slotTransform.position.z);
+                var position = slotTransform.position;
+                moveCard.transform.position = new Vector3(position.x, position.y + 2f,
+                    position.z);
                     
                 moveCard.StartCoroutine(moveCard.MoveInHandOrTable(moveCard, moveCard.m_curParent, CardState.OnTable));
                 
@@ -169,11 +173,22 @@ namespace Cards
             return true;
         }
 
-        private Card[] CheckTaunt()
+        private List<Card> CheckTaunt()
         {
-            Card[] tauntcards  = new Card[] {};
-
-            return tauntcards;
+            List<Card> tauntCards = new List<Card>();
+                List<Card> cards = RoundManager.instance.PlayerMove == Players.Player1
+                ? m_cardManger.cardsPlayedPlayer2
+                : m_cardManger.cardsPlayedPlayer1;
+            
+            foreach (var card in cards)
+            {
+                if (card.isTaunt)
+                {
+                    tauntCards.Add(card);
+                }
+            }
+            
+            return tauntCards;
         }
     }
     }

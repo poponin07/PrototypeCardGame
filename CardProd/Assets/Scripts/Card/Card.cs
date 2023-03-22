@@ -30,6 +30,7 @@ namespace Cards
         public Players players;
         public AnimationComponent animationComponent;
         public int isReadyMome;
+        public bool isTaunt;
         private PlayerHand m_player1Hand;
         private PlayerHand m_player2Hand;
         private float stepY = 10f;
@@ -68,6 +69,7 @@ namespace Cards
             health = data.Health;
             attack = data.Attack;
             coast = data.Cost;
+            isTaunt = data.isTaunt;
             m_tx_cardUnitType.text = CardUnitType.None == data.Type ? "" : data.Type.ToString();
             _picture.material = picture;
             SwitchCardState(this, CardState.InDeck);
