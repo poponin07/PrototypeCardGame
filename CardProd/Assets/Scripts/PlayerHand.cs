@@ -133,10 +133,10 @@ namespace Cards
             var slotTransform = slotScript.transform;
             List<Card> TauntCards = CheckTaunt();
 
-            if ((TauntCards.Count > 0 && (!TauntCards.Contains(slotTransform.GetComponentInChildren<Card>())) && (slotScript != null && slotScript.couple && 
-                Vector3.Distance(moveCard.transform.position, slotTransform.position) < DragAndDropScript.MAGNET_RADIUS + 10f && slotScript.isActiveAndEnabled)))
+            if ( slotScript != null && slotScript.couple && 
+                Vector3.Distance(moveCard.transform.position, slotTransform.position) < DragAndDropScript.MAGNET_RADIUS + 10f && slotScript.isActiveAndEnabled)
             {
-                bool attackResult;
+                bool attackResult = false;
            
                 if (slotScript.m_isPlyerAvatar)
                 {
@@ -150,7 +150,11 @@ namespace Cards
                 }
                 else
                 {
-                     attackResult = slotScript.GetCardCouple().GetDamage(moveCard, true);
+                    Debug.Log(TauntCards.Count);
+                    if (TauntCards.Count > 0 && TauntCards.Contains(slotTransform.GetComponentInChildren<Card>()))
+                    {
+                        attackResult = slotScript.GetCardCouple().GetDamage(moveCard, true); 
+                    }
                 }
 
                 if (attackResult)
