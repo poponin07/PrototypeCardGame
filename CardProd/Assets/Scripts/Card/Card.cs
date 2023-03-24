@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using examples;
+using System.Linq;
+using effects;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine;
@@ -37,7 +39,7 @@ namespace Cards
         private float liftSpeed = 0.05f;
         private float liftHeight = 5f;
         private SlotInhandScript m_slotInhandScript;
-
+        private CardPropertiesData m_cardData;
         private Transform m_deckPosition;
 
         
@@ -54,10 +56,6 @@ namespace Cards
         public void Confiruration(CardPropertiesData data, Material picture, string description, PlayerHand playerHand1, PlayerHand playerHand2, Players player)
         {
             List<BaseEffect> effects = new List<BaseEffect>();
-            foreach (var dataEffect in data.effects)
-            {
-                // effects
-            }
             m_player1Hand = playerHand1;
             m_player2Hand = playerHand2;
             m_tx_coast.text = data.Cost.ToString();
@@ -238,33 +236,54 @@ namespace Cards
             arr.Remove(this);
             Destroy(gameObject);
         }
-        
+
+
+        public CardUnitType GetCardType()
+        {
+            return m_cardData.Type;
+        }
         
         //effect
         private int m_defaultHealth = 1;
         [SerializeField] private int m_defaultDamage = 0;
         
-        private LinkedList<BaseEffect> m_effects = new LinkedList<BaseEffect>();
+        private Dictionary<Card, BaseEffect> m_effects = new Dictionary<Card, BaseEffect>();
+      
         
-        public void AddEffect(BaseEffect effect)
+        public void AddEffect([CanBeNull] BaseEffect effect, Card card)
         {
-            m_effects.AddLast(effect);
+            m_effects.Add(card, effect);
             effect.ApplyEffect(this);
         }
+        
+        public bool TryToRemoveEffect(BaseEffect effect, Card card)
+        {
+            if (m_effects.ContainsKey(card) == null) return false;
+            m_effects.Remove(card);
 
-        public bool TryToRemoveEffect(BaseEffect effect)
+            return effect.TryToRemoveEffect(this);
+        }
+
+          
+        /*  public void AddEffect(BaseEffect effect)
+          {
+              //m_effects.AddLast(effect);
+              effect.ApplyEffect(this);
+          }*/
+
+        /*public bool TryToRemoveEffect(BaseEffect effect)
         {
             if (!m_effects.Contains(effect)) return false;
             m_effects.Remove(effect);
 
             return effect.TryToRemoveEffect(this);
-        }
-
-        private void Awake()
+        }*/
+        
+        /*private void Awake()
         {
             health = m_defaultHealth;
             attack = m_defaultDamage;
-        }
+        }*/
 
     }
 } 

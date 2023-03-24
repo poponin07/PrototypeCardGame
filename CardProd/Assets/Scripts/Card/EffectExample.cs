@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace examples
+namespace effects
 {
 	public class Card : MonoBehaviour
 	{
@@ -42,6 +42,8 @@ namespace examples
 		public string Name { get; }
 		public Card Parent { get; }
 		public bool Permanent { get; }
+		public bool isEnemy { get; }
+		public bool isSingleTarget;
 
 		public BaseEffect(Card parent, bool permanent, string name = "")
 		{

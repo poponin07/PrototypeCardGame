@@ -293,5 +293,27 @@ namespace Cards
             return deck;
         }
 
+        public void SetEffectOnCard(BaseEffect effect, Card effectOwner)
+        {
+            var targetCards = FindCardByType(effect.targetType);
+            if (targetCards.Count < 1)
+            {
+                return;
+            }
+
+            foreach (var targetCard in targetCards)
+            {
+                effect.ApplyEffect(targetCard);
+            }
+        }
+
+        private List<Card> FindCardByType(CardUnitType type)
+        {
+            //поиска карты по типу
+            List<Card> cards = new List<Card>();
+            cards = cardsPlayedPlayer1.FindAll((c) => c.GetCardType() == type);
+            return cards;
+        }
+        
     }
 }

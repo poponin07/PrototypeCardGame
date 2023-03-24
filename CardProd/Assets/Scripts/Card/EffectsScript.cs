@@ -11,9 +11,10 @@ namespace Cards
     [Serializable]
     public abstract class BaseEffect : ScriptableObject
     {
+        [NonSerialized]
         public Card Parent;
         public bool Permanent;
-        public CardUnitType type;
+        public CardUnitType targetType;
 
         public abstract void ApplyEffect(Card target);
 
