@@ -114,7 +114,7 @@ namespace Cards
                 
                 List<Card> arr = moveCard.players  == Players.Player1 ? m_cardManger.cardsPlayedPlayer1 : m_cardManger.cardsPlayedPlayer2;
                 arr.Add(moveCard);
-                
+                m_cardManger.SetEffectOnCard(moveCard);
                 moveCard.SwitchCardState(moveCard,CardState.OnTable);
                 
                 return false;
@@ -150,7 +150,6 @@ namespace Cards
                 }
                 else
                 {
-                    Debug.Log(TauntCards.Count);
                     if (TauntCards.Count > 0 && TauntCards.Contains(slotTransform.GetComponentInChildren<Card>()))
                     {
                         attackResult = slotScript.GetCardCouple().GetDamage(moveCard, true); 

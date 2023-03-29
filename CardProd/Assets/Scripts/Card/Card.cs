@@ -41,6 +41,7 @@ namespace Cards
         private SlotInhandScript m_slotInhandScript;
         private CardPropertiesData m_cardData;
         private Transform m_deckPosition;
+        private BaseEffect m_effect;
 
         
         
@@ -55,7 +56,7 @@ namespace Cards
 
         public void Confiruration(CardPropertiesData data, Material picture, string description, PlayerHand playerHand1, PlayerHand playerHand2, Players player)
         {
-            List<BaseEffect> effects = new List<BaseEffect>();
+            m_effect = data.effect;
             m_player1Hand = playerHand1;
             m_player2Hand = playerHand2;
             m_tx_coast.text = data.Cost.ToString();
@@ -78,6 +79,7 @@ namespace Cards
             m_deckPosition = RoundManager.instance.PlayerMove == players
                 ? cardManager.m_player1DeckRoot
                 : cardManager.m_player2DeckRoot;
+            m_cardData = data;
         }
 
         private void SetChargeParam(CardPropertiesData data)
@@ -234,7 +236,13 @@ namespace Cards
         {
             List<Card> arr = RoundManager.instance.PlayerMove == players ? cardManager.cardsPlayedPlayer1 : cardManager.cardsPlayedPlayer2;
             arr.Remove(this);
-            Destroy(gameObject);
+
+                if (!m_effect.Permanent)
+                {
+                    cardManager.RemoveEffectsByDestroyCard(this);
+                }
+
+                Destroy(gameObject);
         }
 
 
@@ -256,12 +264,17 @@ namespace Cards
             effect.ApplyEffect(this);
         }
         
-        public bool TryToRemoveEffect(BaseEffect effect, Card card)
+        public bool TryToRemoveEffect( Card card)
         {
             if (m_effects.ContainsKey(card) == null) return false;
             m_effects.Remove(card);
 
-            return effect.TryToRemoveEffect(this);
+            return true;
+        }
+
+        public CardPropertiesData GetDataCard()
+        {
+            return m_cardData;
         }
 
           

@@ -33,6 +33,7 @@ namespace Cards
         private Card[] m_player2Deck;
         private Card[] m_customPlayer1Deck;
         private Card[] m_customPlayer2Deck;
+        private Dictionary<Card, Card> actualEffects = new Dictionary<Card, Card>();
         [SerializeField] private int[] m_idForCustomDeckPlayer1;
         [SerializeField] private int[] m_idForCustomDeckPlayer2;
 
@@ -293,17 +294,49 @@ namespace Cards
             return deck;
         }
 
-        public void SetEffectOnCard(BaseEffect effect, Card effectOwner)
+        public void SetEffectOnCard(Card effectOwner)
         {
+            BaseEffect effect = effectOwner.GetDataCard().effect;
+            if (!effect)
+            {
+                return;
+            }
             var targetCards = FindCardByType(effect.targetType);
             if (targetCards.Count < 1)
             {
                 return;
             }
 
-            foreach (var targetCard in targetCards)
+            int rand;
+            if (effect.isSingeTarget)
             {
-                effect.ApplyEffect(targetCard);
+                rand = Random.Range(0, targetCards.Count);
+                effect.ApplyEffect(targetCards[rand]);
+                actualEffects.Add(effectOwner, targetCards[rand]);
+            }
+            else
+            {
+                foreach (var targetCard in targetCards)
+                {
+                    effect.ApplyEffect(targetCard);
+                    actualEffects.Add(effectOwner, targetCard);
+                }   
+            }
+
+                
+        }
+
+        public void RemoveEffectsByDestroyCard(Card effectOwner)
+        {
+            if (actualEffects.ContainsKey(effectOwner))
+            {
+                foreach (var card in actualEffects)
+                {
+                    if (card.Key == effectOwner)
+                    {
+                        card.Value.TryToRemoveEffect(effectOwner);
+                    }
+                }
             }
         }
 
@@ -311,6 +344,10 @@ namespace Cards
         {
             //поиска карты по типу
             List<Card> cards = new List<Card>();
+            if (type == CardUnitType.None)
+            {
+               return cards = cardsPlayedPlayer1;
+            }
             cards = cardsPlayedPlayer1.FindAll((c) => c.GetCardType() == type);
             return cards;
         }

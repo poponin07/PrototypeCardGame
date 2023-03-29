@@ -45,7 +45,7 @@ namespace Cards
 		public CardUnitType Type;
 		public bool isTaunt;
 		public bool isCharge;
-		[SerializeField] public List<BaseEffect> effects;
+		[SerializeField] public BaseEffect effect;
 
 		public CardParamsData GetParams()
 		{

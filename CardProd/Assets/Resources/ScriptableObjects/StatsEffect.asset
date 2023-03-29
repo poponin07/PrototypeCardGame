@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: StatsEffect
   m_EditorClassIdentifier: Assembly-CSharp:Cards:StatsEffect
-  Parent: {fileID: 0}
   Permanent: 0
-  type: 0
-  Damage: 0
-  Health: 0
+  targetType: 0
+  isSingeTarget: 1
+  Damage: 99
+  Health: 99

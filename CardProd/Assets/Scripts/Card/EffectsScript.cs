@@ -15,6 +15,7 @@ namespace Cards
         public Card Parent;
         public bool Permanent;
         public CardUnitType targetType;
+        public bool isSingeTarget;
 
         public abstract void ApplyEffect(Card target);
 
