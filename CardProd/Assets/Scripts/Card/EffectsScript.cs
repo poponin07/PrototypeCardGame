@@ -32,16 +32,16 @@ namespace Cards
 
         public override void ApplyEffect(Card target)
         {
-            target.health += Health;
-            target.attack += Damage;
+            target.Health += Health;
+            target.Attack += Damage;
         }
 
         public override bool TryToRemoveEffect(Card target)
         {
             if (Permanent) return false;
 
-            target.health -= Health;
-            target.attack -= Damage;
+            target.Health -= Health;
+            target.Attack -= Damage;
 
             return true;
         }
@@ -55,6 +55,21 @@ namespace Cards
         public override void ApplyEffect(Card target)
         {
             throw new System.NotImplementedException();
+        }
+
+        public override bool TryToRemoveEffect(Card target)
+        {
+            throw new System.NotImplementedException();
+        }
+    }
+    
+    [CreateAssetMenu(fileName = "Summon", menuName = "Effects/Summon")]
+    public class Summon : BaseEffect
+    {
+        public Card cardToSummon;
+        public override void ApplyEffect(Card target)
+        {
+            //cardToSummon.spawn();
         }
 
         public override bool TryToRemoveEffect(Card target)

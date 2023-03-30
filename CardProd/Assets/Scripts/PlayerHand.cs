@@ -114,6 +114,7 @@ namespace Cards
                 
                 List<Card> arr = moveCard.players  == Players.Player1 ? m_cardManger.cardsPlayedPlayer1 : m_cardManger.cardsPlayedPlayer2;
                 arr.Add(moveCard);
+                
                 m_cardManger.SetEffectOnCard(moveCard);
                 moveCard.SwitchCardState(moveCard,CardState.OnTable);
                 
@@ -140,7 +141,7 @@ namespace Cards
            
                 if (slotScript.m_isPlyerAvatar)
                 {
-                    attackResult = slotScript.gameObject.GetComponent<PlayerScript>().GetDamage(moveCard.attack, false);
+                    attackResult = slotScript.gameObject.GetComponent<PlayerScript>().GetDamage(moveCard.Attack, false);
                     animationComponent.AnimationShakeCard();
                     moveCard.RefresMoveIndex(1);
                     if (attackResult)
@@ -153,6 +154,11 @@ namespace Cards
                     if (TauntCards.Count > 0 && TauntCards.Contains(slotTransform.GetComponentInChildren<Card>()))
                     {
                         attackResult = slotScript.GetCardCouple().GetDamage(moveCard, true); 
+                    }
+
+                    if (TauntCards.Count == 0)
+                    {
+                        attackResult = slotScript.GetCardCouple().GetDamage(moveCard, true);  
                     }
                 }
 

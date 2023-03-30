@@ -49,7 +49,7 @@ MonoBehaviour:
     Type: 2
     isTaunt: 0
     isCharge: 1
-    effect: {fileID: 0}
+    effect: {fileID: 11400000, guid: 8c043565c619bec4c839bf5904a1ad84, type: 2}
   - Id: 105
     Name: Voodoo Doctor
     Texture: {fileID: 2800000, guid: 7e0b1f4c8463171409f543c0222c78bf, type: 3}

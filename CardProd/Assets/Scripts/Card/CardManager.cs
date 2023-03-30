@@ -15,6 +15,7 @@ namespace Cards
 
         [SerializeField] private Card m_cardPrefab;
         [SerializeField] private CardPackConfiguration[] m_allPacks;
+        private IEnumerable<CardPropertiesData> allCard;
         [SerializeField, Range(0, 100)] private int m_cardDeckCount;
 
         public Transform m_player1DeckRoot;
@@ -32,8 +33,8 @@ namespace Cards
         private Card[] m_player1Deck;
         private Card[] m_player2Deck;
         private Card[] m_customPlayer1Deck;
-        private Card[] m_customPlayer2Deck;
-        private Dictionary<Card, Card> actualEffects = new Dictionary<Card, Card>();
+        private Card[] m_customPlayer2Deck; 
+        // private Dictionary<Card, Card> actualEffects = new Dictionary<Card, Card>();
         [SerializeField] private int[] m_idForCustomDeckPlayer1;
         [SerializeField] private int[] m_idForCustomDeckPlayer2;
 
@@ -120,7 +121,7 @@ namespace Cards
 
         private void CollectingAllCards()
         {
-            IEnumerable<CardPropertiesData> allCard = new List<CardPropertiesData>();
+            allCard = new List<CardPropertiesData>();
             foreach (var pack in m_allPacks)
             {
                 allCard = pack.UnionProperties(allCard);
@@ -179,6 +180,52 @@ namespace Cards
             }
         }
 
+        public void AddSummonCardOntable(int ID)
+        {
+            List<SlotScript> slotsOnTable = RoundManager.instance.PlayerMove == Players.Player1 ? slotsOntablePlayer1 : slotsOntablePlayer2;
+            SlotScript freeSlot = null;
+            foreach (var slot in slotsOnTable)
+            {
+                if (slot.couple == false)
+                {
+                    freeSlot = slot;
+                }
+            }
+            if (freeSlot == null)
+            {
+                return;
+                    
+            }
+            CardPropertiesData cardDataForSpaun = m_allCards[0]];
+            bool res = false;
+            foreach (var cardData in allCard)
+            {
+                if (cardData.Id == ID)
+                {
+                    cardDataForSpaun = cardData;
+                    res = true;
+                }
+                
+            }
+            if (res == false)
+            {
+                return;
+            }
+
+            Transform deckTransform = RoundManager.instance.PlayerMove == Players.Player1
+                ? m_player1DeckRoot
+                : m_player2DeckRoot;
+            Card summonCard = Instantiate(m_cardPrefab, deckTransform);
+            summonCard.cardManager = this;
+            
+            var _newMat = new Material(m_baseMat);
+            _newMat.mainTexture = cardDataForSpaun.Texture;
+            
+            //deck[i].Confiruration(card, _newMat, CardUtility.GetDescriptionById(card.Id), _player1Hand,
+                //_player2Hand, player);
+
+        }
+
         private bool CheckDeckNull(Card[] cards)
         {
             foreach (var card in cards)
@@ -209,15 +256,14 @@ namespace Cards
                 arr[indx] = card;
                 card.m_cardState = CardState.InDeck;
             }
-
         }
 
         public bool CheckingCardRequirements(Card card)
         {
             PlayerData data = RoundManager.instance.PlayerMove == Players.Player1 ? m_player1Data : m_player2Data;
-            if (card.coast <= data.Mana)
+            if (card.Coast <= data.Mana)
             {
-                data.Mana -= card.coast;
+                data.Mana -= card.Coast;
                 m_avatarScript.RefreshManaPlayer(data.Mana);
             }
             else
@@ -266,8 +312,10 @@ namespace Cards
 
                 if (UseCustomDeck)
                 {
-                    int[] customePuckCard  = RoundManager.instance.PlayerMove == Players.Player1 ? m_idForCustomDeckPlayer1 : m_idForCustomDeckPlayer2;
-                    
+                    int[] customePuckCard = RoundManager.instance.PlayerMove == Players.Player1
+                        ? m_idForCustomDeckPlayer1
+                        : m_idForCustomDeckPlayer2;
+
                     foreach (var cardData in m_allCards)
                     {
                         if (cardData.Id == customePuckCard[i])
@@ -301,8 +349,9 @@ namespace Cards
             {
                 return;
             }
+
             var targetCards = FindCardByType(effect.targetType);
-            if (targetCards.Count < 1)
+            if (targetCards.Count < 2)
             {
                 return;
             }
@@ -310,47 +359,75 @@ namespace Cards
             int rand;
             if (effect.isSingeTarget)
             {
-                rand = Random.Range(0, targetCards.Count);
-                effect.ApplyEffect(targetCards[rand]);
-                actualEffects.Add(effectOwner, targetCards[rand]);
+                rand = RandomCard(targetCards, effectOwner); //Random.Range(0, targetCards.Count);
+                //effect.ApplyEffect(targetCards[rand]);
+                targetCards[rand].AddEffect(effect, effectOwner);
+                // actualEffects.Add(effectOwner, targetCards[rand]);
             }
             else
             {
                 foreach (var targetCard in targetCards)
                 {
                     effect.ApplyEffect(targetCard);
-                    actualEffects.Add(effectOwner, targetCard);
-                }   
+                    // actualEffects.Add(effectOwner, targetCard);
+                }
             }
 
-                
+
+        }
+
+        private int RandomCard(List<Card> cards, Card ownerEffect)
+        {
+            int rand;
+            do
+            {
+                rand = Random.Range(0, cards.Count);
+            } while (ownerEffect == cards[rand]);
+
+            return rand;
+        }
+
+        public void RemoveCardEffects(Card effectOwnerCard)
+        {
+            var cardAffectedByOwner = cardsPlayedPlayer1.FindAll((c) => c.appliedEffects.ContainsKey(effectOwnerCard));
+           cardAffectedByOwner.AddRange(cardsPlayedPlayer2.FindAll((c) => c.appliedEffects.ContainsKey(effectOwnerCard)));
+           
+           foreach (var card in cardAffectedByOwner)
+           {
+               effectOwnerCard.GetDataCard().effect.TryToRemoveEffect(card);
+           }
         }
 
         public void RemoveEffectsByDestroyCard(Card effectOwner)
-        {
-            if (actualEffects.ContainsKey(effectOwner))
             {
-                foreach (var card in actualEffects)
-                {
-                    if (card.Key == effectOwner)
-                    {
-                        card.Value.TryToRemoveEffect(effectOwner);
-                    }
-                }
+                // if (actualEffects.ContainsKey(effectOwner))
+                // {
+                //     foreach (var card in actualEffects)
+                //     {
+                //         if (card.Key == effectOwner)
+                //         {
+                //             card.Key.TryToRemoveEffect();
+                //         }
+                //     }
+                // }
             }
-        }
 
-        private List<Card> FindCardByType(CardUnitType type)
-        {
-            //поиска карты по типу
-            List<Card> cards = new List<Card>();
-            if (type == CardUnitType.None)
+            private List<Card> FindCardByType(CardUnitType type)
             {
-               return cards = cardsPlayedPlayer1;
+                //поиска карты по типу
+                List<Card> cards = new List<Card>();
+                List<Card> playedCards = new List<Card>();
+                playedCards = RoundManager.instance.PlayerMove == Players.Player1
+                    ? cardsPlayedPlayer1
+                    : cardsPlayedPlayer2;
+                if (type == CardUnitType.None)
+                {
+                    return cards = playedCards;
+                }
+
+                cards = playedCards.FindAll((c) => c.GetCardType() == type);
+                return cards;
             }
-            cards = cardsPlayedPlayer1.FindAll((c) => c.GetCardType() == type);
-            return cards;
+
         }
-        
     }
-}

@@ -7,11 +7,13 @@ using JetBrains.Annotations;
 using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Cards
 {
     public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
+        public int cardIndex;
         [SerializeField, Space] private GameObject m_frontCard;
         [SerializeField] private TextMeshPro m_tx_coast;
         [SerializeField] private TextMeshPro m_tx_attack;
@@ -23,9 +25,46 @@ namespace Cards
         [SerializeField, Space] private uint m_id;
         [SerializeField] private MeshRenderer _picture;
 
-        public int health;
-        public int coast;
-        public int attack;
+        private int m_health;
+        private int m_coast;
+        private int m_attack;
+
+        public int Health
+        {
+            get
+            {
+                return m_health;
+            }
+            set
+            {
+                m_health = value;
+                UpdateUICard();
+            }
+        }
+        public int Coast
+        {
+            get
+            {
+                return m_coast;
+            }
+            set
+            {
+                m_coast = value;
+                UpdateUICard();
+            }
+        }
+        public int Attack {
+            get
+            {
+                return m_attack;
+            }
+            set
+            {
+                m_attack = value;
+                UpdateUICard();
+            } }
+        
+        
         
         public CardManager cardManager;
         public Transform m_curParent;
@@ -41,7 +80,7 @@ namespace Cards
         private SlotInhandScript m_slotInhandScript;
         private CardPropertiesData m_cardData;
         private Transform m_deckPosition;
-        private BaseEffect m_effect;
+        private BaseEffect effect;
 
         
         
@@ -56,7 +95,8 @@ namespace Cards
 
         public void Confiruration(CardPropertiesData data, Material picture, string description, PlayerHand playerHand1, PlayerHand playerHand2, Players player)
         {
-            m_effect = data.effect;
+            cardIndex = Random.Range(0, 999);
+            effect = data.effect;
             m_player1Hand = playerHand1;
             m_player2Hand = playerHand2;
             m_tx_coast.text = data.Cost.ToString();
@@ -65,9 +105,9 @@ namespace Cards
             m_tx_descriptions.text = description;
             m_name.text = data.Name;
             players = player;
-            health = data.Health;
-            attack = data.Attack;
-            coast = data.Cost;
+            m_health = data.Health;
+            m_attack = data.Attack;
+            m_coast = data.Cost;
             isTaunt = data.isTaunt;
             m_tx_cardUnitType.text = CardUnitType.None == data.Type ? "" : data.Type.ToString();
             _picture.material = picture;
@@ -96,9 +136,9 @@ namespace Cards
         
         private void RefreshUICard()
         {
-            m_tx_coast.text = coast.ToString();
-            m_tx_attack.text = attack.ToString();
-            m_tx_health.text = health.ToString();
+            m_tx_coast.text = m_coast.ToString();
+            m_tx_attack.text = m_attack.ToString();
+            m_tx_health.text = m_health.ToString();
         }
 
         [ContextMenu("SwitchEnable")]
@@ -190,7 +230,7 @@ namespace Cards
         
         public bool GetDamage(Card attackingCard, bool  firstAttack)
         {
-            health -= attackingCard.attack;
+            m_health -= attackingCard.m_attack;
             animationComponent.AnimationScaleCard();
             
             if (firstAttack)
@@ -198,7 +238,7 @@ namespace Cards
                 attackingCard.GetDamage(this, false);
             }
 
-            if (health <= 0)
+            if (m_health <= 0)
             {
                 m_curParent.GetComponent<SlotScript>().SwitchCouple(null);
                 DestroyCard();
@@ -234,15 +274,13 @@ namespace Cards
         
         private void DestroyCard()
         {
+            if (!effect.Permanent)
+            {
+                cardManager.RemoveCardEffects(this);
+            }
             List<Card> arr = RoundManager.instance.PlayerMove == players ? cardManager.cardsPlayedPlayer1 : cardManager.cardsPlayedPlayer2;
             arr.Remove(this);
-
-                if (!m_effect.Permanent)
-                {
-                    cardManager.RemoveEffectsByDestroyCard(this);
-                }
-
-                Destroy(gameObject);
+            Destroy(gameObject);
         }
 
 
@@ -255,39 +293,54 @@ namespace Cards
         private int m_defaultHealth = 1;
         [SerializeField] private int m_defaultDamage = 0;
         
-        private Dictionary<Card, BaseEffect> m_effects = new Dictionary<Card, BaseEffect>();
+        public Dictionary<Card, BaseEffect> appliedEffects = new Dictionary<Card, BaseEffect>();
       
         
-        public void AddEffect([CanBeNull] BaseEffect effect, Card card)
+        public void AddEffect(BaseEffect effect, Card effectOwner)
         {
-            m_effects.Add(card, effect);
+            appliedEffects.Add(effectOwner, effect);
             effect.ApplyEffect(this);
         }
-        
-        public bool TryToRemoveEffect( Card card)
-        {
-            if (m_effects.ContainsKey(card) == null) return false;
-            m_effects.Remove(card);
+       //  
+       // public bool TryToRemoveEffect(BaseEffect effectToRemove)
+       //  {
+       //      if (!appliedEffects.ContainsValue(effectToRemove))
+       //      {
+       //          return false;
+       //      }
+       //      effectToRemove.TryToRemoveEffect()
+       //      card.GetDataCard().effect.TryToRemoveEffect(this);
+       //      appliedEffects.Remove(card);
+       //      
+       //
+       //      return true;
+       //  }
 
-            return true;
-        }
+       
 
         public CardPropertiesData GetDataCard()
         {
             return m_cardData;
         }
 
+        private void UpdateUICard()
+        {
+            m_tx_health.text = m_health.ToString();
+            m_tx_attack.text = m_attack.ToString();
+
+        }
+
           
         /*  public void AddEffect(BaseEffect effect)
           {
-              //m_effects.AddLast(effect);
+              //appliedEffects.AddLast(effect);
               effect.ApplyEffect(this);
           }*/
 
         /*public bool TryToRemoveEffect(BaseEffect effect)
         {
-            if (!m_effects.Contains(effect)) return false;
-            m_effects.Remove(effect);
+            if (!appliedEffects.Contains(effect)) return false;
+            appliedEffects.Remove(effect);
 
             return effect.TryToRemoveEffect(this);
         }*/

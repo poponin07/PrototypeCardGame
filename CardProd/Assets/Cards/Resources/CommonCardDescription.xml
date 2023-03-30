@@ -40,7 +40,7 @@
       #Battlecry/#: Summon a 1/1 Murloc Scout
     </Unit>
     <Unit Id="207" Name="Novice Engineer">
-      #Battlecry/#: Draw a card
+      #Battlecry/#: Draw a effectOwner
     </Unit>
     <Unit Id="208" Name="River Crocolisk"/>
   </Pack>
@@ -79,7 +79,7 @@
       #Battlecry/#: Summon a 2/1 Mechanical Dragonling
     </Unit>
     <Unit Id="403" Name="Gnomish Inventor">
-      #Battlecry/#: Draw a card
+      #Battlecry/#: Draw a effectOwner
     </Unit>
     <Unit Id="404" Name="Oasis Snapjaw"/>
     <Unit Id="405" Name="Ogre Magi">
