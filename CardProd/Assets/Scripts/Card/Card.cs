@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using effects;
+//using effects;
 using JetBrains.Annotations;
 using TMPro;
 using UnityEngine.EventSystems;
@@ -72,11 +72,13 @@ namespace Cards
         public AnimationComponent animationComponent;
         public int isReadyMome;
         public bool isTaunt;
+        public bool isSummon;
         private PlayerHand m_player1Hand;
         private PlayerHand m_player2Hand;
         private float stepY = 10f;
         private float liftSpeed = 0.05f;
         private float liftHeight = 5f;
+        private int summonID;
         private SlotInhandScript m_slotInhandScript;
         private CardPropertiesData m_cardData;
         private Transform m_deckPosition;
@@ -109,6 +111,8 @@ namespace Cards
             m_attack = data.Attack;
             m_coast = data.Cost;
             isTaunt = data.isTaunt;
+            isSummon = data.iSummon;
+            summonID = data.summonIDCard;
             m_tx_cardUnitType.text = CardUnitType.None == data.Type ? "" : data.Type.ToString();
             _picture.material = picture;
             SwitchCardState(this, CardState.InDeck);
@@ -274,10 +278,7 @@ namespace Cards
         
         private void DestroyCard()
         {
-            if (!effect.Permanent)
-            {
-                cardManager.RemoveCardEffects(this);
-            }
+            effect.TryToRemoveEffect();
             List<Card> arr = RoundManager.instance.PlayerMove == players ? cardManager.cardsPlayedPlayer1 : cardManager.cardsPlayedPlayer2;
             arr.Remove(this);
             Destroy(gameObject);
@@ -293,14 +294,7 @@ namespace Cards
         private int m_defaultHealth = 1;
         [SerializeField] private int m_defaultDamage = 0;
         
-        public Dictionary<Card, BaseEffect> appliedEffects = new Dictionary<Card, BaseEffect>();
-      
         
-        public void AddEffect(BaseEffect effect, Card effectOwner)
-        {
-            appliedEffects.Add(effectOwner, effect);
-            effect.ApplyEffect(this);
-        }
        //  
        // public bool TryToRemoveEffect(BaseEffect effectToRemove)
        //  {

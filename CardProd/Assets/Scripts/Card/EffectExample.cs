@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace effects
+/*namespace effects
 {
 	public class Card : MonoBehaviour
 	{
@@ -102,4 +102,4 @@ namespace effects
 		}
 	}
 }
-
+*/

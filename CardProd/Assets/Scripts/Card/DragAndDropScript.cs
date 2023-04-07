@@ -96,7 +96,7 @@ namespace Cards
                 case CardState.Discard:
                     
                     PlayerHand playerHand = RoundManager.instance.PlayerMove == Players.Player1 ? m_player1Hand : m_player2Hand;
-                    m_player1Hand.AddCardOnTable(m_card);
+                    m_player1Hand.AddCardOnTable(m_card, CardState.InHand);
                     break;
             }
         }

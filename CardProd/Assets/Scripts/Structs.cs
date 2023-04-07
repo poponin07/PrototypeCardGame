@@ -45,6 +45,8 @@ namespace Cards
 		public CardUnitType Type;
 		public bool isTaunt;
 		public bool isCharge;
+		public bool iSummon;
+		public int summonIDCard;
 		[SerializeField] public BaseEffect effect;
 
 		public CardParamsData GetParams()

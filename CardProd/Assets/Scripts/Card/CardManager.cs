@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Cards.ScriptableObjects;
 using Player;
@@ -33,7 +32,9 @@ namespace Cards
         private Card[] m_player1Deck;
         private Card[] m_player2Deck;
         private Card[] m_customPlayer1Deck;
-        private Card[] m_customPlayer2Deck; 
+
+        private Card[] m_customPlayer2Deck;
+
         // private Dictionary<Card, Card> actualEffects = new Dictionary<Card, Card>();
         [SerializeField] private int[] m_idForCustomDeckPlayer1;
         [SerializeField] private int[] m_idForCustomDeckPlayer2;
@@ -134,7 +135,6 @@ namespace Cards
 
         public void GetCardFromDeck(int cards, bool isRandomCard)
         {
-
             PlayerHand playerHand = RoundManager.instance.PlayerMove == Players.Player1 ? _player1Hand : _player2Hand;
 
             for (int j = cards; j != 0; j--)
@@ -180,50 +180,88 @@ namespace Cards
             }
         }
 
-        public void AddSummonCardOntable(int ID)
+        private SlotScript GetFreeSlotOnTable(Players player)
         {
-            List<SlotScript> slotsOnTable = RoundManager.instance.PlayerMove == Players.Player1 ? slotsOntablePlayer1 : slotsOntablePlayer2;
-            SlotScript freeSlot = null;
-            foreach (var slot in slotsOnTable)
+            List<SlotScript> slots = new List<SlotScript>();
+            if (player == Players.Player1)
+            {
+                slots = slotsOntablePlayer1;
+            }
+            else
+            {
+                slots = slotsOntablePlayer2;
+            }
+
+            foreach (var slot in slots)
             {
                 if (slot.couple == false)
                 {
-                    freeSlot = slot;
+                    return slot;
                 }
             }
-            if (freeSlot == null)
+
+            return null;
+        }
+
+        public void AddSummonCardOntable(int id)
+        {
+            
+            SlotScript freeSlot = GetFreeSlotOnTable(RoundManager.instance.PlayerMove);
+            if (GetFreeSlotOnTable(RoundManager.instance.PlayerMove) == true)
             {
-                return;
-                    
-            }
-            CardPropertiesData cardDataForSpaun = m_allCards[0]];
-            bool res = false;
-            foreach (var cardData in allCard)
-            {
-                if (cardData.Id == ID)
+                /*List<SlotScript> slotsOnTable = RoundManager.instance.PlayerMove == Players.Player1
+                    ? slotsOntablePlayer1
+                    : slotsOntablePlayer2;
+                SlotScript freeSlot = null;
+                foreach (var slot in slotsOnTable)
                 {
-                    cardDataForSpaun = cardData;
-                    res = true;
+                    if (slot.couple == false)
+                    {
+                        freeSlot = slot;
+                    }
                 }
-                
-            }
-            if (res == false)
-            {
-                return;
-            }
 
-            Transform deckTransform = RoundManager.instance.PlayerMove == Players.Player1
-                ? m_player1DeckRoot
-                : m_player2DeckRoot;
-            Card summonCard = Instantiate(m_cardPrefab, deckTransform);
-            summonCard.cardManager = this;
-            
-            var _newMat = new Material(m_baseMat);
-            _newMat.mainTexture = cardDataForSpaun.Texture;
-            
-            //deck[i].Confiruration(card, _newMat, CardUtility.GetDescriptionById(card.Id), _player1Hand,
-                //_player2Hand, player);
+                if (freeSlot == null)
+                {
+                    return;
 
+                }
+*/
+                CardPropertiesData cardDataForSpaun = m_allCards[0];
+                bool res = false;
+                foreach (var cardData in allCard)
+                {
+                    if (cardData.Id == id)
+                    {
+                        cardDataForSpaun = cardData;
+                        res = true;
+                    }
+                }
+
+                if (res == false)
+                {
+                    return;
+                }
+
+                Transform deckTransform = RoundManager.instance.PlayerMove == Players.Player1
+                    ? m_player1DeckRoot
+                    : m_player2DeckRoot;
+                Card summonCard = Instantiate(m_cardPrefab, deckTransform);
+                summonCard.cardManager = this;
+
+                var _newMat = new Material(m_baseMat);
+                _newMat.mainTexture = cardDataForSpaun.Texture;
+
+                PlayerHand playerHand =
+                    RoundManager.instance.PlayerMove == Players.Player1 ? _player1Hand : _player2Hand;
+                summonCard.Confiruration(cardDataForSpaun, _newMat, CardUtility.GetDescriptionById(cardDataForSpaun.Id),
+                    _player1Hand,
+                    _player2Hand, RoundManager.instance.PlayerMove);
+
+                summonCard.m_curParent = freeSlot.gameObject.transform;
+                playerHand.AddCardOnTable(summonCard, CardState.OnTable);
+                summonCard.animationComponent.AnimationFlipCard();
+            }
         }
 
         private bool CheckDeckNull(Card[] cards)
@@ -349,85 +387,10 @@ namespace Cards
             {
                 return;
             }
-
-            var targetCards = FindCardByType(effect.targetType);
-            if (targetCards.Count < 2)
-            {
-                return;
-            }
-
-            int rand;
-            if (effect.isSingeTarget)
-            {
-                rand = RandomCard(targetCards, effectOwner); //Random.Range(0, targetCards.Count);
-                //effect.ApplyEffect(targetCards[rand]);
-                targetCards[rand].AddEffect(effect, effectOwner);
-                // actualEffects.Add(effectOwner, targetCards[rand]);
-            }
-            else
-            {
-                foreach (var targetCard in targetCards)
-                {
-                    effect.ApplyEffect(targetCard);
-                    // actualEffects.Add(effectOwner, targetCard);
-                }
-            }
-
-
+            
+            effect.ApplyEffect(this);
         }
 
-        private int RandomCard(List<Card> cards, Card ownerEffect)
-        {
-            int rand;
-            do
-            {
-                rand = Random.Range(0, cards.Count);
-            } while (ownerEffect == cards[rand]);
-
-            return rand;
-        }
-
-        public void RemoveCardEffects(Card effectOwnerCard)
-        {
-            var cardAffectedByOwner = cardsPlayedPlayer1.FindAll((c) => c.appliedEffects.ContainsKey(effectOwnerCard));
-           cardAffectedByOwner.AddRange(cardsPlayedPlayer2.FindAll((c) => c.appliedEffects.ContainsKey(effectOwnerCard)));
-           
-           foreach (var card in cardAffectedByOwner)
-           {
-               effectOwnerCard.GetDataCard().effect.TryToRemoveEffect(card);
-           }
-        }
-
-        public void RemoveEffectsByDestroyCard(Card effectOwner)
-            {
-                // if (actualEffects.ContainsKey(effectOwner))
-                // {
-                //     foreach (var card in actualEffects)
-                //     {
-                //         if (card.Key == effectOwner)
-                //         {
-                //             card.Key.TryToRemoveEffect();
-                //         }
-                //     }
-                // }
-            }
-
-            private List<Card> FindCardByType(CardUnitType type)
-            {
-                //поиска карты по типу
-                List<Card> cards = new List<Card>();
-                List<Card> playedCards = new List<Card>();
-                playedCards = RoundManager.instance.PlayerMove == Players.Player1
-                    ? cardsPlayedPlayer1
-                    : cardsPlayedPlayer2;
-                if (type == CardUnitType.None)
-                {
-                    return cards = playedCards;
-                }
-
-                cards = playedCards.FindAll((c) => c.GetCardType() == type);
-                return cards;
-            }
-
-        }
+       
     }
+}

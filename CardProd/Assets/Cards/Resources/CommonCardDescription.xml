@@ -2,7 +2,7 @@
 <Descriptions>
   <Pack Cost="1" Type="Common">
     <Unit Id="101" Name="Grimscale Oracle">
-      Your other Murloc have +1 Attack
+      Your other Murloc have +1 Attack+
     </Unit>
     <Unit Id="102" Name="Elven Archer">
       #Battlecry/#: Deal 1 damage
@@ -83,7 +83,7 @@
     </Unit>
     <Unit Id="404" Name="Oasis Snapjaw"/>
     <Unit Id="405" Name="Ogre Magi">
-      #Spee Damage +1/#
+      #Spel Damage +1/#
     </Unit>
     <Unit Id="406" Name="Sen'jin Shieldmasta">
       #Taunt/#
@@ -130,7 +130,7 @@
   <Pack Cost="7" Type="Common">
     <Unit Id="701" Name="Core Hound"/>
     <Unit Id="702" Name="Stormwind Champion">
-      Your other minions have +1/+1
+      Your other minions have +1/+1+
     </Unit>
     <Unit Id="703" Name="War Golem"/>
   </Pack>

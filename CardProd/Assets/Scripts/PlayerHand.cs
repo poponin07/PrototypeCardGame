@@ -100,7 +100,7 @@ namespace Cards
             } 
         }
         
-        public bool AddCardOnTable(Card moveCard)
+        public bool AddCardOnTable(Card moveCard, CardState cardState)
         {
             SlotScript slotScript = m_cardManger.GetClosestSlot(moveCard, true);
             var slotTransform = slotScript.transform;
@@ -123,9 +123,22 @@ namespace Cards
             Card [] playerHand = RoundManager.instance.PlayerMove == Players.Player1 ? m_cardInHand1 : m_cardInHand2;
             int result = GetIndexLastCard(playerHand);
             playerHand[result] = moveCard;
-            moveCard.StartCoroutine(moveCard.MoveInHandOrTable(moveCard, moveCard.m_curParent, CardState.InHand));
+            moveCard.StartCoroutine(moveCard.MoveInHandOrTable(moveCard, moveCard.m_curParent, cardState));
             return true;
         }
+
+        // public void AddCardOnTableFromDeck(Card moveCard)
+        // {
+        //     moveCard.transform.SetParent(moveCard.m_curParent);
+        //     
+        //     List<Card> arr = moveCard.players  == Players.Player1 ? m_cardManger.cardsPlayedPlayer1 : m_cardManger.cardsPlayedPlayer2;
+        //     arr.Add(moveCard);
+        //     
+        //     m_cardManger.SetEffectOnCard(moveCard);
+        //     moveCard.SwitchCardState(moveCard,CardState.OnTable);
+        //     
+        //     moveCard.StartCoroutine(moveCard.MoveInHandOrTable(moveCard, moveCard.m_curParent, CardState.OnTable));
+        // }
 
         public bool CardAttack(Card moveCard)
         {

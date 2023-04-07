@@ -5,23 +5,17 @@ using System.Runtime.CompilerServices;
 using Cards;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Cards
 {
     [Serializable]
     public abstract class BaseEffect : ScriptableObject
     {
-        [NonSerialized]
-        public Card Parent;
-        public bool Permanent;
-        public CardUnitType targetType;
-        public bool isSingeTarget;
+        public abstract void ApplyEffect(CardManager cardManager);
 
-        public abstract void ApplyEffect(Card target);
-
-        public abstract bool TryToRemoveEffect(Card target);
+        public abstract bool TryToRemoveEffect();
     }
-
 
 
     [CreateAssetMenu(fileName = "StatsEffect", menuName = "Effects/StatsEffect")]
@@ -29,54 +23,87 @@ namespace Cards
     {
         public int Damage;
         public int Health;
+        [NonSerialized] private Card m_effectedCard;
 
-        public override void ApplyEffect(Card target)
+        public override void ApplyEffect(CardManager cardManager)
         {
-            target.Health += Health;
-            target.Attack += Damage;
+            List<Card> targetCards = new List<Card>();
+            targetCards.AddRange(
+                RoundManager.instance.PlayerMove == Players.Player1
+                ? cardManager.cardsPlayedPlayer1
+                : cardManager.cardsPlayedPlayer2);
+            int rand = Random.Range(0, targetCards.Count);
+            m_effectedCard = targetCards[rand];
+            m_effectedCard.Health += Health;
+            m_effectedCard.Attack += Damage;
         }
 
-        public override bool TryToRemoveEffect(Card target)
+        public override bool TryToRemoveEffect()
         {
-            if (Permanent) return false;
-
-            target.Health -= Health;
-            target.Attack -= Damage;
+            m_effectedCard.Health -= Health;
+            m_effectedCard.Attack -= Damage;
 
             return true;
         }
-
-
     }
 
     [CreateAssetMenu(fileName = "BattleCry", menuName = "Effects/BattleCry")]
     public class BattleCry : BaseEffect
     {
-        public override void ApplyEffect(Card target)
+        public override void ApplyEffect(CardManager cardManager)
         {
-            throw new System.NotImplementedException();
+            // if (isSingleTarget)
+            // {
+            //     int rand = Random.Range(0, targetCards.Count);
+            //     effectedCard = targetCards[rand];
+            // }
+            // else
+            // {
+            //     foreach (var targetCard in targetCards)
+            //     {
+            //         effectedCard = targetCard;
+            //     }
+            // }        
         }
-
-        public override bool TryToRemoveEffect(Card target)
+        // private List<Card> FindCardByType(CardUnitType type)
+        // {
+        //     //поиска карты по типу
+        //     List<Card> cards = new List<Card>();
+        //     List<Card> playedCards = new List<Card>();
+        //     playedCards = RoundManager.instance.PlayerMove == Players.Player1
+        //         ? cardsPlayedPlayer1
+        //         : cardsPlayedPlayer2;
+        //     if (type == CardUnitType.None)
+        //     {
+        //         cards.AddRange(playedCards);
+        //         return cards;
+        //     }
+        //
+        //     cards.AddRange(playedCards.FindAll((c) => c.GetCardType() == type));
+        //     return cards;
+        // }
+        public override bool TryToRemoveEffect()
         {
             throw new System.NotImplementedException();
         }
     }
-    
+
     [CreateAssetMenu(fileName = "Summon", menuName = "Effects/Summon")]
     public class Summon : BaseEffect
     {
-        public Card cardToSummon;
-        public override void ApplyEffect(Card target)
+        public int cardIdToSummon;
+        [NonSerialized] private Card m_effectOwner;
+
+        public override void ApplyEffect(CardManager cardManager)
         {
-            //cardToSummon.spawn();
+            
+            cardManager.AddSummonCardOntable(cardIdToSummon);
+            
         }
 
-        public override bool TryToRemoveEffect(Card target)
+        public override bool TryToRemoveEffect()
         {
-            throw new System.NotImplementedException();
+            return true;
         }
     }
 }
-
-        
