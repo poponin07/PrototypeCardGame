@@ -10,11 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: Summon
-  m_EditorClassIdentifier: Assembly-CSharp:Cards:Summon
-  Permanent: 0
-  targetType: 0
-  isSingleTarget: 0
-  isSummon: 0
-  summonIDCard: 0
-  cardToSummon: {fileID: 0}
+  m_Name: BattleCryDealDamage
+  m_EditorClassIdentifier: Assembly-CSharp:Cards:BattleCryDealDamage
+  damage: 0

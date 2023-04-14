@@ -16,28 +16,35 @@ namespace Player
             m_damageCounterForCards = 1;
         }
 
-        public bool GetDamage(int damage,bool  forGetCard)
+        public void GetDamage(int damage,bool  forGetCard)
         {
             if (forGetCard)
             {
                 m_plaerData.Health -= m_damageCounterForCards;
                 m_damageCounterForCards++;
+                m_UIavatarscript.RefreshHealthPlayer(m_plaerData.Health, false);
             }
             else
             {
                 m_plaerData.Health -= damage; 
+                m_UIavatarscript.RefreshHealthPlayer(m_plaerData.Health, true);
             }
-            
-            
-            m_UIavatarscript.RefreshHealthPlayer(m_plaerData.Health);
-            
-            if (m_plaerData.Health <= 0)
+
+            if ( m_plaerData.Health <= 0 )
             {
-                m_UIavatarscript.RefreshHealthPlayer(0);
-                return true;
+                Debug.LogError(RoundManager.instance.PlayerMove + " wins!");
             }
             
-            return false;
+        }
+
+        public void RestoreHealth(int restoreData)
+        {
+            m_plaerData.Health += restoreData;
+            if (m_plaerData.Health > m_plaerData.HealthDefault)
+            {
+                m_plaerData.Health = m_plaerData.HealthDefault;
+            }
+            m_UIavatarscript.RefreshHealthPlayer(m_plaerData.Health, false);
         }
         
         public int GetDamageForEmptyDeck()

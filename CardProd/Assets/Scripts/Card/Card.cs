@@ -128,7 +128,7 @@ namespace Cards
 
         private void SetChargeParam(CardPropertiesData data)
         {
-            if (data.isCharge == true)
+            if (data.isCharge)
             {
                 isReadyMome = 0;
             }
@@ -254,6 +254,17 @@ namespace Cards
             return false;
         }
 
+        public void GetDamageSpell(int damage)
+        {
+            m_health = -damage;
+
+            if (m_health <= 0)
+            {
+                m_curParent.GetComponent<SlotScript>().SwitchCouple(null);
+                DestroyCard();
+            }
+        }
+
         public SlotInhandScript GetSlotInCurHand()
         {
             return m_slotInhandScript;
@@ -261,7 +272,7 @@ namespace Cards
 
         public bool CardInDeck()
         {
-            if (m_slotInhandScript.GetIsSwapedCardOnFerstRound())
+            if (!m_slotInhandScript.GetIsSwapedCardOnFerstRound())
             {
                 StartCoroutine(LiftCard( this, m_deckPosition, false));
                 m_slotInhandScript.SetIsSwapedCardOnFerstRound();
@@ -280,6 +291,7 @@ namespace Cards
         {
             effect.TryToRemoveEffect();
             List<Card> arr = RoundManager.instance.PlayerMove == players ? cardManager.cardsPlayedPlayer1 : cardManager.cardsPlayedPlayer2;
+            Debug.LogError(RoundManager.instance.PlayerMove == players);
             arr.Remove(this);
             Destroy(gameObject);
         }
@@ -294,23 +306,6 @@ namespace Cards
         private int m_defaultHealth = 1;
         [SerializeField] private int m_defaultDamage = 0;
         
-        
-       //  
-       // public bool TryToRemoveEffect(BaseEffect effectToRemove)
-       //  {
-       //      if (!appliedEffects.ContainsValue(effectToRemove))
-       //      {
-       //          return false;
-       //      }
-       //      effectToRemove.TryToRemoveEffect()
-       //      card.GetDataCard().effect.TryToRemoveEffect(this);
-       //      appliedEffects.Remove(card);
-       //      
-       //
-       //      return true;
-       //  }
-
-       
 
         public CardPropertiesData GetDataCard()
         {
@@ -323,27 +318,5 @@ namespace Cards
             m_tx_attack.text = m_attack.ToString();
 
         }
-
-          
-        /*  public void AddEffect(BaseEffect effect)
-          {
-              //appliedEffects.AddLast(effect);
-              effect.ApplyEffect(this);
-          }*/
-
-        /*public bool TryToRemoveEffect(BaseEffect effect)
-        {
-            if (!appliedEffects.Contains(effect)) return false;
-            appliedEffects.Remove(effect);
-
-            return effect.TryToRemoveEffect(this);
-        }*/
-        
-        /*private void Awake()
-        {
-            health = m_defaultHealth;
-            attack = m_defaultDamage;
-        }*/
-
     }
 } 

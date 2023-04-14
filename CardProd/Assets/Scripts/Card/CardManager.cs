@@ -48,7 +48,9 @@ namespace Cards
         [SerializeField] private PlayerCardSlotsManager m_slotsManager;
         public List<SlotScript> slotsOntablePlayer1;
         public List<SlotScript> slotsOntablePlayer2;
-        private UIAvatarScript m_avatarScript;
+        private UIAvatarScript m_uiAvatarScript;
+        public PlayerScript player1Script;
+        public PlayerScript player2Script;
         public PlayerData m_player1Data;
         public PlayerData m_player2Data;
         public bool UseCustomDeck;
@@ -67,9 +69,9 @@ namespace Cards
         {
             m_player1Deck = CreateDeck(m_player1DeckRoot, Players.Player1);
             m_player2Deck = CreateDeck(m_player2DeckRoot, Players.Player2);
-            m_avatarScript = GetComponent<UIAvatarScript>();
-            m_player1Data = m_avatarScript._player1Data;
-            m_player2Data = m_avatarScript._player2Data;
+            m_uiAvatarScript = GetComponent<UIAvatarScript>();
+            m_player1Data = m_uiAvatarScript._player1Data;
+            m_player2Data = m_uiAvatarScript._player2Data;
 
             FillCardSlots();
         }
@@ -209,24 +211,6 @@ namespace Cards
             SlotScript freeSlot = GetFreeSlotOnTable(RoundManager.instance.PlayerMove);
             if (GetFreeSlotOnTable(RoundManager.instance.PlayerMove) == true)
             {
-                /*List<SlotScript> slotsOnTable = RoundManager.instance.PlayerMove == Players.Player1
-                    ? slotsOntablePlayer1
-                    : slotsOntablePlayer2;
-                SlotScript freeSlot = null;
-                foreach (var slot in slotsOnTable)
-                {
-                    if (slot.couple == false)
-                    {
-                        freeSlot = slot;
-                    }
-                }
-
-                if (freeSlot == null)
-                {
-                    return;
-
-                }
-*/
                 CardPropertiesData cardDataForSpaun = m_allCards[0];
                 bool res = false;
                 foreach (var cardData in allCard)
@@ -261,6 +245,25 @@ namespace Cards
                 summonCard.m_curParent = freeSlot.gameObject.transform;
                 playerHand.AddCardOnTable(summonCard, CardState.OnTable);
                 summonCard.animationComponent.AnimationFlipCard();
+            }
+        }
+
+        public void DealDamage(int damage)
+        {
+            List<Card> playedCard = RoundManager.instance.PlayerMove == Players.Player1
+                ? cardsPlayedPlayer2
+                : cardsPlayedPlayer1;
+
+            if (playedCard.Count > 0 )
+            {
+                int rand = Random.Range(0, playedCard.Count);
+                playedCard[rand].GetDamageSpell(damage);
+            }
+            else
+            {
+                PlayerScript playerScript =
+                    RoundManager.instance.PlayerMove == Players.Player1 ? player2Script : player1Script;
+                playerScript.GetDamage(damage, false);
             }
         }
 
@@ -302,7 +305,7 @@ namespace Cards
             if (card.Coast <= data.Mana)
             {
                 data.Mana -= card.Coast;
-                m_avatarScript.RefreshManaPlayer(data.Mana);
+                m_uiAvatarScript.RefreshManaPlayer(data.Mana);
             }
             else
             {

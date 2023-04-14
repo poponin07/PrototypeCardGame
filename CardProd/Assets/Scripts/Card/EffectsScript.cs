@@ -52,39 +52,47 @@ namespace Cards
     {
         public override void ApplyEffect(CardManager cardManager)
         {
-            // if (isSingleTarget)
-            // {
-            //     int rand = Random.Range(0, targetCards.Count);
-            //     effectedCard = targetCards[rand];
-            // }
-            // else
-            // {
-            //     foreach (var targetCard in targetCards)
-            //     {
-            //         effectedCard = targetCard;
-            //     }
-            // }        
         }
-        // private List<Card> FindCardByType(CardUnitType type)
-        // {
-        //     //поиска карты по типу
-        //     List<Card> cards = new List<Card>();
-        //     List<Card> playedCards = new List<Card>();
-        //     playedCards = RoundManager.instance.PlayerMove == Players.Player1
-        //         ? cardsPlayedPlayer1
-        //         : cardsPlayedPlayer2;
-        //     if (type == CardUnitType.None)
-        //     {
-        //         cards.AddRange(playedCards);
-        //         return cards;
-        //     }
-        //
-        //     cards.AddRange(playedCards.FindAll((c) => c.GetCardType() == type));
-        //     return cards;
-        // }
+
         public override bool TryToRemoveEffect()
         {
             throw new System.NotImplementedException();
+        }
+    }
+    
+    [CreateAssetMenu(fileName = "BattleCryDealDamage", menuName = "Effects/BattleCryDealDamage")]
+    public class BattleCryDealDamage : BaseEffect
+    {
+        [SerializeField] private int damage;
+        public override void ApplyEffect(CardManager cardManager)
+        {
+            cardManager.DealDamage(damage);
+        }
+        public override bool TryToRemoveEffect()
+        {
+            return true;
+        }
+    }
+    
+    [CreateAssetMenu(fileName = "BattleCryRestoreHealth", menuName = "Effects/BattleCryRestoreHealth")]
+    public class BattleCryRestoreHealth : BaseEffect
+    {
+        public int valueHealthRestore;
+        public override void ApplyEffect(CardManager cardManager)
+        {
+            if (RoundManager.instance.PlayerMove == Players.Player1)
+            {
+                cardManager.player1Script.RestoreHealth(valueHealthRestore);
+            }
+            else
+            {
+                cardManager.player2Script.RestoreHealth(valueHealthRestore);
+            }
+        }
+
+        public override bool TryToRemoveEffect()
+        {
+            return true;
         }
     }
 

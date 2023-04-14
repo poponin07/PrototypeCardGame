@@ -14,7 +14,7 @@
       #Charge/#
     </Unit>
     <Unit Id="105" Name="Voodoo Doctor">
-      #Battlecry/#: Restore 2 Health
+      #Battlecry/#: Restore 2 Health++
     </Unit>
     <Unit Id="106" Name="Murloc Raider"/>
     <Unit Id="107" Name="Boar" Uncollectible="true"/>
@@ -37,7 +37,7 @@
       #Spell Damage +1/#
     </Unit>
     <Unit Id="206" Name="Murloc Tidehunter">
-      #Battlecry/#: Summon a 1/1 Murloc Scout
+      #Battlecry/#: Summon a 1/1 Murloc Scout++
     </Unit>
     <Unit Id="207" Name="Novice Engineer">
       #Battlecry/#: Draw a effectOwner
@@ -60,7 +60,7 @@
       Your other minions have +1 Attack
     </Unit>
     <Unit Id="306" Name="Razorfen Hunter">
-      #Battlecry/#: Summon a 1/1 Boar
+      #Battlecry/#: Summon a 1/1 Boar++
     </Unit>
     <Unit Id="307" Name="Shattered Sun Cleric">
       #Battlecry/#: Give a friendly miniom +1/+1
@@ -76,7 +76,7 @@
   <Pack Cost="4" Type="Common">
     <Unit Id="401" Name="Chillwind Yeti"/>
     <Unit Id="402" Name="Dragonling Mechanic">
-      #Battlecry/#: Summon a 2/1 Mechanical Dragonling
+      #Battlecry/#: Summon a 2/1 Mechanical Dragonling ++
     </Unit>
     <Unit Id="403" Name="Gnomish Inventor">
       #Battlecry/#: Draw a effectOwner
@@ -98,7 +98,7 @@
       #Taunt/#
     </Unit>
     <Unit Id="502" Name="Darkscale Healer">
-      #Battlecry/#: Restore 2 Health to all friendly characters
+      #Battlecry/#: Restore 2 Health to all friendly characters 
     </Unit>
     <Unit Id="503" Name="Frostwolf Warlord">
       #Battlecry/#: Gain +1/+1 for each other friendly minion on the battlefield

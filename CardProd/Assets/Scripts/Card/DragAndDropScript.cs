@@ -38,7 +38,8 @@ namespace Cards
                     }
 
                     m_card.transform.position = m_card.m_curParent.transform.position;
-                    m_player1Hand.RemoveCardFromHand(m_card);
+                    PlayerHand playerHand = RoundManager.instance.PlayerMove == Players.Player1 ? m_player1Hand : m_player2Hand;
+                    playerHand.RemoveCardFromHand(m_card);
                     break;
                 case CardState.OnTable:
                     break;

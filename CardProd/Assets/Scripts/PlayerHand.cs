@@ -30,13 +30,13 @@ namespace Cards
         public bool SetNewCardInHand(Card newCard, bool fromDeck)
         {
             Card[] cardInHand;
-            if (RoundManager.instance.PlayerMove != Players.Player1)
+            if (RoundManager.instance.PlayerMove == Players.Player1)
             {
-                cardInHand = m_cardInHand2;
+                cardInHand = m_cardInHand1;
             }
             else
             {
-                cardInHand = m_cardInHand1;
+                cardInHand = m_cardInHand2;
             }
             
             int result = GetIndexLastCard(cardInHand);
@@ -68,11 +68,6 @@ namespace Cards
                 {
                     return i;
                 }
-                /*Debug.Log(arr[i].gameObject.transform.childCount);
-                if (arr[i].gameObject.transform.childCount == 0)
-                {
-                    return i; 
-                }*/
             }
             return -1;
         }
@@ -126,20 +121,7 @@ namespace Cards
             moveCard.StartCoroutine(moveCard.MoveInHandOrTable(moveCard, moveCard.m_curParent, cardState));
             return true;
         }
-
-        // public void AddCardOnTableFromDeck(Card moveCard)
-        // {
-        //     moveCard.transform.SetParent(moveCard.m_curParent);
-        //     
-        //     List<Card> arr = moveCard.players  == Players.Player1 ? m_cardManger.cardsPlayedPlayer1 : m_cardManger.cardsPlayedPlayer2;
-        //     arr.Add(moveCard);
-        //     
-        //     m_cardManger.SetEffectOnCard(moveCard);
-        //     moveCard.SwitchCardState(moveCard,CardState.OnTable);
-        //     
-        //     moveCard.StartCoroutine(moveCard.MoveInHandOrTable(moveCard, moveCard.m_curParent, CardState.OnTable));
-        // }
-
+        
         public bool CardAttack(Card moveCard)
         {
             SlotScript slotScript = m_cardManger.GetClosestSlot(moveCard, false);
@@ -154,13 +136,13 @@ namespace Cards
            
                 if (slotScript.m_isPlyerAvatar)
                 {
-                    attackResult = slotScript.gameObject.GetComponent<PlayerScript>().GetDamage(moveCard.Attack, false);
+                    slotScript.gameObject.GetComponent<PlayerScript>().GetDamage(moveCard.Attack, false);
                     animationComponent.AnimationShakeCard();
                     moveCard.RefresMoveIndex(1);
-                    if (attackResult)
+                   /* if (attackResult)
                     {
                         Debug.LogError(RoundManager.instance.PlayerMove + " wins!");
-                    }
+                    }*/
                 }
                 else
                 {

@@ -46,15 +46,30 @@ public class UIAvatarScript : MonoBehaviour
             manaUItext_Player2.text = mana.ToString();
         }
     }
-    public void RefreshHealthPlayer(int helth)
+    public void RefreshHealthPlayer(int helth, bool isCardAttack)
     {
-        if (RoundManager.instance.PlayerMove == Players.Player1)
+        if (isCardAttack)
         {
-            healthUItext_Player1.text = helth.ToString();
+
+            if (RoundManager.instance.PlayerMove == Players.Player2)
+            {
+                healthUItext_Player1.text = helth.ToString();
+            }
+            else
+            {
+                healthUItext_Player2.text = helth.ToString();
+            }
         }
         else
         {
-            healthUItext_Player2.text = helth.ToString();
+            if (RoundManager.instance.PlayerMove == Players.Player1)
+            {
+                healthUItext_Player1.text = helth.ToString();
+            }
+            else
+            {
+                healthUItext_Player2.text = helth.ToString();
+            }
         }
     }
     

@@ -105,8 +105,8 @@ namespace Cards
             m_manaIndex++;
          }
          
-         m_PlayerData1.Mana += m_manaIndex;
-        m_PlayerData2.Mana += m_manaIndex;
+         m_PlayerData1.Mana = m_manaIndex;
+        m_PlayerData2.Mana = m_manaIndex;
         
          m_avatarScript.RefreshPlayerManaRound(m_PlayerData1.Mana, m_PlayerData2.Mana);
       }

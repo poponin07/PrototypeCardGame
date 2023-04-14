@@ -43,7 +43,7 @@ namespace Input
                         сhoicePlayerAvatar.SetAvatar();
                         return;
                     }
-                    return;
+                   
                 }
                 
                  
