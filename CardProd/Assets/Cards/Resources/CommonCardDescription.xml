@@ -2,7 +2,7 @@
 <Descriptions>
   <Pack Cost="1" Type="Common">
     <Unit Id="101" Name="Grimscale Oracle">
-      Your other Murloc have +1 Attack+
+      Your other Murloc have +1 Attack
     </Unit>
     <Unit Id="102" Name="Elven Archer">
       #Battlecry/#: Deal 1 damage
@@ -14,7 +14,7 @@
       #Charge/#
     </Unit>
     <Unit Id="105" Name="Voodoo Doctor">
-      #Battlecry/#: Restore 2 Health++
+      #Battlecry/#: Restore 2 Health
     </Unit>
     <Unit Id="106" Name="Murloc Raider"/>
     <Unit Id="107" Name="Boar" Uncollectible="true"/>

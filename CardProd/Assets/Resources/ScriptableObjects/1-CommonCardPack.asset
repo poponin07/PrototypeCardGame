@@ -24,7 +24,7 @@ MonoBehaviour:
     isCharge: 0
     iSummon: 0
     summonIDCard: 0
-    effect: {fileID: 0}
+    effect: {fileID: 11400000, guid: 1392c305677e49648ba9f249a95c13ee, type: 2}
   - Id: 102
     Name: Elven Archer
     Texture: {fileID: 2800000, guid: 70dde54215b51254abe6a32218138450, type: 3}
@@ -90,7 +90,7 @@ MonoBehaviour:
     isCharge: 0
     iSummon: 0
     summonIDCard: 0
-    effect: {fileID: 11400000, guid: 1392c305677e49648ba9f249a95c13ee, type: 2}
+    effect: {fileID: 0}
   - Id: 108
     Name: Mechanical Dragonling
     Texture: {fileID: 2800000, guid: aa2e71adae60f064091f659f6240f2ac, type: 3}

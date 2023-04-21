@@ -296,6 +296,7 @@ namespace Cards
             Destroy(gameObject);
         }
 
+        
 
         public CardUnitType GetCardType()
         {
