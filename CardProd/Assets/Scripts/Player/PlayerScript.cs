@@ -34,7 +34,6 @@ namespace Player
             {
                 Debug.LogError(RoundManager.instance.PlayerMove + " wins!");
             }
-            
         }
 
         public void RestoreHealth(int restoreData)

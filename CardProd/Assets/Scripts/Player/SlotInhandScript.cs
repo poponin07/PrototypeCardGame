@@ -6,15 +6,10 @@ using UnityEngine;
 public class SlotInhandScript : MonoBehaviour
 {
     [SerializeField]private bool isSwapedCardOnFerstRound;
-
-    private void Start()
-    {
-       // isSwapedCardOnFerstRound = true;
-    }
-
+    
     public void SetIsSwapedCardOnFerstRound()
     {
-        isSwapedCardOnFerstRound = false;
+        isSwapedCardOnFerstRound = true;
     }
 
 

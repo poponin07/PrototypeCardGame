@@ -270,10 +270,13 @@ namespace Cards
             return m_slotInhandScript;
         }
 
-        public bool CardInDeck()
+        public bool CardInDeck(Card card)
         {
             if (!m_slotInhandScript.GetIsSwapedCardOnFerstRound())
             {
+                PlayerHand playerHand =
+                    RoundManager.instance.PlayerMove == Players.Player1 ? m_player1Hand : m_player2Hand;
+                playerHand.RemoveCardFromHand(card);
                 StartCoroutine(LiftCard( this, m_deckPosition, false));
                 m_slotInhandScript.SetIsSwapedCardOnFerstRound();
                 return true;
@@ -287,12 +290,23 @@ namespace Cards
             m_slotInhandScript = slotInhandScript;
         }
         
-        private void DestroyCard()
+        public void DestroyCard()
         {
-            effect.TryToRemoveEffect();
+            effect.TryToRemoveEffect(cardManager);
             List<Card> arr = RoundManager.instance.PlayerMove == players ? cardManager.cardsPlayedPlayer1 : cardManager.cardsPlayedPlayer2;
-            Debug.LogError(RoundManager.instance.PlayerMove == players);
             arr.Remove(this);
+            if (isSummon == true)
+            {
+                if (players == Players.Player1)
+                {
+                    cardManager.SummonedCardPlayer1.Remove(this);
+                }
+                else
+                {
+                    cardManager.SummonedCardPlayer2.Remove(this);
+                }
+            }
+
             Destroy(gameObject);
         }
 

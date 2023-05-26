@@ -33,7 +33,6 @@ namespace Input
             if (Physics.Raycast(ray, out var hit))
             {
                 Card card = hit.transform.GetComponent<Card>();
-                Debug.Log(hit.collider.gameObject.name);
                 if (card == null || card.players == RoundManager.instance.PlayerMove)
                 {
                     СhoicePlayerAvatar сhoicePlayerAvatar = hit.transform.GetComponent<СhoicePlayerAvatar>();
@@ -48,10 +47,9 @@ namespace Input
                 
                  
                     Card cardComp = hit.transform != null ? card : null;
-                    if (cardComp != null && cardComp.m_cardState == CardState.InHand /*&& RoundManager.instance.GetSwapCardOnFerstRoundIndex() > 0 */)
+                    if (cardComp != null && cardComp.m_cardState == CardState.InHand  )
                     {
-                        Debug.Log("click");
-                        if (cardComp.CardInDeck())
+                        if (cardComp.CardInDeck(card))
                         {
                             m_cardManager.AddCardToDeck(cardComp);
                             m_cardManager.GetCardFromDeck(1, true); 

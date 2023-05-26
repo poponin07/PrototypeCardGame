@@ -32,13 +32,13 @@ namespace Cards
         private Card[] m_player1Deck;
         private Card[] m_player2Deck;
         private Card[] m_customPlayer1Deck;
+        public List<Card> SummonedCardPlayer1; 
+        public List<Card> SummonedCardPlayer2; 
 
         private Card[] m_customPlayer2Deck;
-
-        // private Dictionary<Card, Card> actualEffects = new Dictionary<Card, Card>();
+        
         [SerializeField] private int[] m_idForCustomDeckPlayer1;
         [SerializeField] private int[] m_idForCustomDeckPlayer2;
-
 
         private const float c_stepCardInDeck = 0.07f;
         private Material m_baseMat;
@@ -182,7 +182,7 @@ namespace Cards
             }
         }
 
-        private SlotScript GetFreeSlotOnTable(Players player)
+        public SlotScript GetFreeSlotOnTable(Players player)
         {
             List<SlotScript> slots = new List<SlotScript>();
             if (player == Players.Player1)
@@ -243,7 +243,17 @@ namespace Cards
                     _player2Hand, RoundManager.instance.PlayerMove);
 
                 summonCard.m_curParent = freeSlot.gameObject.transform;
-                playerHand.AddCardOnTable(summonCard, CardState.OnTable);
+                summonCard.isSummon = true;
+                if (summonCard.players == Players.Player1)
+                {
+                    SummonedCardPlayer1.Add(summonCard);
+                }
+                else
+                {
+                    SummonedCardPlayer2.Add(summonCard); 
+                }
+                
+                playerHand.AddSummoncardOnTable(summonCard, CardState.OnTable);
                 summonCard.animationComponent.AnimationFlipCard();
             }
         }
@@ -394,6 +404,58 @@ namespace Cards
             effect.ApplyEffect(this);
         }
 
-       
+        public List<Card> SummonedMurlocsAddDamage(bool isAddDamage, int damageValue)
+        {
+            List<Card> cardsSummoned;
+            List<Card> targetcards = new List<Card>();
+            if (RoundManager.instance.PlayerMove == Players.Player1)
+            {
+                cardsSummoned = SummonedCardPlayer1;
+            }
+            else
+            {
+                cardsSummoned = SummonedCardPlayer2;
+            }
+
+            foreach (var card in cardsSummoned)
+            {
+                if (card.GetCardType() == CardUnitType.Murloc)
+                {
+                        card.Attack += damageValue;
+                        targetcards.Add(card);
+                }
+            }
+            return targetcards;
+        }
+
+        public void RemoveCardOpponent()
+        {
+            Card[] playerCards = new Card[] {};
+                if (RoundManager.instance.PlayerMove == Players.Player1)
+                {
+                    playerCards = _player2Hand.m_cardInHand2;
+                }
+                else
+                {
+                    playerCards = _player1Hand.m_cardInHand1;
+                }
+
+                List<Card> tempcard = new List<Card>();
+                foreach (var card in playerCards)
+                {
+                    if (card != null)
+                    {
+                        tempcard.Add(card);
+                    }
+                }
+
+                if ( tempcard.Count == 0)
+                {
+                    return;
+                }
+                int randIndx = Random.Range(0, tempcard.Count);
+                
+                playerCards[randIndx].DestroyCard();
+        }
     }
-}
+    }

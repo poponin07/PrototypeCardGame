@@ -14,8 +14,8 @@ namespace Cards
         [SerializeField]
         private CardManager m_cardManger;
         
-        private Card[] m_cardInHand1;
-        private Card[] m_cardInHand2;
+        public Card[] m_cardInHand1;
+        public Card[] m_cardInHand2;
         //private List<Card> m_cardOnTable;
         
         public Transform axis;
@@ -120,6 +120,32 @@ namespace Cards
             playerHand[result] = moveCard;
             moveCard.StartCoroutine(moveCard.MoveInHandOrTable(moveCard, moveCard.m_curParent, cardState));
             return true;
+        }
+
+        public void AddSummoncardOnTable(Card moveCard, CardState cardState)
+        {
+            SlotScript slot = m_cardManger.GetFreeSlotOnTable(RoundManager.instance.PlayerMove);
+            var slotTransform = slot.transform;
+
+            if (slot != null)
+            {
+                slot.SwitchCouple(moveCard);
+                moveCard.m_curParent = slotTransform;
+                moveCard.transform.SetParent(slotTransform);
+                //moveCard.transform.position = slotTransform.position;
+                
+                List<Card> arr = moveCard.players  == Players.Player1 ? m_cardManger.cardsPlayedPlayer1 : m_cardManger.cardsPlayedPlayer2;
+                arr.Add(moveCard);
+                
+                //m_cardManger.SetEffectOnCard(moveCard);
+                moveCard.SwitchCardState(moveCard,CardState.OnTable);
+               
+                Card [] playerHand = RoundManager.instance.PlayerMove == Players.Player1 ? m_cardInHand1 : m_cardInHand2;
+                int result = GetIndexLastCard(playerHand);
+                //playerHand[result] = moveCard;
+                moveCard.StartCoroutine(moveCard.MoveInHandOrTable(moveCard, moveCard.m_curParent, cardState));
+            }
+
         }
         
         public bool CardAttack(Card moveCard)
