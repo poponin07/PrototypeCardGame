@@ -59,7 +59,8 @@ namespace Cards
             return true;
         }
     }
-
+    
+    //наночит урон
     [CreateAssetMenu(fileName = "BattleCryDealDamage", menuName = "Effects/BattleCryDealDamage")]
     public class BattleCryDealDamage : BaseEffect
     {
@@ -75,7 +76,8 @@ namespace Cards
             return true;
         }
     }
-
+    
+    //повышение урона миньонов-мурлоков
     [CreateAssetMenu(fileName = "SummonedMurlocsDamageStats", menuName = "Effects/SummonedMurlocsDamageStats")]
     public class SummonedMurlocsDamageStats : BaseEffect
     {
@@ -98,6 +100,36 @@ namespace Cards
         }
     }
 
+    //повышение статов миньонов
+    [CreateAssetMenu(fileName = "SummoneUpStats", menuName = "Effects/SummoneUpStats")]
+    public class SummonedUpStats : BaseEffect
+    {
+        [SerializeField] private int damage;
+        [SerializeField] private int health;
+        private List<Card> effectedCards;
+
+        public override void ApplyEffect(CardManager cardManager)
+        {
+            effectedCards = cardManager.SummonedCardsAddStats(damage, health);
+        }
+
+        public override bool TryToRemoveEffect(CardManager cardManager)
+        {
+            foreach (var card in effectedCards)
+            {
+                if (card != null)
+                {
+                    card.Attack -= damage;
+                    card.Health -= health; 
+                }
+                
+            }
+
+            return true;
+        }
+    }
+    
+    //удаляет карту соперника
     [CreateAssetMenu(fileName = "RemoveCardOpponent", menuName = "Effects/RemoveCardOpponent")]
     public class RemoveCardOpponent : BaseEffect
     {
@@ -110,62 +142,62 @@ namespace Cards
         {
             return true;
         }
-
-
-
-        [CreateAssetMenu(fileName = "BattleCryDrawCard", menuName = "Effects/BattleCryDrawCard")]
-        public class BattleCryDrawCard : BaseEffect
+    }
+    
+    //дает карту из колоды
+    [CreateAssetMenu(fileName = "BattleCryDrawCard", menuName = "Effects/BattleCryDrawCard")]
+    public class BattleCryDrawCard : BaseEffect
+    {
+        public override void ApplyEffect(CardManager cardManager)
         {
-            public override void ApplyEffect(CardManager cardManager)
-            {
-                cardManager.GetCardFromDeck(1, true);
-            }
+            cardManager.GetCardFromDeck(1, true);
+        }
 
-            public override bool TryToRemoveEffect(CardManager cardManager)
+        public override bool TryToRemoveEffect(CardManager cardManager)
+        {
+            return true;
+        }
+    }
+
+    //восстанавливает доровье 
+    [CreateAssetMenu(fileName = "BattleCryRestoreHealth", menuName = "Effects/BattleCryRestoreHealth")]
+    public class BattleCryRestoreHealth : BaseEffect
+    {
+        public int valueHealthRestore;
+
+        public override void ApplyEffect(CardManager cardManager)
+        {
+            if (RoundManager.instance.PlayerMove == Players.Player1)
             {
-                return true;
+                cardManager.player1Script.RestoreHealth(valueHealthRestore);
+            }
+            else
+            {
+                cardManager.player2Script.RestoreHealth(valueHealthRestore);
             }
         }
 
-
-        [CreateAssetMenu(fileName = "BattleCryRestoreHealth", menuName = "Effects/BattleCryRestoreHealth")]
-        public class BattleCryRestoreHealth : BaseEffect
+        public override bool TryToRemoveEffect(CardManager cardManager)
         {
-            public int valueHealthRestore;
+            return true;
+        }
+    }
+    
+    //призыв миньона
+    [CreateAssetMenu(fileName = "Summon", menuName = "Effects/Summon")]
+    public class Summon : BaseEffect
+    {
+        public int cardIdToSummon;
+        [NonSerialized] private Card m_effectOwner;
 
-            public override void ApplyEffect(CardManager cardManager)
-            {
-                if (RoundManager.instance.PlayerMove == Players.Player1)
-                {
-                    cardManager.player1Script.RestoreHealth(valueHealthRestore);
-                }
-                else
-                {
-                    cardManager.player2Script.RestoreHealth(valueHealthRestore);
-                }
-            }
-
-            public override bool TryToRemoveEffect(CardManager cardManager)
-            {
-                return true;
-            }
+        public override void ApplyEffect(CardManager cardManager)
+        {
+            cardManager.AddSummonCardOntable(cardIdToSummon);
         }
 
-        [CreateAssetMenu(fileName = "Summon", menuName = "Effects/Summon")]
-        public class Summon : BaseEffect
+        public override bool TryToRemoveEffect(CardManager cardManager)
         {
-            public int cardIdToSummon;
-            [NonSerialized] private Card m_effectOwner;
-
-            public override void ApplyEffect(CardManager cardManager)
-            {
-                cardManager.AddSummonCardOntable(cardIdToSummon);
-            }
-
-            public override bool TryToRemoveEffect(CardManager cardManager)
-            {
-                return true;
-            }
+            return true;
         }
     }
 }

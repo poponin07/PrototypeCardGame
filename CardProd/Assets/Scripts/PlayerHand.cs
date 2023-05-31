@@ -112,14 +112,13 @@ namespace Cards
                 
                 m_cardManger.SetEffectOnCard(moveCard);
                 moveCard.SwitchCardState(moveCard,CardState.OnTable);
-                
-                return false;
+                return true;
             }
             Card [] playerHand = RoundManager.instance.PlayerMove == Players.Player1 ? m_cardInHand1 : m_cardInHand2;
             int result = GetIndexLastCard(playerHand);
             playerHand[result] = moveCard;
-            moveCard.StartCoroutine(moveCard.MoveInHandOrTable(moveCard, moveCard.m_curParent, cardState));
-            return true;
+            moveCard.StartCoroutine(moveCard.MoveInHandOrTable(moveCard, moveCard.m_curParent, CardState.InHand));
+            return false;
         }
 
         public void AddSummoncardOnTable(Card moveCard, CardState cardState)
@@ -132,18 +131,18 @@ namespace Cards
                 slot.SwitchCouple(moveCard);
                 moveCard.m_curParent = slotTransform;
                 moveCard.transform.SetParent(slotTransform);
-                //moveCard.transform.position = slotTransform.position;
-                
+
                 List<Card> arr = moveCard.players  == Players.Player1 ? m_cardManger.cardsPlayedPlayer1 : m_cardManger.cardsPlayedPlayer2;
                 arr.Add(moveCard);
                 
                 //m_cardManger.SetEffectOnCard(moveCard);
-                moveCard.SwitchCardState(moveCard,CardState.OnTable);
+                
                
                 Card [] playerHand = RoundManager.instance.PlayerMove == Players.Player1 ? m_cardInHand1 : m_cardInHand2;
                 int result = GetIndexLastCard(playerHand);
                 //playerHand[result] = moveCard;
                 moveCard.StartCoroutine(moveCard.MoveInHandOrTable(moveCard, moveCard.m_curParent, cardState));
+                moveCard.SwitchCardState(moveCard,CardState.OnTable);
             }
 
         }
@@ -165,10 +164,6 @@ namespace Cards
                     slotScript.gameObject.GetComponent<PlayerScript>().GetDamage(moveCard.Attack, false);
                     animationComponent.AnimationShakeCard();
                     moveCard.RefresMoveIndex(1);
-                   /* if (attackResult)
-                    {
-                        Debug.LogError(RoundManager.instance.PlayerMove + " wins!");
-                    }*/
                 }
                 else
                 {

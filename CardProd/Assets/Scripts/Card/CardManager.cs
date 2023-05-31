@@ -20,8 +20,8 @@ namespace Cards
         public Transform m_player1DeckRoot;
         public Transform m_player2DeckRoot;
 
-        [SerializeField, Space] private PlayerHand _player1Hand;
-        [SerializeField] private PlayerHand _player2Hand;
+        [SerializeField, Space] public PlayerHand _player1Hand;
+        [SerializeField] public PlayerHand _player2Hand;
 
         [SerializeField] private PlayerScript m_playerScript1;
         [SerializeField] private PlayerScript m_playerScript2;
@@ -254,7 +254,9 @@ namespace Cards
                 }
                 
                 playerHand.AddSummoncardOnTable(summonCard, CardState.OnTable);
-                summonCard.animationComponent.AnimationFlipCard();
+                //summonCard.animationComponent.AnimationFlipCard();
+                summonCard.SwitchEnable();
+                summonCard.transform.localEulerAngles = new Vector3(180, 0, 0);
             }
         }
 
@@ -427,7 +429,35 @@ namespace Cards
             }
             return targetcards;
         }
+        
+        
+        
+        public List<Card> SummonedCardsAddStats(int damageValue, int healthValue)
+        {
+            List<Card> cardsSummoned;
+            
+            if (RoundManager.instance.PlayerMove == Players.Player1)
+            {
+                cardsSummoned = SummonedCardPlayer1;
+            }
+            else
+            {
+                cardsSummoned = SummonedCardPlayer2;
+            }
 
+            foreach (var card in cardsSummoned)
+            {
+                if (card != null)
+                {
+                    card.Attack += damageValue;
+                    card.Health += healthValue;
+                }
+                
+            }
+
+            return cardsSummoned;
+        }
+        
         public void RemoveCardOpponent()
         {
             Card[] playerCards = new Card[] {};
@@ -453,9 +483,9 @@ namespace Cards
                 {
                     return;
                 }
-                int randIndx = Random.Range(0, tempcard.Count);
+                int randIndx = Random.Range(0, tempcard.Count - 1);
                 
-                playerCards[randIndx].DestroyCard();
+                tempcard[randIndx].DestroyCard(playerCards);
         }
     }
     }

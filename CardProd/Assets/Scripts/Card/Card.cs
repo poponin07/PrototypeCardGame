@@ -245,7 +245,16 @@ namespace Cards
             if (m_health <= 0)
             {
                 m_curParent.GetComponent<SlotScript>().SwitchCouple(null);
-                DestroyCard();
+                Card[] hand = new Card[] {};
+                if (RoundManager.instance.PlayerMove == Players.Player1)
+                {
+                    hand = cardManager._player2Hand.m_cardInHand2;
+                }
+                else
+                {
+                    hand = cardManager._player1Hand.m_cardInHand1;
+                }
+                DestroyCard(hand);
                 return true;
             }
 
@@ -261,7 +270,18 @@ namespace Cards
             if (m_health <= 0)
             {
                 m_curParent.GetComponent<SlotScript>().SwitchCouple(null);
-                DestroyCard();
+                
+                Card[] hand = new Card[] {};
+                if (RoundManager.instance.PlayerMove == Players.Player1)
+                {
+                    hand = cardManager._player2Hand.m_cardInHand2;
+                }
+                else
+                {
+                    hand = cardManager._player1Hand.m_cardInHand1;
+                }
+                
+                DestroyCard(hand);
             }
         }
 
@@ -290,12 +310,16 @@ namespace Cards
             m_slotInhandScript = slotInhandScript;
         }
         
-        public void DestroyCard()
+        public void DestroyCard(Card[] hand)
         {
-            effect.TryToRemoveEffect(cardManager);
+            if (effect != null)
+            {
+                effect.TryToRemoveEffect(cardManager);
+            }
+
             List<Card> arr = RoundManager.instance.PlayerMove == players ? cardManager.cardsPlayedPlayer1 : cardManager.cardsPlayedPlayer2;
             arr.Remove(this);
-            if (isSummon == true)
+            if (isSummon)
             {
                 if (players == Players.Player1)
                 {
@@ -304,6 +328,25 @@ namespace Cards
                 else
                 {
                     cardManager.SummonedCardPlayer2.Remove(this);
+                }
+            }
+
+            for (int i = 0; i < hand.Length - 1; i++)
+            {
+                if (hand[i] == this)
+                {
+                    hand[i] = null;
+                    break;
+                }
+            }
+            
+            SlotScript slotScript = m_curParent.transform.GetComponent<SlotScript>();
+            if (slotScript)
+            {
+                Card card = slotScript.GetCardCouple();
+                if (card == this)
+                {
+                    slotScript.couple = false;
                 }
             }
 
