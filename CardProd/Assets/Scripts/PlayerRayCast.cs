@@ -44,9 +44,7 @@ namespace Input
                     }
                    
                 }
-                
-                 
-                    Card cardComp = hit.transform != null ? card : null;
+                Card cardComp = hit.transform != null ? card : null;
                     if (cardComp != null && cardComp.m_cardState == CardState.InHand  )
                     {
                         if (cardComp.CardInDeck(card))

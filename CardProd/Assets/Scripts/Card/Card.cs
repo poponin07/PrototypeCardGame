@@ -25,9 +25,11 @@ namespace Cards
         [SerializeField, Space] private uint m_id;
         [SerializeField] private MeshRenderer _picture;
 
-        private int m_health;
-        private int m_coast;
-        private int m_attack;
+        private int m_health; //здоровье
+        private int m_coast; //стоимость использования
+        private int m_attack; //атака
+        public int healthDefaulte; //дефолтное здоровье карты
+        public int attackDefaulte; //дефолтная  атака карты
 
         public int Health
         {
@@ -40,7 +42,7 @@ namespace Cards
                 m_health = value;
                 UpdateUICard();
             }
-        }
+        } // свойство здороья 
         public int Coast
         {
             get
@@ -52,7 +54,7 @@ namespace Cards
                 m_coast = value;
                 UpdateUICard();
             }
-        }
+        } //свойство цены
         public int Attack {
             get
             {
@@ -62,17 +64,16 @@ namespace Cards
             {
                 m_attack = value;
                 UpdateUICard();
-            } }
-        
-        
+            } } // свойство атаки
         
         public CardManager cardManager;
-        public Transform m_curParent;
-        public Players players;
+        public Transform m_curParent; //текущий родитель
+        public Players players; //какому игроку принадлежит
         public AnimationComponent animationComponent;
-        public int isReadyMome;
-        public bool isTaunt;
-        public bool isSummon;
+        public int isReadyMome; //флаг возможности хода в текущем раунде
+        public bool isTaunt; //флаг для карт с наунтом
+        public bool isSummon; //флаг для призванных карт
+        public bool effectWhenTakingDamage; //флаг для карт со свойством при получении урона
         private PlayerHand m_player1Hand;
         private PlayerHand m_player2Hand;
         private float stepY = 10f;
@@ -83,6 +84,7 @@ namespace Cards
         private CardPropertiesData m_cardData;
         private Transform m_deckPosition;
         private BaseEffect effect;
+        
 
         
         
@@ -95,6 +97,7 @@ namespace Cards
 
         public  CardState m_cardState;
 
+        //конфигурация карты
         public void Confiruration(CardPropertiesData data, Material picture, string description, PlayerHand playerHand1, PlayerHand playerHand2, Players player)
         {
             cardIndex = Random.Range(0, 999);
@@ -109,10 +112,15 @@ namespace Cards
             players = player;
             m_health = data.Health;
             m_attack = data.Attack;
+            healthDefaulte = m_health;
+            attackDefaulte = m_attack;
             m_coast = data.Cost;
             isTaunt = data.isTaunt;
             isSummon = data.iSummon;
             summonID = data.summonIDCard;
+            healthDefaulte = m_health;
+            attackDefaulte = m_attack;
+            effectWhenTakingDamage = false;
             m_tx_cardUnitType.text = CardUnitType.None == data.Type ? "" : data.Type.ToString();
             _picture.material = picture;
             SwitchCardState(this, CardState.InDeck);
@@ -125,7 +133,8 @@ namespace Cards
                 : cardManager.m_player2DeckRoot;
             m_cardData = data;
         }
-
+        
+        //переключатель флага хода для карты
         private void SetChargeParam(CardPropertiesData data)
         {
             if (data.isCharge)
@@ -138,13 +147,7 @@ namespace Cards
             }
         }
         
-        private void RefreshUICard()
-        {
-            m_tx_coast.text = m_coast.ToString();
-            m_tx_attack.text = m_attack.ToString();
-            m_tx_health.text = m_health.ToString();
-        }
-
+        
         [ContextMenu("SwitchEnable")]
         public void SwitchEnable()
         {
@@ -152,6 +155,7 @@ namespace Cards
             m_frontCard.SetActive(turneBool);
             _picture.enabled = turneBool;
         }
+        
 
         public void OnPointerEnter(PointerEventData eventData)
         {
@@ -186,6 +190,7 @@ namespace Cards
             }
         }
 
+        //карта поднимается 
         public IEnumerator LiftCard(Card card, Transform parent, bool fromDeck)
         {
             Vector3 startPos = card.transform.position;
@@ -205,6 +210,7 @@ namespace Cards
             card.animationComponent.AnimationFlipCard();
         }
 
+        //перемещение карты в руку или на стол
         public IEnumerator MoveInHandOrTable(Card card, Transform parent, CardState cardState)
         {
             Vector3 startPos = card.transform.position;
@@ -222,20 +228,29 @@ namespace Cards
             SwitchCardState(card, cardState);
         }
 
+        //смена состояния (на столе, в руке)
         public void SwitchCardState(Card card, CardState cardState)
         {
             card.m_cardState = cardState;
         }
 
+        //создал индекс для управления ходами
         public void RefresMoveIndex(int arg)
         {
             isReadyMome += arg;
         }
         
+        //карта получает урон
         public bool GetDamage(Card attackingCard, bool  firstAttack)
         {
             m_health -= attackingCard.m_attack;
             animationComponent.AnimationScaleCard();
+
+            if (effectWhenTakingDamage)
+            {
+                cardManager.SetEffectOnCard(this);  
+            }
+           
             
             if (firstAttack)
             {
@@ -257,12 +272,13 @@ namespace Cards
                 DestroyCard(hand);
                 return true;
             }
-
-            RefreshUICard();
+            
+            UpdateUICard();
             
             return false;
         }
 
+        //урон от способности
         public void GetDamageSpell(int damage)
         {
             m_health = -damage;
@@ -285,11 +301,12 @@ namespace Cards
             }
         }
 
-        public SlotInhandScript GetSlotInCurHand()
+        /*public SlotInhandScript GetSlotInCurHand()
         {
             return m_slotInhandScript;
-        }
+        }*/
 
+        //возвращение карты колоду
         public bool CardInDeck(Card card)
         {
             if (!m_slotInhandScript.GetIsSwapedCardOnFerstRound())
@@ -305,11 +322,13 @@ namespace Cards
             return false;
         }
         
+        
         public void SetSlotInCurHand(SlotInhandScript slotInhandScript)
         {
             m_slotInhandScript = slotInhandScript;
         }
         
+        //уничтожение карты
         public void DestroyCard(Card[] hand)
         {
             if (effect != null)
@@ -352,17 +371,16 @@ namespace Cards
 
             Destroy(gameObject);
         }
-
         
-
+        //возвращает тип карты
         public CardUnitType GetCardType()
         {
             return m_cardData.Type;
         }
         
-        //effect
-        private int m_defaultHealth = 1;
-        [SerializeField] private int m_defaultDamage = 0;
+
+       // private int m_defaultHealth = 1;
+        //[SerializeField] private int m_defaultDamage = 0;
         
 
         public CardPropertiesData GetDataCard()
@@ -370,6 +388,7 @@ namespace Cards
             return m_cardData;
         }
 
+        //обновляет UI карты
         private void UpdateUICard()
         {
             m_tx_health.text = m_health.ToString();

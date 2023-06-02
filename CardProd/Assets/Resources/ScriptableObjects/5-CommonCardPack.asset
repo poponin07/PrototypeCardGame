@@ -22,7 +22,9 @@ MonoBehaviour:
     Type: 0
     isTaunt: 1
     isCharge: 0
-    effects: []
+    iSummon: 0
+    summonIDCard: 0
+    effect: {fileID: 0}
   - Id: 502
     Name: Darkscale Healer
     Texture: {fileID: 2800000, guid: ba0c888e544dbc54bb92ed1ae096bdfc, type: 3}
@@ -31,7 +33,9 @@ MonoBehaviour:
     Type: 0
     isTaunt: 0
     isCharge: 0
-    effects: []
+    iSummon: 0
+    summonIDCard: 0
+    effect: {fileID: 11400000, guid: 12e2d8d4b08e4d34f98d08af06ac9a56, type: 2}
   - Id: 503
     Name: Frostwolf Warlord
     Texture: {fileID: 2800000, guid: 9f4593a48e103e348a365104c4fe0266, type: 3}
@@ -40,7 +44,9 @@ MonoBehaviour:
     Type: 0
     isTaunt: 0
     isCharge: 0
-    effects: []
+    iSummon: 0
+    summonIDCard: 0
+    effect: {fileID: 11400000, guid: a039d5c17bc45204db6519aad6ce6007, type: 2}
   - Id: 504
     Name: Gurubashi Berserer
     Texture: {fileID: 2800000, guid: 9e38a10689e5b004abbfe139dde974a3, type: 3}
@@ -49,7 +55,9 @@ MonoBehaviour:
     Type: 0
     isTaunt: 0
     isCharge: 0
-    effects: []
+    iSummon: 0
+    summonIDCard: 0
+    effect: {fileID: 11400000, guid: a039d5c17bc45204db6519aad6ce6007, type: 2}
   - Id: 505
     Name: Nightblade
     Texture: {fileID: 2800000, guid: c39f529da285b1d4ea6c011bdb66301b, type: 3}
@@ -58,7 +66,9 @@ MonoBehaviour:
     Type: 0
     isTaunt: 0
     isCharge: 0
-    effects: []
+    iSummon: 0
+    summonIDCard: 0
+    effect: {fileID: 11400000, guid: 2da22db2c8ab87a4db6965f7141cd36e, type: 2}
   - Id: 506
     Name: Stormpike Commando
     Texture: {fileID: 2800000, guid: 91c8badf91051554ca58dc893b722e9c, type: 3}
@@ -67,4 +77,6 @@ MonoBehaviour:
     Type: 0
     isTaunt: 0
     isCharge: 0
-    effects: []
+    iSummon: 0
+    summonIDCard: 0
+    effect: {fileID: 11400000, guid: be7834152175da2498f01ea89e3c36d7, type: 2}

@@ -60,7 +60,7 @@
       Your other minions have +1 Attack
     </Unit>
     <Unit Id="306" Name="Razorfen Hunter">
-      #Battlecry/#: Summon a 1/1 Boar++
+      #Battlecry/#: Summon a 1/1 Boar
     </Unit>
     <Unit Id="307" Name="Shattered Sun Cleric">
       #Battlecry/#: Give a friendly miniom +1/+1

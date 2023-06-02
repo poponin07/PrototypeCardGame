@@ -8,25 +8,22 @@ namespace Cards
 {
     public class PlayerHand : MonoBehaviour
     {
-        [SerializeField] private Players m_move;
-        [SerializeField] private Transform[] m_positonsCardInHand;
+        //[SerializeField] private Players m_move;
+        [SerializeField] private Transform[] m_positonsCardInHand; //позиции для карт в руке
 
-        [SerializeField]
-        private CardManager m_cardManger;
+        [SerializeField] private CardManager m_cardManger;
         
-        public Card[] m_cardInHand1;
-        public Card[] m_cardInHand2;
-        //private List<Card> m_cardOnTable;
-        
-        public Transform axis;
+        public Card[] m_cardInHand1; //карты в руке игрок 1
+        public Card[] m_cardInHand2; //карты в руке игрок 2
+
+       // public Transform axis;
         private void Start()
         {
             m_cardInHand1 = new Card[m_positonsCardInHand.Length];
             m_cardInHand2 = new Card[m_positonsCardInHand.Length];
-            //m_cardOnTable = new List<Card>();
         }
         
-        
+        //получение карты в уку
         public bool SetNewCardInHand(Card newCard, bool fromDeck)
         {
             Card[] cardInHand;
@@ -60,6 +57,7 @@ namespace Cards
             return true;
         }
 
+        //последняя карта
         public int GetIndexLastCard(Card[] arr)
         {
             for (int i = 0; i < arr.Length; i++)
@@ -72,6 +70,7 @@ namespace Cards
             return -1;
         }
 
+        //убирает карту из руки
         public void RemoveCardFromHand(Card removeCard)
         {
             Card[] m_cardInHand;
@@ -95,6 +94,7 @@ namespace Cards
             } 
         }
         
+        //добавляет карту на стол
         public bool AddCardOnTable(Card moveCard, CardState cardState)
         {
             SlotScript slotScript = m_cardManger.GetClosestSlot(moveCard, true);
@@ -121,6 +121,7 @@ namespace Cards
             return false;
         }
 
+        //добавляет призванную карту на стол
         public void AddSummoncardOnTable(Card moveCard, CardState cardState)
         {
             SlotScript slot = m_cardManger.GetFreeSlotOnTable(RoundManager.instance.PlayerMove);
@@ -147,6 +148,7 @@ namespace Cards
 
         }
         
+        //атака карты
         public bool CardAttack(Card moveCard)
         {
             SlotScript slotScript = m_cardManger.GetClosestSlot(moveCard, false);
@@ -198,6 +200,7 @@ namespace Cards
             return true;
         }
 
+        //првоерка на таунт
         private List<Card> CheckTaunt()
         {
             List<Card> tauntCards = new List<Card>();

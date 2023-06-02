@@ -18,19 +18,23 @@ namespace Cards
             m_playerHand = playerHand;
         }
 
+        //анимация поворота карты
         public void AnimationFlipCard()
         {
             m_animator.SetTrigger(ToHand);
         }
+        //анимация тряски камеры
         public void AnimationShakeCard()
         {
             m_animator.SetTrigger(ShakeCard);
         }
 
+        //анимация скейлинга карты
         public void AnimationScaleCard()
         { m_animator.SetTrigger(ScaleCard);
         }
         
+        //метод для ивента в анимации карты
         public void Flip()
         {
             Card card = GetComponent<Card>();

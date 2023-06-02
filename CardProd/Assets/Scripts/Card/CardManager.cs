@@ -12,13 +12,13 @@ namespace Cards
     {
         private List<CardPropertiesData> m_allCards;
 
-        [SerializeField] private Card m_cardPrefab;
-        [SerializeField] private CardPackConfiguration[] m_allPacks;
-        private IEnumerable<CardPropertiesData> allCard;
-        [SerializeField, Range(0, 100)] private int m_cardDeckCount;
+        [SerializeField] private Card m_cardPrefab; //префаб карты
+        [SerializeField] private CardPackConfiguration[] m_allPacks;//все паки карт
+        private IEnumerable<CardPropertiesData> allCard;//все карты
+        [SerializeField, Range(0, 100)] private int m_cardDeckCount;//количество карт в колоде
 
-        public Transform m_player1DeckRoot;
-        public Transform m_player2DeckRoot;
+        public Transform m_player1DeckRoot;//рут для колоды 1 игрока
+        public Transform m_player2DeckRoot;//рут для колоды 2 игрока
 
         [SerializeField, Space] public PlayerHand _player1Hand;
         [SerializeField] public PlayerHand _player2Hand;
@@ -26,21 +26,20 @@ namespace Cards
         [SerializeField] private PlayerScript m_playerScript1;
         [SerializeField] private PlayerScript m_playerScript2;
 
-        public List<Card> cardsPlayedPlayer1;
-        public List<Card> cardsPlayedPlayer2;
-
-        private Card[] m_player1Deck;
-        private Card[] m_player2Deck;
-        private Card[] m_customPlayer1Deck;
-        public List<Card> SummonedCardPlayer1; 
-        public List<Card> SummonedCardPlayer2; 
-
-        private Card[] m_customPlayer2Deck;
+        public List<Card> cardsPlayedPlayer1;//карты на столе 1 игрока
+        public List<Card> cardsPlayedPlayer2;//карты на столе 2 игрока
+        public List<Card> SummonedCardPlayer1; //призванные карты игрока 1
+        public List<Card> SummonedCardPlayer2; //призванные карты игрока 2
         
-        [SerializeField] private int[] m_idForCustomDeckPlayer1;
-        [SerializeField] private int[] m_idForCustomDeckPlayer2;
+        private Card[] m_player1Deck; // колода 1 игрока
+        private Card[] m_player2Deck;// колода 2 игрока
+        private Card[] m_customPlayer1Deck; //кастомная колода карт для игрока 1
+        private Card[] m_customPlayer2Deck;//кастомная колода карт для игрока 2
+        [SerializeField] private int[] m_idForCustomDeckPlayer1; //id для формирвоания кастомной колоды карт в редакторе - игрок 1
+        [SerializeField] private int[] m_idForCustomDeckPlayer2;//id для формирвоания кастомной колоды карт в редакторе - игрок 2
+        
 
-        private const float c_stepCardInDeck = 0.07f;
+        private const float c_stepCardInDeck = 0.07f; // отступ для карт в олоде
         private Material m_baseMat;
 
         private Dictionary<int, SlotScript> m_playerCardSlots = new Dictionary<int, SlotScript>();
@@ -53,18 +52,18 @@ namespace Cards
         public PlayerScript player2Script;
         public PlayerData m_player1Data;
         public PlayerData m_player2Data;
-        public bool UseCustomDeck;
+        public bool UseCustomDeck; //флаг для использования кастомных колод карт
 
         private void Awake()
         {
             CollectingAllCards();
         }
-
         private void Start()
         {
             Initialization();
         }
 
+        //инициализация
         private void Initialization()
         {
             m_player1Deck = CreateDeck(m_player1DeckRoot, Players.Player1);
@@ -99,6 +98,7 @@ namespace Cards
             }
         }
 
+        //ближайший слот для карты на столе
         public SlotScript GetClosestSlot(Card card, bool isSamePlayerSlots)
         {
             float minDistance = float.MaxValue;
@@ -122,6 +122,7 @@ namespace Cards
             return closestSlot;
         }
 
+        //сбор карт
         private void CollectingAllCards()
         {
             allCard = new List<CardPropertiesData>();
@@ -135,6 +136,7 @@ namespace Cards
             m_baseMat.renderQueue = 2994;
         }
 
+        //получение карт из колоды
         public void GetCardFromDeck(int cards, bool isRandomCard)
         {
             PlayerHand playerHand = RoundManager.instance.PlayerMove == Players.Player1 ? _player1Hand : _player2Hand;
@@ -182,6 +184,7 @@ namespace Cards
             }
         }
 
+        //возвращает свободный слот на столе
         public SlotScript GetFreeSlotOnTable(Players player)
         {
             List<SlotScript> slots = new List<SlotScript>();
@@ -205,6 +208,7 @@ namespace Cards
             return null;
         }
 
+        //добавление призванной карты на стол
         public void AddSummonCardOntable(int id)
         {
             
@@ -260,6 +264,7 @@ namespace Cards
             }
         }
 
+        //нанесение урона
         public void DealDamage(int damage)
         {
             List<Card> playedCard = RoundManager.instance.PlayerMove == Players.Player1
@@ -278,7 +283,15 @@ namespace Cards
                 playerScript.GetDamage(damage, false);
             }
         }
+        
+        //нанесение урона игроку
+        public void DealDamagePlayer(int damage)
+        {
+            PlayerScript player = RoundManager.instance.PlayerMove == Players.Player1 ? player1Script : player2Script;
+           player.GetDamage(2, false);
+        }
 
+        //првоерка колоды на заполненность
         private bool CheckDeckNull(Card[] cards)
         {
             foreach (var card in cards)
@@ -292,6 +305,7 @@ namespace Cards
             return false;
         }
 
+        //добавлеине карты в колоду
         public void AddCardToDeck(Card card)
         {
             Card[] arr = card.players == RoundManager.instance.PlayerMove ? m_player1Deck : m_player2Deck;
@@ -311,6 +325,7 @@ namespace Cards
             }
         }
 
+        //проверка требований карты
         public bool CheckingCardRequirements(Card card)
         {
             PlayerData data = RoundManager.instance.PlayerMove == Players.Player1 ? m_player1Data : m_player2Data;
@@ -328,6 +343,7 @@ namespace Cards
             return true;
         }
 
+        //рандомный индекс в колоде
         private (Card card, int index) GetRandomIndexFromDeck(Card[] cardsInDeck)
         {
             Card card = null;
@@ -346,8 +362,8 @@ namespace Cards
 
             return (card, index);
         }
-
-
+        
+        //создание колоды
         private Card[] CreateDeck(Transform root, Players player)
         {
             Card[] deck = new Card[m_cardDeckCount];
@@ -395,6 +411,7 @@ namespace Cards
             return deck;
         }
 
+        //применение эффекта карты
         public void SetEffectOnCard(Card effectOwner)
         {
             BaseEffect effect = effectOwner.GetDataCard().effect;
@@ -403,10 +420,11 @@ namespace Cards
                 return;
             }
             
-            effect.ApplyEffect(this);
+            effect.ApplyEffect(this, effectOwner);
         }
 
-        public List<Card> SummonedMurlocsAddDamage(bool isAddDamage, int damageValue)
+        //призванным мурлокам добавляется урон
+        public List<Card> SummonedMurlocsAddDamage(int damageValue)
         {
             List<Card> cardsSummoned;
             List<Card> targetcards = new List<Card>();
@@ -430,8 +448,29 @@ namespace Cards
             return targetcards;
         }
         
-        
-        
+        //добавление статов призавнным картам
+        public Card SummoneCardAddStats(int damageValue, int healthValue)
+        {
+            List<Card> cardsSummoned;
+
+            if (RoundManager.instance.PlayerMove == Players.Player1)
+            {
+                cardsSummoned = SummonedCardPlayer1;
+            }
+            else
+            {
+                cardsSummoned = SummonedCardPlayer2;
+            }
+
+            int indx = Random.Range(0, cardsSummoned.Count - 1);
+            cardsSummoned[indx].Health += healthValue;
+            cardsSummoned[indx].Attack += damageValue;
+            
+            return cardsSummoned[indx];
+
+        }
+
+        //дабавление статов призванной карте
         public List<Card> SummonedCardsAddStats(int damageValue, int healthValue)
         {
             List<Card> cardsSummoned;
@@ -457,7 +496,27 @@ namespace Cards
 
             return cardsSummoned;
         }
+
+        //восстановление здоровья картам
+        public void RestoreHealthCharacters(int restoreData)
+        {
+            List<Card> listCards = RoundManager.instance.PlayerMove == Players.Player1
+                ? cardsPlayedPlayer1
+                : cardsPlayedPlayer2;
+            List<Card> playedCards = new List<Card>(listCards);
+
+            foreach (var card in playedCards)
+            {
+                card.Health += restoreData;
+                if ( card.Health > card.healthDefaulte)
+                {
+                    card.Health = card.healthDefaulte;
+                }
+            }
+      
+        }
         
+        //удаляет карту оппонента
         public void RemoveCardOpponent()
         {
             Card[] playerCards = new Card[] {};
@@ -486,6 +545,22 @@ namespace Cards
                 int randIndx = Random.Range(0, tempcard.Count - 1);
                 
                 tempcard[randIndx].DestroyCard(playerCards);
+        }
+
+        //эффект FrostwolfWarlord
+        public int  FrostwolfWarlordEffect()
+        {
+            List<Card> cardsSummoned;
+            if (RoundManager.instance.PlayerMove == Players.Player1)
+            {
+                cardsSummoned = SummonedCardPlayer1;
+            }
+            else
+            {
+                cardsSummoned = SummonedCardPlayer2;
+            }
+
+            return cardsSummoned.Count;
         }
     }
     }

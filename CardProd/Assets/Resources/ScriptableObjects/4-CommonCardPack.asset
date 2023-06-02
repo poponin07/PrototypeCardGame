@@ -22,7 +22,9 @@ MonoBehaviour:
     Type: 0
     isTaunt: 0
     isCharge: 0
-    effects: []
+    iSummon: 0
+    summonIDCard: 0
+    effect: {fileID: 0}
   - Id: 402
     Name: Dragonling Mechanic
     Texture: {fileID: 2800000, guid: 815334f1e8468564c9ccf7e0d54dba81, type: 3}
@@ -31,7 +33,9 @@ MonoBehaviour:
     Type: 0
     isTaunt: 0
     isCharge: 0
-    effects: []
+    iSummon: 0
+    summonIDCard: 0
+    effect: {fileID: 11400000, guid: 89d87cbd64821fc4a88f86c862518db7, type: 2}
   - Id: 403
     Name: Gnomish Inventor
     Texture: {fileID: 2800000, guid: 9ee6a53b5e7075743bd6cdb7d8b9729a, type: 3}
@@ -40,7 +44,9 @@ MonoBehaviour:
     Type: 0
     isTaunt: 0
     isCharge: 0
-    effects: []
+    iSummon: 0
+    summonIDCard: 0
+    effect: {fileID: 11400000, guid: 74471e1bfc125e24a8da234afbc57b68, type: 2}
   - Id: 404
     Name: Oasis Snapjaw
     Texture: {fileID: 2800000, guid: 3425e9de4230b9a4098559590f0ea885, type: 3}
@@ -49,7 +55,9 @@ MonoBehaviour:
     Type: 2
     isTaunt: 0
     isCharge: 0
-    effects: []
+    iSummon: 0
+    summonIDCard: 0
+    effect: {fileID: 0}
   - Id: 405
     Name: Ogre Magi
     Texture: {fileID: 2800000, guid: 291bbce33b6221f4c9e1fdaaaba5d7d5, type: 3}
@@ -58,7 +66,9 @@ MonoBehaviour:
     Type: 0
     isTaunt: 0
     isCharge: 0
-    effects: []
+    iSummon: 0
+    summonIDCard: 0
+    effect: {fileID: 0}
   - Id: 406
     Name: Sen'jin Shieldmasta
     Texture: {fileID: 2800000, guid: 99874dc23e0d56d45866ae3850e8cb71, type: 3}
@@ -66,8 +76,10 @@ MonoBehaviour:
     Health: 5
     Type: 0
     isTaunt: 1
-    isCharge: 1
-    effects: []
+    isCharge: 0
+    iSummon: 0
+    summonIDCard: 0
+    effect: {fileID: 0}
   - Id: 407
     Name: Stormwind Knight
     Texture: {fileID: 2800000, guid: 91db97110b0891e49ad2d48d011772d7, type: 3}
@@ -76,4 +88,6 @@ MonoBehaviour:
     Type: 0
     isTaunt: 0
     isCharge: 1
-    effects: []
+    iSummon: 0
+    summonIDCard: 0
+    effect: {fileID: 0}

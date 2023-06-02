@@ -14,12 +14,12 @@ namespace Cards
       [SerializeField] private Players m_playerMove;
 
       [SerializeField] private CardManager m_cardManager;
+      
       private PlayerData m_PlayerData1;
       private PlayerData m_PlayerData2;
       private int m_manaIndex;
       private int ferstMoveIsDonePlayerIndex;
-      //public event Action EndRound;
-      
+
       public Players PlayerMove => m_playerMove;
       
       private void Awake()
@@ -41,6 +41,7 @@ namespace Cards
       {
          DistributionCards();
       }
+      //смена флага возможности ходить
       public void SetIndexIsReadyMome(List<SlotScript> cardSlot)
       {
          foreach (var slot in cardSlot)
@@ -49,6 +50,8 @@ namespace Cards
            card?.RefresMoveIndex(-1);
          }
       }
+      
+      //раздача карт по раундам
       public void DistributionCards()
       {
          if (ferstMoveIsDonePlayerIndex > 2)
@@ -67,6 +70,7 @@ namespace Cards
          }
       }
       
+      //ход
       public void MoveChange()
       {
          switch (m_playerMove)
@@ -86,14 +90,7 @@ namespace Cards
          }
       }
 
-      public void EndFerstMove()
-      {
-         if (ferstMoveIsDonePlayerIndex > 0)
-         {
-            ferstMoveIsDonePlayerIndex--;
-         }
-      }
-
+      //разадача маны
       private void GetMana()
       {
          if (ferstMoveIsDonePlayerIndex > 2)

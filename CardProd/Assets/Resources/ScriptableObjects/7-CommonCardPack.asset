@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4cf6de20b2646f4193e999d2dee71e4, type: 3}
   m_Name: 7-CommonCardPack
   m_EditorClassIdentifier: 
-  _sideType: 0
   _cost: 7
   _cards:
   - Id: 701
@@ -21,15 +20,30 @@ MonoBehaviour:
     Attack: 9
     Health: 5
     Type: 2
+    isTaunt: 0
+    isCharge: 0
+    iSummon: 0
+    summonIDCard: 0
+    effect: {fileID: 0}
   - Id: 702
     Name: Stormwind Champion
     Texture: {fileID: 2800000, guid: 69fe9d69d1e8d194bbea49330e90af90, type: 3}
     Attack: 6
     Health: 6
     Type: 0
+    isTaunt: 0
+    isCharge: 0
+    iSummon: 0
+    summonIDCard: 0
+    effect: {fileID: 11400000, guid: 14078866049500c4ebaf1b90b3584638, type: 2}
   - Id: 703
     Name: War Golem
     Texture: {fileID: 2800000, guid: df4e97a7b1f292b40b18dad56f8d434b, type: 3}
     Attack: 7
     Health: 7
     Type: 0
+    isTaunt: 0
+    isCharge: 0
+    iSummon: 0
+    summonIDCard: 0
+    effect: {fileID: 0}

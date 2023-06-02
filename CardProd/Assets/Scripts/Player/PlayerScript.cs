@@ -15,7 +15,7 @@ namespace Player
             m_plaerData = GetComponent<PlayerData>();
             m_damageCounterForCards = 1;
         }
-
+        //игрок получает урон
         public void GetDamage(int damage,bool  forGetCard)
         {
             if (forGetCard)
@@ -36,6 +36,7 @@ namespace Player
             }
         }
 
+        //восстановление здоровья
         public void RestoreHealth(int restoreData)
         {
             m_plaerData.Health += restoreData;
@@ -46,6 +47,7 @@ namespace Player
             m_UIavatarscript.RefreshHealthPlayer(m_plaerData.Health, false);
         }
         
+        //игрок получает урон из-за пустой колоды
         public int GetDamageForEmptyDeck()
         {
             return m_damageCounterForCards;

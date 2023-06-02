@@ -88,10 +88,10 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="25008">
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="25008" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -212,6 +212,10 @@
       <workItem from="1685371664209" duration="2204000" />
       <workItem from="1685438159954" duration="9734000" />
       <workItem from="1685540543481" duration="7140000" />
+      <workItem from="1685607836553" duration="4945000" />
+      <workItem from="1685690274566" duration="6346000" />
+      <workItem from="1685708522318" duration="177000" />
+      <workItem from="1685712442754" duration="3549000" />
     </task>
     <servers />
   </component>
@@ -235,24 +239,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Card/CardManager.cs</url>
-          <line>487</line>
-          <properties documentPath="C:\Users\user\Documents\PrototypeCardGame\CardProd\Assets\Scripts\Card\CardManager.cs" initialLine="457" containingFunctionPresentation="method 'RemoveCardOpponent'">
-            <startOffsets>
-              <option value="15855" />
-            </startOffsets>
-            <endOffsets>
-              <option value="15899" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
