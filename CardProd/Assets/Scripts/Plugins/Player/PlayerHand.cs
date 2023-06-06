@@ -182,7 +182,7 @@ namespace Cards
 
                 if (attackResult)
                {
-                   slotScript.SwitchCouple(slotScript.GetCardCouple());
+                   //slotScript.SwitchCouple(slotScript.GetCardCouple());
                    moveCard.RefresMoveIndex(1);
                    animationComponent.AnimationShakeCard();
                }

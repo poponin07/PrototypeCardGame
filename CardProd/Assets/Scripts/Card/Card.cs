@@ -270,12 +270,12 @@ namespace Cards
                     hand = cardManager._player1Hand.m_cardInHand1;
                 }
                 DestroyCard(hand);
-                return true;
+                return false;
             }
             
             UpdateUICard();
             
-            return false;
+            return true;
         }
 
         //урон от способности
@@ -321,8 +321,7 @@ namespace Cards
 
             return false;
         }
-        
-        
+
         public void SetSlotInCurHand(SlotInhandScript slotInhandScript)
         {
             m_slotInhandScript = slotInhandScript;

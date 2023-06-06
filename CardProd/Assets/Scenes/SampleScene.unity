@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_health: 30
-  m_mana: 1
+  m_mana: 0
   m_players: 1
 --- !u!114 &26577039
 MonoBehaviour:
@@ -2476,7 +2476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_health: 30
-  m_mana: 1
+  m_mana: 0
   m_players: 0
 --- !u!114 &521428998
 MonoBehaviour:

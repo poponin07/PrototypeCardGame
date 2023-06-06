@@ -22,5 +22,10 @@ namespace Cards
             m_cardCouple = card; 
             couple = !couple;
         }
+        
+        public void SetCouple(Card card)
+        {
+            m_cardCouple = card;
+        }
     }
 }

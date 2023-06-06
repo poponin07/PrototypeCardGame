@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Cards
 {
@@ -12,6 +13,7 @@ namespace Cards
       [SerializeField, Range(0.1f, 100f)] private float speedRotateCamera;
       [SerializeField] public UIAvatarScript m_avatarScript;
       [SerializeField] private Players m_playerMove;
+      [SerializeField] private Button m_buttonNextMove;
 
       [SerializeField] private CardManager m_cardManager;
       
@@ -19,11 +21,13 @@ namespace Cards
       private PlayerData m_PlayerData2;
       private int m_manaIndex;
       private int ferstMoveIsDonePlayerIndex;
+      public bool ferstMoveAnd;
 
       public Players PlayerMove => m_playerMove;
       
       private void Awake()
       {
+         m_buttonNextMove.enabled = false;
          ferstMoveIsDonePlayerIndex = 4;
          if (instance != null)
             Destroy(gameObject);
@@ -61,11 +65,16 @@ namespace Cards
          }
          if (ferstMoveIsDonePlayerIndex != 0)
          {
+            if (m_buttonNextMove.enabled == false)
+            {
+               m_buttonNextMove.enabled = true;
+            }
             m_cardManager.GetCardFromDeck(3, true);
             --ferstMoveIsDonePlayerIndex;
          }
          else
          {
+            ferstMoveAnd = true;
             m_cardManager.GetCardFromDeck(1, false);
          }
       }

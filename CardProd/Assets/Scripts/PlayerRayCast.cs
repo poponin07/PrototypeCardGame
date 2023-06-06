@@ -40,12 +40,13 @@ namespace Input
                     if (сhoicePlayerAvatar != null && сhoicePlayerAvatar.m_players ==  RoundManager.instance.PlayerMove)
                     {
                         сhoicePlayerAvatar.SetAvatar();
+                        RoundManager.instance.MoveChange();
                         return;
                     }
                    
                 }
-                Card cardComp = hit.transform != null ? card : null;
-                    if (cardComp != null && cardComp.m_cardState == CardState.InHand  )
+               Card cardComp = hit.transform != null ? card : null;
+                    if (cardComp != null && cardComp.m_cardState == CardState.InHand && !RoundManager.instance.ferstMoveAnd)
                     {
                         if (cardComp.CardInDeck(card))
                         {
