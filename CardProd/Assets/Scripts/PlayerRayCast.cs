@@ -37,7 +37,7 @@ namespace Input
                 {
                     СhoicePlayerAvatar сhoicePlayerAvatar = hit.transform.GetComponent<СhoicePlayerAvatar>();
                     
-                    if (сhoicePlayerAvatar != null && сhoicePlayerAvatar.m_players ==  RoundManager.instance.PlayerMove)
+                    if (сhoicePlayerAvatar != null && сhoicePlayerAvatar.m_players ==  RoundManager.instance.PlayerMove && сhoicePlayerAvatar.isSetAvatar == false)
                     {
                         сhoicePlayerAvatar.SetAvatar();
                         RoundManager.instance.MoveChange();

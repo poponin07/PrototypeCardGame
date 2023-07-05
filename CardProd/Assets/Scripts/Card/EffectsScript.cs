@@ -10,19 +10,6 @@ namespace Cards
 
         public abstract bool TryToRemoveEffect(CardManager cardManager);
     }
-
-    //[CreateAssetMenu(fileName = "BattleCry", menuName = "Effects/BattleCry")]
-    /*public class BattleCry : BaseEffect
-    {
-        public override void ApplyEffect(CardManager cardManager, Card effectOwner)
-        {
-        }
-
-        public override bool TryToRemoveEffect(CardManager cardManager)
-        {
-            return true;
-        }
-    }*/
     
     [CreateAssetMenu(fileName = "BattleCryDealDamagePlayer", menuName = "Effects/BattleCryDealDamagePlayer")]
     public class BattleCryDealDamagePlayer : BaseEffect

@@ -14,7 +14,9 @@ namespace Cards
       [SerializeField] public UIAvatarScript m_avatarScript;
       [SerializeField] private Players m_playerMove;
       [SerializeField] private Button m_buttonNextMove;
-
+      [SerializeField] private Button m_buttonAbilityPlayer1;
+      [SerializeField] private Button m_buttonAbilityPlayer2;
+      
       [SerializeField] private CardManager m_cardManager;
       
       private PlayerData m_PlayerData1;
@@ -97,6 +99,9 @@ namespace Cards
                GetMana();
                break;
          }
+
+         m_buttonAbilityPlayer1.enabled = true;
+         m_buttonAbilityPlayer2.enabled = true;
       }
 
       //разадача маны

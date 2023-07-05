@@ -278,7 +278,7 @@ namespace Cards
             return true;
         }
 
-        //урон от способности
+        //урон от эффекта
         public void GetDamageSpell(int damage)
         {
             m_health = -damage;

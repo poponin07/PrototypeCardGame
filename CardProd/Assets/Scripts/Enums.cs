@@ -13,12 +13,12 @@ namespace Cards
 		Mech = 4
 	}
 
-	public enum SideType : byte
+	/*public enum SideType : byte
 	{
 		Common = 0,
 		Mage = 1,
 		Warrior = 2
-	}
+	}*/
 
 	public enum CardState : byte
 	{

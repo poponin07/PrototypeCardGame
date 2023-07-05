@@ -1,36 +1,53 @@
 ﻿using System;
 using Cards;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Player
 {
     public class PlayerScript: MonoBehaviour
     {
-        private PlayerData m_plaerData;
+        private PlayerData m_playerData;
         [SerializeField] private UIAvatarScript m_UIavatarscript;
+        [SerializeField] private Button m_abilityButtonButton;
         private int  m_damageCounterForCards;
+        public BaseAbilities m_ability;
+        
 
         private void Awake()
         {
-            m_plaerData = GetComponent<PlayerData>();
+            m_playerData = GetComponent<PlayerData>();
             m_damageCounterForCards = 1;
         }
+
+        public void ApplyAbility()
+        {
+            m_ability.ApplyAbility();
+            m_abilityButtonButton.enabled = false;
+        }
+
+        
+        public void SetHeroParams(BaseAbilities ability)
+        {
+            m_ability = ability;
+        }
+        
         //игрок получает урон
         public void GetDamage(int damage,bool  forGetCard)
         {
             if (forGetCard)
             {
-                m_plaerData.Health -= m_damageCounterForCards;
+                m_playerData.Health -= m_damageCounterForCards;
                 m_damageCounterForCards++;
-                m_UIavatarscript.RefreshHealthPlayer(m_plaerData.Health, false);
+                m_UIavatarscript.RefreshHealthPlayer(m_playerData.Health, false);
             }
             else
             {
-                m_plaerData.Health -= damage; 
-                m_UIavatarscript.RefreshHealthPlayer(m_plaerData.Health, true);
+                m_playerData.Health -= damage; 
+                m_UIavatarscript.RefreshHealthPlayer(m_playerData.Health, true);
             }
 
-            if ( m_plaerData.Health <= 0 )
+            if ( m_playerData.Health <= 0 )
             {
                 Debug.LogError(RoundManager.instance.PlayerMove + " wins!");
             }
@@ -39,12 +56,12 @@ namespace Player
         //восстановление здоровья
         public void RestoreHealth(int restoreData)
         {
-            m_plaerData.Health += restoreData;
-            if (m_plaerData.Health > m_plaerData.HealthDefault)
+            m_playerData.Health += restoreData;
+            if (m_playerData.Health > m_playerData.HealthDefault)
             {
-                m_plaerData.Health = m_plaerData.HealthDefault;
+                m_playerData.Health = m_playerData.HealthDefault;
             }
-            m_UIavatarscript.RefreshHealthPlayer(m_plaerData.Health, false);
+            m_UIavatarscript.RefreshHealthPlayer(m_playerData.Health, false);
         }
         
         //игрок получает урон из-за пустой колоды

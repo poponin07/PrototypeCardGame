@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
 
 namespace Cards
@@ -10,7 +11,7 @@ namespace Cards
         private int healthDefault;
         [SerializeField] private int m_health;
         [SerializeField] private int m_mana;
-        [SerializeField] public Players m_players;
+        //[SerializeField] public Players m_players;
 
         private void Start()
         {

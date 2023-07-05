@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: FrostwolfWarlordEffect
-  m_EditorClassIdentifier: Assembly-CSharp:Cards:FrostwolfWarlordEffect
-  healthToAdd: 1
-  attackToAdd: 1
+  m_Script: {fileID: 11500000, guid: 6552ed4568763ba4ba49405864c06dbc, type: 3}
+  m_Name: PriestAbility
+  m_EditorClassIdentifier: 
+  m_cardManager: {fileID: 0}
+  m_healValue: 2
