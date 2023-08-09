@@ -52,11 +52,13 @@ namespace Cards
         public PlayerScript player2Script;
         public PlayerData m_player1Data;
         public PlayerData m_player2Data;
-        public bool UseCustomDeck; //флаг для использования кастомных колод карт
+        
+        private bool UseCustomDeck; //флаг для использования кастомных колод карт
 
         private void Awake()
         {
             CollectingAllCards();
+            UseCustomDeck = PlayerPrefs.GetInt("UseDefDeck") == 1 ? true : false;
         }
         private void Start()
         {
